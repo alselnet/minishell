@@ -6,13 +6,13 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:19:06 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 14:09:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/18 17:40:57 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_token	*ft_tknew(char *content)
+t_token	*tk_new(char *content)
 {
 	t_token	*new;
 
@@ -26,7 +26,7 @@ t_token	*ft_tknew(char *content)
 	return (new);
 }
 
-int	ft_tksize(t_token *token)
+int	tk_size(t_token *token)
 {
 	int		count;
 
@@ -39,7 +39,7 @@ int	ft_tksize(t_token *token)
 	return (count);
 }
 
-t_token	*ft_tklast(t_token *token)
+t_token	*tk_last(t_token *token)
 {
 	if (!token)
 		return (0);
@@ -48,7 +48,29 @@ t_token	*ft_tklast(t_token *token)
 	return (token);
 }
 
-void	tk_deftype(t_token *token, char *type)
+void	tk_delone(t_token *token)
 {
-//waiting for complete parser
+	if (!token)
+		return ;
+	if (token->content)
+		free(token->content);
+	if (token->type)
+		free(token->type);
+	free(token);
+}
+
+void	tk_clear(t_token **head)
+{
+	t_token	*browse;
+
+	if (!head)
+		return ;
+	browse = *head;
+	while (*head)
+	{
+		*head = (*head)->next;
+		tk_delone(browse);
+		browse = *head;
+	}
+	*head = 0;
 }

@@ -6,40 +6,15 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 15:09:28 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/18 18:04:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_tkdelone(t_token *token)
-{
-	if (!token)
-		return ;
-	if (token->content)
-		free(token->content);
-	if (token->type)
-		free(token->type);
-	free(token);
-}
 
-void	ft_tkclear(t_token **head)
-{
-	t_token	*browse;
 
-	if (!head)
-		return ;
-	browse = *head;
-	while (*head)
-	{
-		*head = (*head)->next;
-		ft_tkdelone(browse);
-		browse = *head;
-	}
-	*head = 0;
-}
-
-void	ft_tkadd_back(t_token **head, t_token *new)
+void	tk_add_back(t_token **head, t_token *new)
 {
 	t_token	*browse;
 
@@ -48,7 +23,7 @@ void	ft_tkadd_back(t_token **head, t_token *new)
 	browse = *head;
 	if (*head)
 	{
-		browse = ft_tklast(*head);
+		browse = tk_last(*head);
 		browse->next = new;
 		new->prev = browse;
 	}
@@ -61,16 +36,11 @@ void	tk_addto(t_token **head, t_token *new, int pos)
 	t_token	*browse;
 	int		count;
 
-	if (!head || new || pos < 0 || pos > ft_tksize(*head) || (!*head && pos != 0))
+	if (!head || !*head || !new || pos <= 0 || pos > tk_size(*head))
 		return ;
-	count = -1;
+	count = 0;
 	browse = *head;
-	if (!pos)
-	{
-		new->prev = browse;
-		return;
-	}
-	while (++count < pos)
+	while (++count < pos && browse)
 		browse = browse->next;
 	new->next = browse->next;
 	browse->next = new;
@@ -81,13 +51,18 @@ void	tk_addto(t_token **head, t_token *new, int pos)
 
 void	tk_moveto(t_token	**head, t_token *token, int pos)
 {
-	if (!head || pos < 0 || pos > ft_tksize(*head) || (!*head && pos))
+	if (!head || pos < 0 || pos > tk_size(*head) || (!*head && pos))
 		return ;
 	if (token->next)
 		token->next->prev = token->prev;
-	(if token->prev)
+	if (token->prev)
 		token->prev->next = token->next;
 	token->prev = 0;
 	token->next = 0;
 	tk_addto(head, token, pos);
 }
+
+/*void	tk_deftype(t_token *token, char *type)
+{
+//waiting for complete parser
+}*/
