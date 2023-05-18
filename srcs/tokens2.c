@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 14:40:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/18 15:09:28 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ void	tk_moveto(t_token	**head, t_token *token, int pos)
 {
 	if (!head || pos < 0 || pos > ft_tksize(*head) || (!*head && pos))
 		return ;
-	token->next->prev = token->prev;
-	token->prev->next = token->next;
+	if (token->next)
+		token->next->prev = token->prev;
+	(if token->prev)
+		token->prev->next = token->next;
 	token->prev = 0;
 	token->next = 0;
 	tk_addto(head, token, pos);
