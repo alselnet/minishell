@@ -23,4 +23,4 @@ rerun gcc -Wall -Werror -Wextra main.c -I../../include/
 ./a.out unset _(will remove all variables inside envp)_  
 
 **FOR ENV**  
-./a.out env 
+./a.out env  
