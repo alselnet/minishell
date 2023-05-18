@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/18 17:15:26 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/18 20:59:22 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS = -Wall -Wextra -Werror -g3 -MMD -I include
 SRC = srcs/main_test.c\
 srcs/tokens.c\
 srcs/tokens2.c\
-srcs/utils.c\
+srcs/init.c\
+srcs/parsing.c\
 srcs/temp.c\
 
  
@@ -28,7 +29,7 @@ REMOVE = rm -f
 
 ${NAME}: ${OBJS}
 		make -C srcs/libft
-		$(CC) $(CFLAGS) ${OBJS} libft.a -o $(NAME)
+		$(CC) $(CFLAGS) ${OBJS} libft.a -lreadline -o $(NAME)
 
 -include $(DEPS)
 

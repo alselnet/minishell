@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 18:04:29 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/18 20:59:17 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,27 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-//LEXING
-typedef	struct s_token //liste doublement chainée contenant deux variables
+//PARSING & INDEXING
+typedef struct s_token //liste doublement chainée contenant deux variables
 {
 	char			*content;
 	char			*type;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
+
+typedef	struct s_parsing
+{
+	char	***cmd_table;
+	char	**split_tokens;
+	t_token	**tklist_head;
+	char	*input;
+	int		tklist_size;
+
+}	t_parsing;
 
 /*adapations de libft_bonus*/
 t_token	*tk_new(char	*content);
@@ -42,6 +54,13 @@ void	tk_moveto(t_token	**head, t_token *token, int pos);
 
 //fonctions temporaires de test
 void	print_token_list(t_token **head);
-t_token	*	create_token_list(int	number_of_tokens);
+void	rev_print_token_list(t_token **last, t_token **head);
+
+//UTILS
+void	init_table(t_parsing *table);
+void	quit(char *error_msg);
+
+//PARSING
+void	create_token_list(t_parsing *table);
 
 #endif
