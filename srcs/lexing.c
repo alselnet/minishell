@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 17:51:02 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:11:22 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	create_redir_token(t_lexing *ltable, int *reader)
 		new = tk_new(ft_substr(ltable->input, *reader, 1));
 	if (!new->content)
 		quit(ltable, "Unable to allocate token content", 1);
-	tk_add_back(ltable->tklist_head, new);
+	tk_add_back(&ltable->tklist_head, new);
 	*reader = *reader + 1;
 }
 
@@ -62,7 +62,7 @@ void	create_quoted_token(t_lexing *ltable, int *reader)
 	new = tk_new(ft_substr(ltable->input, *reader, quote_len));
 	if (!new->content)
 		quit(ltable, "Unable to allocate token content", 1);
-	tk_add_back(ltable->tklist_head, new);
+	tk_add_back(&ltable->tklist_head, new);
 	*reader += quote_len;
 }
 
@@ -81,7 +81,7 @@ void	create_regular_token(t_lexing *ltable, int *reader)
 	new = tk_new(ft_substr(ltable->input, *reader, count));
 	if (!new->content)
 		quit(ltable, "Unable to allocate token content", 1);
-	tk_add_back(ltable->tklist_head, new);
+	tk_add_back(&ltable->tklist_head, new);
 	*reader += count;
 }
 

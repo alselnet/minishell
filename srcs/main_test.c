@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 14:52:55 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:10:07 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	main (int argc, char **argv)
 		if (!ltable.input || !ltable.input[0])
 			return (printf("exit\n"));
 		create_token_list(&ltable);
-		print_token_list(ltable.tklist_head);
-		tk_clear(ltable.tklist_head);
+		print_token_list(&ltable.tklist_head);
+		tk_clear(&ltable.tklist_head);
 		free(ltable.input);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 16:38:08 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:09:30 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_token //liste doublement chainée contenant deux variables
 
 typedef	struct s_lexing
 {
-	t_token	**tklist_head;
+	t_token	*tklist_head;
 	char	*input;
 	int		tklist_size;
 }	t_lexing;

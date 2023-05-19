@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 17:39:02 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 18:10:16 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	tk_add_back(t_token **head, t_token *new)
 		new->prev = browse;
 	}
 	else
-		head = &new;
+		*head = new;
 }
 
 void	tk_addto(t_token **head, t_token *new, int pos)
