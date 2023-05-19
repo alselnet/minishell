@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 17:39:36 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 17:51:02 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,18 @@ void	create_token_list(t_lexing *ltable)
 	{
 		while (ltable->input[reader] == ' ' || ltable->input[reader] == '\t')
 			reader++;
-		if (ft_isinbase(ltable->input[reader], "<|>"))
+		if (ltable->input[reader] && ft_isinbase(ltable->input[reader], "<|>"))
 			create_redir_token(ltable, &reader);
-		while (ltable->input[reader] == ' ' || ltable->input[reader] == '\t')
+		while (ltable->input[reader] && (ltable->input[reader] == ' '
+				|| ltable->input[reader] == '\t'))
 			reader++;
-		if (ft_isinbase(ltable->input[reader], "\'\""))
+		if (ltable->input[reader] && ft_isinbase(ltable->input[reader], "\'\""))
 			create_quoted_token(ltable, &reader);
-		while (ltable->input[reader] == ' ' || ltable->input[reader] == '\t')
+		while (ltable->input[reader] && (ltable->input[reader] == ' '
+				|| ltable->input[reader] == '\t'))
 			reader++;
-		if (!ft_isinbase(ltable->input[reader], "<|>\'\""))
+		if (ltable->input[reader]
+			&& !ft_isinbase(ltable->input[reader], "<|>\'\""))
 			create_regular_token(ltable, &reader);
 	}
 }
