@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:30:15 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 12:41:47 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 17:39:24 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_table(t_lexing *ltable)
 {
-	ltable->split_tokens = 0;
 	ltable->tklist_head = 0;
 	ltable->input = 0;
 	ltable->tklist_size = 0;

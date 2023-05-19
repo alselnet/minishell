@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 14:36:51 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 17:39:36 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,12 @@ void	create_regular_token(t_lexing *ltable, int *reader)
 
 void	create_token_list(t_lexing *ltable)
 {
-	t_token	*head;
 	int		reader;
 
-	head = 0;
-	reader = -1;
-	ltable->tklist_head = &head;
+	reader = 0;
 	if (!ltable->input)
 		quit(ltable, "Unable ton find input", 0);
-	while (ltable->input[++reader])
+	while (ltable->input[reader])
 	{
 		while (ltable->input[reader] == ' ' || ltable->input[reader] == '\t')
 			reader++;

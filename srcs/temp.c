@@ -8,7 +8,6 @@ void	print_token_list(t_token **head)
 	i = 0;
 	if (!head || !*head)
 		return ;
-
 	browse = *head;
 	while (browse)
 	{
