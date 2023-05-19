@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 20:59:17 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:45:15 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ typedef struct s_token //liste doublement chainée contenant deux variables
 	struct s_token	*next;
 }	t_token;
 
-typedef	struct s_parsing
+typedef	struct s_lexing
 {
-	char	***cmd_table;
 	char	**split_tokens;
 	t_token	**tklist_head;
 	char	*input;
 	int		tklist_size;
 
-}	t_parsing;
+}	t_lexing;
 
 /*adapations de libft_bonus*/
 t_token	*tk_new(char	*content);
@@ -57,10 +56,10 @@ void	print_token_list(t_token **head);
 void	rev_print_token_list(t_token **last, t_token **head);
 
 //UTILS
-void	init_table(t_parsing *table);
-void	quit(char *error_msg);
+void	init_table(t_lexing *table);
+void	quit(t_lexing *ltable, char *error_msg,	char mode);
 
 //PARSING
-void	create_token_list(t_parsing *table);
+void	create_token_list(t_lexing *table);
 
 #endif

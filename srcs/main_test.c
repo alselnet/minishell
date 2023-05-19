@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 21:00:43 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/19 14:52:55 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,24 @@
 
 int	main (int argc, char **argv)
 {
-	t_parsing	table;
+	t_lexing	ltable;
 	//token_testing();
 	(void)argv;
-	init_table(&table);
+	init_table(&ltable);
 	if (argc != 1)
 	{
-		ft_printf("./minishell doesn't take any arguments\n");
+		printf("./minishell doesn't take any arguments\n");
 		return (0);
 	}
 	while(1)
 	{
-		table.input = readline("> ");
-		if (!table.input)
-			return (0);
-		create_token_list(&table);
-		print_token_list(table.tklist_head);
-		tk_clear(table.tklist_head);
+		ltable.input = readline("> ");
+		if (!ltable.input || !ltable.input[0])
+			return (printf("exit\n"));
+		create_token_list(&ltable);
+		print_token_list(ltable.tklist_head);
+		tk_clear(ltable.tklist_head);
+		free(ltable.input);
 	}
 	return (0);
 }
