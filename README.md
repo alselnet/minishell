@@ -1,7 +1,7 @@
 # TEST BUILT-IN COMMANDS
 
 cd srcs/built_in_commands  
-gcc -Wall -Werror -Wextra main.c -I../../include/  
+gcc -Wall -Werror -Wextra *.c 
 
 ## To test the built-in commands, do this:
 
@@ -19,7 +19,7 @@ export TEST=océ
 Check that it has been added in your terminal: env | grep TEST  
 rerun gcc -Wall -Werror -Wextra main.c -I../../include/  
 ./a.out unset TEST _(will remove TEST inside envp)_  
-./a.out unset océ _(will try remove a variable that does not exist)_  
+./a.out unset mama _(will try remove a variable that does not exist)_  
 ./a.out unset _(will remove all variables inside envp)_  
 
 **FOR ENV**  
