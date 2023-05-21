@@ -26,5 +26,5 @@ rerun gcc -Wall -Werror -Wextra main.c -I../../include/
 ./a.out env 
 
 **FOR EXPORT**  
-./a.out export
+./a.out export  
 ./a.out export TEST=TEST
