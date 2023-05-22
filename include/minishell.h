@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 18:09:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/22 19:44:37 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+//ENV
+typedef struct s_data_env
+{
+	int		size;
+	char	**envp;
+}	t_data_env;
+
+char	**ft_strdup_env(char **envp);
+void	ft_print_env(t_data_env *s_data_env);
+void	ft_remove_var_in_env(int i, t_data_env *s_data_env);\
+int		ft_compute_env_len(char **envp);
+int		ft_strcmp_env(const char *s1, const char *s2);
 
 //PARSING & INDEXING
 typedef struct s_token //liste doublement chainée contenant deux variables
@@ -55,9 +68,11 @@ void	rev_print_token_list(t_token **last, t_token **head);
 
 //UTILS
 void	init_table(t_lexing *table);
+int		free_array(char **arr);
 void	quit(t_lexing *ltable, char *error_msg,	char mode);
 
 //PARSING
 void	create_token_list(t_lexing *table);
+void	expand_token_list(t_lexing *ltable, t_data_env *data_env);
 
 #endif

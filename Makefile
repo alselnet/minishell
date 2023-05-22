@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/19 14:33:55 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/22 18:24:08 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -MMD -I include
 
-SRC = srcs/main_test.c\
+SRC = srcs/expand.c\
+srcs/main_test.c\
 srcs/tokens.c\
 srcs/tokens2.c\
 srcs/init.c\
@@ -22,6 +23,7 @@ srcs/quit.c\
 srcs/lexing.c\
 srcs/parsing.c\
 srcs/temp.c\
+srcs/ft_environment_var_utils.c\
 
  
 OBJS = ${SRC:.c=.o}

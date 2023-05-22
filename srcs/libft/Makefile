@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/19 14:51:11 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/22 17:26:31 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = ft_isinbase.c\
 ft_split.c\
 ft_substr.c\
 ft_strjoin.c\
+ft_strdup.c\
 ft_strlen.c\
 ft_strlcpy.c\
 ft_strncmp.c\

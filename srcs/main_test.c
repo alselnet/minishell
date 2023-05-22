@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 18:10:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/22 20:07:11 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,31 @@
 	tk_clear(&head);
 } */
 
-int	main (int argc, char **argv)
+int	main (int argc, char **argv, char **envp)
 {
 	t_lexing	ltable;
+	t_data_env	data_env;
+
+	data_env.size = ft_compute_env_len(envp);
+	data_env.envp = ft_strdup_env(envp);
 	//token_testing();
 	(void)argv;
+	(void)envp;
 	init_table(&ltable);
 	if (argc != 1)
 	{
 		printf("./minishell doesn't take any arguments\n");
+		free_array(data_env.envp);
 		return (0);
 	}
 	while(1)
 	{
 		ltable.input = readline("> ");
 		if (!ltable.input || !ltable.input[0])
-			return (printf("exit\n"));
+			return (free_array(data_env.envp), printf("exit\n"));
 		create_token_list(&ltable);
+		print_token_list(&ltable.tklist_head);
+		expand_token_list(&ltable, &data_env);
 		print_token_list(&ltable.tklist_head);
 		tk_clear(&ltable.tklist_head);
 		free(ltable.input);
