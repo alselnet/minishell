@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 14:05:20 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/02 17:09:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:15:22 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ char	*get_next_line(int fd)
 		newline = reset_arr(newline);
 		return (0);
 	}
-	//if (ft_chr_is_in_base(line, '\n'))
-		//newline = make_newline(line, newline);
+	if (ft_chr_is_in_base(line, '\n'))
+		newline = make_newline(line, newline);
 	else if (newline)
 		newline = reset_arr(newline);
 	return (line);

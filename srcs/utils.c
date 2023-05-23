@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 18:47:03 by aselnet          ###   ########.fr       */
+/*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
+/*   Updated: 2023/05/23 18:51:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	free_array(char **arr)
+char	*extract_variable_value(char **env)
 {
-	int	i;
+	char	*full_var;
+	char	*value;
+	int		i;
+	int		j;
 
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free (arr);
-	return (0);
-}
-
-int	free_structs(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg,	char mode)
-{
-	if (mode == 1 || mode == 2)
-		tk_clear(&ltable->tklist_head);
-	if (mode == 2)
-		free_array(data_env->envp);
-	perror(error_msg);
-	return (0);
+	i = 0;
+	j = 0;
+	full_var = *env;
+	while (full_var[i] && full_var[i] != '=')
+		i++;
+	if (!full_var[i])
+		return (0);
+	j += i + 1;
+	while (full_var[j] && full_var[j] != '\n')
+		j++;
+	if (j < 1)
+		return (0);
+	value = ft_substr(*env + i + 1, 0, j);
+	if (!value)
+		return (0);
+	return (value);
 }

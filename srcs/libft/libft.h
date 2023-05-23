@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:00:32 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/18 20:04:42 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/23 15:33:30 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size);
 size_t		ft_strlcpy(char *dst, char const *src, size_t size);
 size_t		ft_strlen(const char *s);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int			ft_strmatch(const char *s, const char *charset);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strnstr(const char	*big, const char *little, size_t len);
 char		*ft_strrchr(const char *s, int c);
