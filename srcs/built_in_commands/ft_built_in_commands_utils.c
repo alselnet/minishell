@@ -6,15 +6,16 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/21 23:13:25 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:39:36 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in_commands.h"
 
-void	ft_error(char *error_msg)
+void	ft_error(char *error_msg, t_data_env *s_data_env)
 {
 	perror(error_msg);
+	ft_free_env(s_data_env->envp, s_data_env->size);
 	exit(EXIT_FAILURE);
 }
 
@@ -105,4 +106,33 @@ int  ft_srch(char const c, char const *str)
         i++;
     }
     return (-1);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	size_t	len;
+	char	*dest;
+
+	if ((s1 == NULL) || (s2 == NULL))
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	dest = (char *)malloc(sizeof(char) * (len + 1));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		dest[i] = s2[j++];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }

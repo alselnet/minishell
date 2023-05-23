@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/22 00:47:17 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/23 19:40:02 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,12 @@
 void	ft_print_export(char *str)
 {
 	while (*str != '=')
-	{
-		printf("%c", *str);
-		str++;
-	}
-	printf("%c", *str);
+		printf("%c", *(str++));
+	printf("%c\"", *str);
 	str++;
-	printf("\"");
 	while (*str)
-	{
-		printf("%c", *str);
-		str++;
-	}
-	printf("\"");
-	printf("\n");
+		printf("%c", *(str++));
+	printf("\"\n");
 }
 
 int ft_print_env_min(char **env, int size)
@@ -75,6 +67,8 @@ void	ft_export_without_arg(t_data_env *s_data_env)
 	int min;
 	
 	dup_env = ft_strdup_env(s_data_env->envp);
+	if (dup_env == NULL)
+		return ;
 	i = 0;
 	while (i < s_data_env->size)
 	{
@@ -87,72 +81,71 @@ void	ft_export_without_arg(t_data_env *s_data_env)
 	free(dup_env);
 }
 
-// ERROR CASES TO HANDLE
+// TO HANDLE
 /*
-> check for reserved word ?
+> When the parsing will be done, 
+the loop will be different
 
-> export/unset will handle multiple arguments in a row (like as long as it's a WORD, it's echo arguments)
+It will be someting like as long as it is WORD, loop through each word
 
-> This error will have to be handled
-$ export mama=PAPA mam-rm=rl
-bash: export: `mam-rm=rl': not a valid identifier
-$ env | grep mama
-mama=PAPA
-
-> if the variable does exist, only update its value
-don't add a new line
-
->  TAKE THIS INTO ACCOUNT: (need a history)
-$papa=mama
-$export papa
-
-> variable can have accent ? like é è etc
-
-=> SAME FOR UNSET!!!!
 */
+
 void ft_export(int argc, char **argv, t_data_env *s_data_env)
 {
-	char **dup_env;
 	int i;
+	int j;
 	
-	(void)argv;
 	// export without any argument
 	if (argc == 2)
 	{
 		ft_export_without_arg(s_data_env);
 		return ;
 	}
-	// export with an argument
-	// Check that the variable identifier has a correct format
-	if (ft_srch('=', argv[2]) == 0)
+	j = 2;
+	while (j < argc)
 	{
-		printf("export: '%s': not a valid identifier\n", argv[2]);
-		return ;
-	}
-	i = 0;
-	while (argv[2][i] && argv[2][i] != '=')
-	{
-		if (ft_isalnum(argv[2][i]) == 0)
+		// export with an argument
+		// Check that the variable identifier has a correct format
+		if (ft_srch('=', argv[j]) == 0)
 		{
-			printf("export: '%s': not a valid identifier\n", argv[2]);
+			printf("export: '%s': not a valid identifier\n", argv[j]);
 			return ;
 		}
-		i++;
-	}
-	// the argument must have a '=' at least at the 2nd character
-	if (ft_srch('=', argv[2]) >= 1)
-	{
-		//il faudra créer une fonction: dup_env = ft_add_var_env(char **envp, char *new_var)
 		i = 0;
-		dup_env = (char **)malloc(sizeof(char *) * (s_data_env->size + 2));
-		while (s_data_env->envp[i])
+		while (argv[j][i] && argv[j][i] != '=')
 		{
-			dup_env[i] = ft_strdup(s_data_env->envp[i]);
+			if (ft_isalnum(argv[j][i]) == 0 && (argv[j][i] != '_'))
+			{
+				printf("export: '%s': not a valid identifier\n", argv[j]);
+				return ;
+			}
 			i++;
 		}
-		dup_env[i++] = ft_strdup(argv[2]);
-		dup_env[i] = NULL;
-		s_data_env->size = s_data_env->size++;
-		s_data_env->envp = dup_env;
+		// the argument must have a '=' at least at the 2nd character
+		if (ft_srch('=', argv[j]) >= 1)
+		{
+			i = 0;
+			while (s_data_env->envp[i])
+			{
+				if (ft_strcmp_env(argv[j], s_data_env->envp[i]) == 0)
+					break ;
+				i++;
+			}
+			if (s_data_env->envp[i] == NULL)
+			{
+				s_data_env->envp = ft_add_var_env(s_data_env, argv[j]);
+				if (s_data_env->envp == NULL)
+					ft_error("Failed to allocate the requested memory", s_data_env);
+			}	
+			else
+			{
+				free(s_data_env->envp[i]);
+				s_data_env->envp[i] = NULL;
+				s_data_env->envp[i] = ft_strdup(argv[j]);
+				if (s_data_env->envp[i] == NULL)
+					ft_error("Failed to allocate the requested memory", s_data_env);
+			}
+		}
+		j++;
 	}
 }

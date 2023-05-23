@@ -6,11 +6,13 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:06:31 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/22 00:42:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/23 19:51:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in_commands.h"
+
+// Add cases where env has too many arguments ??
 
 void ft_env(char **envp)
 {

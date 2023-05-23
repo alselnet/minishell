@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/21 23:05:30 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/23 19:56:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	ft_pwd(void)
 {
-	char print_path[1000];
-	
-	if (chdir("./") != 0)
-		ft_error("getting current directory failed");
-	// Check that we get the right directory now	
-	getcwd(print_path, sizeof(print_path));
-	printf("%s\n", print_path);
+	char current_path[1000];
+	char *cwd;
+		
+	cwd = getcwd(current_path, sizeof(current_path));
+	if (cwd == NULL)
+	{
+		perror("");
+		return ;
+	}
+	printf("%s\n", current_path);
 }
