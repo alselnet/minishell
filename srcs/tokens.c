@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:19:06 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 14:45:12 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 14:02:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	tk_delone(t_token *token)
 		return ;
 	if (token->content)
 		free(token->content);
-	if (token->type)
-		free(token->type);
 	free(token);
 }
 

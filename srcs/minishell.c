@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 18:48:33 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:51:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 			monitor = parse_token_list(ltable, data_env);
 		if (monitor)
 			monitor = expand_token_list(ltable, data_env);
+		if (monitor)
+			monitor = define_token_types(ltable, data_env);
 		if (monitor)
 			print_token_list(&ltable->tklist_head);
 		if (monitor)

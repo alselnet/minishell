@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 18:51:45 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:15:20 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../srcs/libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <errno.h>
 # include <readline/readline.h>
@@ -37,9 +38,9 @@ int		ft_strcmp_env(const char *s1, const char *s2);
 typedef struct s_token //liste doublement chainée contenant deux variables
 {
 	char			*content;
-	char			*type;
 	struct s_token	*prev;
 	struct s_token	*next;
+	char			type;
 }	t_token;
 
 typedef struct s_lexing
@@ -61,6 +62,7 @@ void	tk_clear(t_token **head);
 void	tk_deftype(t_token *token, char *type);
 void	tk_addto(t_token **head, t_token *new, int pos);
 void	tk_moveto(t_token	**head, t_token *token, int pos);
+int		tk_merge(t_token *token1, t_token *token2);
 
 //fonctions temporaires de test
 void	print_token_list(t_token **head);
@@ -77,5 +79,8 @@ int		free_structs(t_lexing *ltable, t_data_env *data_env,
 int		create_token_list(t_lexing *table, t_data_env *data_env);
 int		parse_token_list(t_lexing *ltable, t_data_env *data_env);
 int		expand_token_list(t_lexing *ltable, t_data_env *data_env);
+int		define_token_types(t_lexing *ltable, t_data_env *data_env);
+void	define_args(t_lexing *ltable);
+int		define_cmds(t_lexing *ltable, t_data_env *data_env);
 
 #endif

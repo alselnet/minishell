@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:13:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 14:14:28 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:49:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_token_list(t_token **head)
 	while (browse)
 	{
 		printf("token %d contains %s\n", i, browse->content);
+		printf("\ttoken type is %c\n\n", browse->type);
 		browse = browse->next;
 		i++;
 	}

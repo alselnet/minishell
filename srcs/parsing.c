@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 17:59:12 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 13:51:58 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		if (browse->content[0] == '\''
 			&& (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\''))
-			return (free_structs(ltable, data_env, "error : single \'", 1));
-		else if (browse->content[0] == '\"'
-			&& (ft_strlen(browse->content) == 1
+			return (free_structs(ltable, data_env, "error : single \'\n", 1));
+		else if (browse->content[0] == '\"' && (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\"'))
-			return (free_structs(ltable, data_env, "error : single \"", 1));
+			return (free_structs(ltable, data_env, "error : single \"\n", 1));
 		else if (ft_strmatch(browse->content, "<|>"))
 		{
-			if (!browse->next || (ft_strlen(browse->content) > 1
+			if (!browse->next || (!browse->prev && browse->content[0] != '<')
+				|| (ft_strlen(browse->content) > 1
 					&& browse->content[0] != browse->content[1]))
 				return (free_structs(ltable, data_env,
-						"wrong redirection", 1));
+						"wrong redirection\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
-				return (free_structs(ltable, data_env, "|| not supported", 1));
+				return (free_structs(ltable, data_env, "|| not supported\n", 1));
 		}
 		browse = browse->next;
 	}

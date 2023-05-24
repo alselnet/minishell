@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 18:55:02 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 13:52:16 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	while (env && *env && ft_strncmp(cursor, *env, i - 1) != 0)
 		env++;
 	if (!*env || !**env)
-		return (free_structs(ltable, data_env, "Variable not found", 1));
+		return (free_structs(ltable, data_env, "Variable not found\n", 1));
 	variable = extract_variable_value(env);
 	if (!variable)
-		return (free_structs(ltable, data_env, "Variable expand failed", 1));
+		return (free_structs(ltable, data_env, "Variable expand failed\n", 1));
 	update_token_content(token, variable);
 	free(variable);
 	return (1);
@@ -69,7 +69,7 @@ char	*clean_up_quotes(char *oldcontent,
 	newcontent = ft_strtrim(oldcontent, "\'\"");
 	if (!newcontent)
 	{
-		free_structs(ltable, data_env, "Variable expand failed", 1);
+		free_structs(ltable, data_env, "Variable expand failed\n", 1);
 		return (0);
 	}
 	return (newcontent);

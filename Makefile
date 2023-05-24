@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/23 18:50:54 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/24 17:15:45 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -MMD -I include
 
 SRC = srcs/expand.c\
+srcs/define.c\
+srcs/define2.c\
 srcs/utils.c\
 srcs/minishell.c\
 srcs/tokens.c\

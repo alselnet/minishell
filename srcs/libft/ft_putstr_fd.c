@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 13:49:16 by aselnet          ###   ########.fr       */
+/*   Created: 2022/04/02 13:48:31 by aselnet           #+#    #+#             */
+/*   Updated: 2023/05/24 13:51:15 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-int	free_array(char **arr)
+int	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
 	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free (arr);
-	return (0);
+	if (!s)
+		return (0);
+	while (s[++i])
+		write (fd, s + i, 1);
+	return (i);
 }
-
-int	free_structs(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg,	char mode)
+/*int	main()
 {
-	if (mode == 1 || mode == 2)
-		tk_clear(&ltable->tklist_head);
-	if (mode == 2)
-		free_array(data_env->envp);
-	ft_putstr_fd(error_msg, 2);
+	char s[] = "salut a tous les ptizamis";
+	ft_putstr_fd(s, 2);
 	return (0);
-}
+}*/

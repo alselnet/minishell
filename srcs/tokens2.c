@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 13:31:22 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:16:07 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,25 @@ void	tk_moveto(t_token **head, t_token *token, int pos)
 	tk_addto(head, token, pos);
 }
 
-/*void	tk_deftype(t_token *token, char *type)
+int	tk_merge(t_token *token1, t_token *token2)
 {
-//waiting for complete parser
-}*/
+	t_token	*new;
+	char	*new_content;
+
+	new_content = ft_strjoin(token1->content, token2->content);
+	if (!new_content)
+		return (0);
+	new = tk_new(new_content);
+	if (!new)
+		return (0);
+	new->type = token1->type;
+	new->prev = token1->prev;
+	new->next = token2->next;
+	if (new->prev)
+		new->prev->next = new;
+	if (new->next)
+		new->next->prev = new;
+	tk_delone(token1);
+	tk_delone(token2);
+	return (1);
+}

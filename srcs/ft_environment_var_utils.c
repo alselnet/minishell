@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:10:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/22 17:19:17 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:17:09 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	ft_compute_env_len(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 void	ft_remove_var_in_env(int i, t_data_env *s_data_env)
 {
-	char **envp;
-	
+	char	**envp;
+
 	envp = s_data_env->envp;
 	while (1)
 	{
@@ -57,10 +57,10 @@ void	ft_remove_var_in_env(int i, t_data_env *s_data_env)
 
 char	**ft_strdup_env(char **envp)
 {
-	int	size;
-	char **env;
-	int	i;
-	
+	int		size;
+	char	**env;
+	int		i;
+
 	size = ft_compute_env_len(envp);
 	env = (char **)malloc(sizeof(char *) * (size + 1));
 	i = 0;
@@ -75,8 +75,8 @@ char	**ft_strdup_env(char **envp)
 
 void	ft_print_env(t_data_env *s_data_env)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (s_data_env->envp[i])
 		printf("%s\n", s_data_env->envp[i++]);
