@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 17:16:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:33:09 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,15 @@ int	tk_merge(t_token *token1, t_token *token2)
 {
 	t_token	*new;
 	char	*new_content;
+	char	*tmp;
 
-	new_content = ft_strjoin(token1->content, token2->content);
+	tmp = ft_strjoin(token1->content, " ");
+	if (!tmp)
+		return (0);
+	new_content = ft_strjoin(tmp, token2->content);
 	if (!new_content)
 		return (0);
+	free (tmp);
 	new = tk_new(new_content);
 	if (!new)
 		return (0);
