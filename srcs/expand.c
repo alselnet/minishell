@@ -6,11 +6,13 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 15:04:04 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 18:38:07 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+extern int	g_monitor;
 
 void	update_token_content(t_token *token, char *variable)
 {
@@ -40,8 +42,6 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	env = data_env->envp;
 	while (cursor && *cursor != '$')
 		cursor++;
-	if (*(cursor + 1) == '?')
-		printf("$? special case\n");
 	cursor++;
 	while (*(cursor + i))
 		i++;
@@ -104,8 +104,19 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 	{
 		if (ft_isinbase('$', browse->content)
 			&& !ft_isinbase(browse->content[0], "\'"))
-			if (!expand_token(browse, ltable, data_env))
-				return (0);
+		{
+			if (!ft_strncmp(browse->content, "$?", 2)
+				&& ft_strlen(browse->content) == 2)
+			{
+				free(browse->content);
+				browse->content = ft_itoa(g_monitor);
+			}
+			else
+			{
+				if (!expand_token(browse, ltable, data_env))
+					return (0);
+			}
+		}
 		browse = browse->next;
 	}
 	if (!format_tokens(ltable, data_env))

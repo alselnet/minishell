@@ -6,13 +6,13 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/24 17:15:45 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/25 18:00:13 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -MMD -I include
+CC = clang
+CFLAGS = -Wall -Wextra -Werror -g3 -MMD -g -I include
 
 SRC = srcs/expand.c\
 srcs/define.c\

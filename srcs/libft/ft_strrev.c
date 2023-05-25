@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 18:26:50 by aselnet          ###   ########.fr       */
+/*   Created: 2022/04/01 17:54:09 by aselnet           #+#    #+#             */
+/*   Updated: 2022/04/01 17:54:09 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-char	*extract_variable_value(char **env)
+void	ft_strrev(char *s)
 {
-	char	*full_var;
-	char	*value;
-	int		i;
-	int		j;
+	int	i;
+	int	tmp;
+	int	len;
 
 	i = 0;
-	j = 0;
-	full_var = *env;
-	while (full_var[i] && full_var[i] != '=')
+	tmp = 0;
+	len = ft_strlen(s);
+	while (i < len / 2)
+	{
+		tmp = s[i];
+		s[i] = s[len - i - 1];
+		s[len - i - 1] = tmp;
 		i++;
-	if (!full_var[i])
-		return (0);
-	j += i + 1;
-	while (full_var[j] && full_var[j] != '\n')
-		j++;
-	if (j < 1)
-		return (0);
-	value = ft_substr(*env + i + 1, 0, j);
-	if (!value)
-		return (0);
-	return (value);
+	}
+	return ;
 }
