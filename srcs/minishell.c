@@ -6,35 +6,51 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 15:51:13 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:25:03 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int	g_monitor;
+
+int	define_token_types(t_lexing *ltable, t_data_env *data_env)
+{
+	g_monitor = define_redirs(ltable, data_env);
+	if (g_monitor)
+		define_delims(ltable);
+	if (g_monitor)
+		g_monitor = define_files(ltable, data_env);
+	if (g_monitor)
+		g_monitor = define_cmds(ltable, data_env);
+	if (g_monitor)
+		define_args(ltable);
+	if (!g_monitor)
+		return (0);
+	return (1);
+}
+
 int	minishell(t_lexing *ltable, t_data_env *data_env)
 {
-	int	monitor;
-
 	while (1)
 	{
 		ltable->input = readline("> ");
 		if (!ltable->input || !ltable->input[0])
 			return (free_array(data_env->envp), printf("exit\n"));
-		monitor = create_token_list(ltable, data_env);
-		if (monitor)
-			monitor = parse_token_list(ltable, data_env);
-		if (monitor)
-			monitor = expand_token_list(ltable, data_env);
-		if (monitor)
-			monitor = define_token_types(ltable, data_env);
-		if (monitor)
+		g_monitor = create_token_list(ltable, data_env);
+		if (g_monitor)
+			g_monitor = parse_token_list(ltable, data_env);
+		if (g_monitor)
+			g_monitor = expand_token_list(ltable, data_env);
+		if (g_monitor)
+			g_monitor = define_token_types(ltable, data_env);
+		if (g_monitor)
 			print_token_list(&ltable->tklist_head);
-		if (monitor)
+		if (g_monitor)
 			tk_clear(&ltable->tklist_head);
 		free(ltable->input);
 	}
-	return (monitor);
+	return (g_monitor);
 }
 
 int	main(int argc, char **argv, char **envp)

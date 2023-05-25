@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 15:25:56 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 17:22:07 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ int		free_structs(t_lexing *ltable, t_data_env *data_env,
 int		create_token_list(t_lexing *table, t_data_env *data_env);
 int		parse_token_list(t_lexing *ltable, t_data_env *data_env);
 int		expand_token_list(t_lexing *ltable, t_data_env *data_env);
-int		define_token_types(t_lexing *ltable, t_data_env *data_env);
 void	define_args(t_lexing *ltable);
 int		define_cmds(t_lexing *ltable, t_data_env *data_env);
+int		define_files(t_lexing *ltable, t_data_env *data_env);
+int		define_redirs(t_lexing *ltable, t_data_env *data_env);
+void	define_delims(t_lexing *ltable);
 
 #endif
