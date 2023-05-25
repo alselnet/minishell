@@ -6,45 +6,53 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/23 19:24:01 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/25 20:25:08 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built_in_commands.h"
+#include "builtins.h"
 
-// to test with an option -n, -nnnn -nnnnnnn. I type this string "./a.out echo option" (option is for the real option)
+int	ft_check_option(char *str)
+{
+	if (*str != '-')
+		return (0);
+	str++;
+	while (*str)
+	{
+		if (*str != 'n')
+			break ;
+		str++;
+	}
+	if (*str != 0)
+		return (0);
+	return (1);
+}
 
 void	ft_echo(int argc, char **argv)
 {
-	int i;
-	
-	// echo without an option, and without arguments
-	if (argc == 2)
+	int	i;
+	int	has_option;
+
+	has_option = 0;
+	if (argc == 1)
 	{
 		printf("\n");
 		return ;
 	}
-	// echo with option, but no arguments
-	if ((argc == 3) && (ft_strcmp(argv[2], "option") == 0))
+	has_option = ft_check_option(argv[1]);
+	if ((argc == 2) && (has_option == 1))
 		return ;
-	
-	// initalize i depending on the presence of an option
-	if (ft_strcmp(argv[2], "option") == 0)
-		i = 3;
-	else
+	if (has_option == 1)
 		i = 2;
-	// Loop through all the strings
+	else
+		i = 1;
 	while (i < argc)
 	{
-		// while it's not an option
-		if (ft_strcmp(argv[i], "option") != 0)
-			printf("%s", argv[i]);
-		// if it's the last string, no space
-		if (i != argc - 1)
+		printf("%s", argv[i]);
+		if (i++ != argc - 1)
 			printf(" ");
-		i++;
 	}
-	// if there is no option
-	if (ft_strcmp(argv[2], "option") != 0)
+	if (has_option != 1)
 		printf("\n");
+	g_minishell.exit_status = 0;
 }

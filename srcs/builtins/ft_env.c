@@ -6,20 +6,18 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:06:31 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/23 19:51:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/25 18:52:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built_in_commands.h"
+#include "builtins.h"
 
-// Add cases where env has too many arguments ??
-
-void ft_env(char **envp)
+void	ft_env(char **envp)
 {
 	int	i;
-	
-	// maybe use ft_print_env in the future
+
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 		printf("%s\n", envp[i++]);
+	g_minishell.exit_status = 0;
 }

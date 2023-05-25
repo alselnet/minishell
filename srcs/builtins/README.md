@@ -1,6 +1,6 @@
 # TEST BUILT-IN COMMANDS
 
-cd srcs/built_in_commands  
+cd srcs/builtins  
 gcc -Wall -Werror -Wextra *.c 
 
 ## To test the built-in commands, do this:
