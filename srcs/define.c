@@ -59,13 +59,13 @@ int	define_files(t_lexing *ltable, t_data_env *data_env)
 		if (browse->prev->content[0] == '>')
 			browse->type = 'F';
 		else if (browse->prev->content[0] == '<'
-				&& !browse->prev->content[1])
+			&& !browse->prev->content[1])
 		{
 			if (!access(browse->content, R_OK))
 				browse->type = 'F';
 			else
 				return (free_structs(ltable, data_env,
-					"Invalid infile\n", 1));
+						"Invalid infile\n", 1));
 		}
 		browse = browse->prev;
 	}
