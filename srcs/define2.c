@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 17:16:16 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:26:52 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ int	merge_flags(t_lexing *ltable)
 	{
 		if (browse->type == 'C' && browse->next->content[0] == '-')
 		{
-			if (!tk_merge(browse, browse->next))
+			browse = tk_merge(&ltable->tklist_head, browse, browse->next);
+			if (!browse)
 				return (0);
 		}
-		browse = browse->next;
+		if (browse->next)
+			browse = browse->next;
 	}
 	return (1);
 }

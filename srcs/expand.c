@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 13:52:16 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:04:04 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ char	*clean_up_quotes(char *oldcontent,
 			t_lexing *ltable, t_data_env *data_env)
 {
 	char	*newcontent;
-	int		i;
-	int		j;
 
-	i = -1;
-	j = -1;
 	newcontent = ft_strtrim(oldcontent, "\'\"");
 	if (!newcontent)
 	{

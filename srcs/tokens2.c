@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 17:33:09 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:25:45 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	tk_moveto(t_token **head, t_token *token, int pos)
 	tk_addto(head, token, pos);
 }
 
-int	tk_merge(t_token *token1, t_token *token2)
+t_token	*tk_merge(t_token **head, t_token *token1, t_token *token2)
 {
 	t_token	*new;
 	char	*new_content;
@@ -76,14 +76,15 @@ int	tk_merge(t_token *token1, t_token *token2)
 	new = tk_new(new_content);
 	if (!new)
 		return (0);
-	new->type = token1->type;
 	new->prev = token1->prev;
 	new->next = token2->next;
 	if (new->prev)
 		new->prev->next = new;
+	else
+		*head = new;
 	if (new->next)
 		new->next->prev = new;
 	tk_delone(token1);
 	tk_delone(token2);
-	return (1);
+	return (new);
 }
