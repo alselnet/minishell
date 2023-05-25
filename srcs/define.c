@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 17:16:19 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:52:52 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,36 +47,29 @@ void	define_delims(t_lexing *ltable)
 	}
 }
 
-void	type_file(t_token *token)
-{
-	int	fd;
-
-	fd = 0;
-	fd = open(token->content, O_RDONLY, 0777);
-	if (fd > -1)
-	{
-		token->type = 'F';
-		close (fd);
-	}
-	else if (token->prev)
-	{
-		if ((token->prev->content[0] == '>' && !token->prev->content[1])
-			|| (!ft_strncmp(token->prev->content, ">>", 2)))
-			token->type = 'F';
-	}
-}
-
-void	define_files(t_lexing *ltable)
+int	define_files(t_lexing *ltable, t_data_env *data_env)
 {
 	t_token	*browse;
 
 	browse = ltable->tklist_head;
-	while (browse)
-	{
-		if (!browse->type)
-			type_file(browse);
+	while (browse->next)
 		browse = browse->next;
+	while (browse->prev)
+	{
+		if (browse->prev->content[0] == '>')
+			browse->type = 'F';
+		else if (browse->prev->content[0] == '<'
+				&& !browse->prev->content[1])
+		{
+			if (!access(browse->content, R_OK))
+				browse->type = 'F';
+			else
+				return (free_structs(ltable, data_env,
+					"Invalid infile\n", 1));
+		}
+		browse = browse->prev;
 	}
+	return (1);
 }
 
 int	define_token_types(t_lexing *ltable, t_data_env *data_env)
@@ -87,9 +80,9 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 	if (monitor)
 		define_delims(ltable);
 	if (monitor)
-		define_cmds(ltable, data_env);
+		monitor = define_files(ltable, data_env);
 	if (monitor)
-		define_files(ltable);
+		monitor = define_cmds(ltable, data_env);
 	if (monitor)
 		define_args(ltable);
 	if (!monitor)
