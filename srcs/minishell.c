@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 17:25:03 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/27 00:12:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 			g_monitor = expand_token_list(ltable, data_env);
 		if (g_monitor)
 			g_monitor = define_token_types(ltable, data_env);
+		// if (g_monitor)
+		// 	print_token_list(&ltable->tklist_head);
+		// ON VA RAJOUTER L EXEC
 		if (g_monitor)
-			print_token_list(&ltable->tklist_head);
+			ft_execute(ltable->tklist_head, data_env);
 		if (g_monitor)
 			tk_clear(&ltable->tklist_head);
 		free(ltable->input);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/25 18:00:13 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/27 00:03:35 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ srcs/lexing.c\
 srcs/parsing.c\
 srcs/temp.c\
 srcs/ft_environment_var_utils.c\
+srcs/ft_execute.c
 
  
 OBJS = ${SRC:.c=.o}

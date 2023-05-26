@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 17:22:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/27 00:11:10 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 
 //ENV
 typedef struct s_data_env
@@ -85,4 +87,24 @@ int		define_files(t_lexing *ltable, t_data_env *data_env);
 int		define_redirs(t_lexing *ltable, t_data_env *data_env);
 void	define_delims(t_lexing *ltable);
 
+// EXECUTE
+typedef struct	s_cmd
+{
+	int		argc;
+	char	*cmd_value;
+	char	**argv;
+	int		pipe;
+	char	*infile;
+	char	*outfile;
+	int		to_append;
+	int		final_cmd;
+	int		fd_in;
+	int		fd_out;
+	int		pid;
+	char 	*cmd_path;
+	int		final_pid;
+}				t_cmd;
+
+void	ft_execute(t_token *tklist_head, t_data_env *data_env);
+char	*find_cmd_path(char	*cmd_name, char **envp);
 #endif
