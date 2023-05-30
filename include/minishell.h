@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 17:12:35 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/30 18:42:27 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_data_env
 {
 	int		size;
 	char	**envp;
+	int		stdin;
+	int		stdout;
 }	t_data_env;
 
 char	**ft_strdup_env(char **envp);

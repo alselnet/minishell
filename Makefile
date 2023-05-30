@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/30 17:06:23 by orazafy          ###   ########.fr        #
+#    Updated: 2023/05/30 19:04:24 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ clean:
 
 fclean: clean
 		$(RMR) $(BINDIR)
-		$(RMR) $(LIBFT)
+		cd $(LIBDIR) && make fclean
 
 re: fclean all
 

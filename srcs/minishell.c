@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 17:19:29 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:03:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		ltable->input = readline("> ");
 		if (!ltable->input || !ltable->input[0])
 			return (free_array(data_env->envp), printf("exit\n"));
+		add_history(ltable->input);
 		g_monitor = create_token_list(ltable, data_env);
 		if (g_monitor)
 			g_monitor = parse_token_list(ltable, data_env);
@@ -79,6 +80,9 @@ int	main(int argc, char **argv, char **envp)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGINT, &sa, 0) == -1)
+	//handle error
+		exit(1);
+	if (sigaction(SIGQUIT, &sa, 0) == -1)
 	//handle error
 		exit(1);
 	data_env.size = ft_compute_env_len(envp);

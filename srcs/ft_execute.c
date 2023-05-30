@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/30 16:26:58 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:06:25 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,13 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 			dup2(pipefd[0], STDIN_FILENO);
 			close(pipefd[0]);
 		}
+		if (cmd->final_cmd == 1)
+		{
+			dup2(data_env->stdin, STDIN_FILENO);
+			close(data_env->stdin);
+			dup2(data_env->stdout, STDOUT_FILENO);
+			close(data_env->stdout);
+		}	
 	}
 }
 
@@ -252,6 +259,9 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	current_pid = 0;
 	// final_status = 0;
 	cmd.final_cmd = 0;
+	// IL FAUDRA FERMER CES DESCRIPTEURS DE FICHIER SI ON EXIT
+	data_env->stdin = dup(STDIN_FILENO);
+	data_env->stdout = dup(STDOUT_FILENO);
 	while (1)
 	{
 		ft_init_cmd(&cmd);
@@ -263,6 +273,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		ft_free_cmd(&cmd);
 	}
 	ft_free_cmd(&cmd);
+	
 	while (current_pid != -1)
 	{
 		current_pid = waitpid(cmd.pid, &status, 0);
@@ -297,7 +308,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 //         token type is R
 
 
-// 2)
+// 2) =============================DONE==================
 // impossible to do valgrind with makefile result
 
 // 3)
@@ -332,9 +343,24 @@ when will code exit builtin !! (we will need global variables)
 */
 
 // 6 : update status later (inside the global struct)
+// status succeed is 0, not 1 ! (for $?)
 
-// 7: when there is a pipe in readline, the code exit itself instead of showing a new prompt
+// 7:=============================DONE==================
+//when there is a pipe in readline, the code exit itself instead of showing a new prompt
 
 // 8: connect builtins when everyting is perfect with no builtins
 
 // 9: export, unset etc builtins need to have "C" as type
+
+//10 : // IL FAUDRA FERMER CES DESCRIPTEURS DE FICHIER SI ON EXIT
+	// data_env->stdin = dup(STDIN_FILENO);
+	// data_env->stdout = dup(STDOUT_FILENO);
+
+//PROTECTION DOUBLE CLOSE
+// add a flag to know if a fd has already been closed or not
+
+// 11 : protect ALL your dup, dup2
+
+//12: waitpid with SIGNALS !! WFSTATUS etc 
+
+//13: syntax error. Check how we handle it.
