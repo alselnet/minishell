@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:10 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/30 17:19:29 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,31 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	return (g_monitor);
 }
 
+void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
+{
+	(void)ptr;
+	(void)siginfo;
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_lexing	ltable;
-	t_data_env	data_env;
+	t_lexing			ltable;
+	t_data_env			data_env;
+	struct sigaction	sa;
 
+	sa.sa_sigaction = handler_function;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_SIGINFO;
+	if (sigaction(SIGINT, &sa, 0) == -1)
+	//handle error
+		exit(1);
 	data_env.size = ft_compute_env_len(envp);
 	data_env.envp = ft_strdup_env(envp);
 	init_table(&ltable);
