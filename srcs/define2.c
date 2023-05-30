@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   define2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 16:22:20 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:26:47 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	define_args(t_lexing *ltable)
 {

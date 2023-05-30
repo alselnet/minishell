@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/25 18:27:25 by aselnet          ###   ########.fr        #
+#    Updated: 2023/05/30 16:54:00 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,7 @@ LIB = ar rcs
 REMOVE = rm -f
 
 $(NAME): ${OBJS}
-		${LIB} $(NAME) ${OBJS} 
-		mv ${NAME} ../../		
+		${LIB} $(NAME) ${OBJS} 		
 	
 bonus: ${BONUSOBJS}
 		${LIB} $(NAME) ${BONUSOBJS}
@@ -50,7 +49,7 @@ clean :
 		${REMOVE} ${OBJS} ${BONUSOBJS}
 
 fclean :clean
-		${REMOVE} ../$(NAME)
+		${REMOVE} $(NAME)
 
 re:fclean all
 

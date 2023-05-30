@@ -6,11 +6,11 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/27 00:06:30 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:26:58 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_init_cmd(t_cmd *cmd)
 {

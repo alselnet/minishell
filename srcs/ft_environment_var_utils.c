@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_environment_var_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:10:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/24 17:17:09 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:26:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	ft_strcmp_env(const char *s1, const char *s2)
 {

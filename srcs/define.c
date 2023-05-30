@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   define.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 17:21:06 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:26:42 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	define_redirs(t_lexing *ltable, t_data_env *data_env)
 {

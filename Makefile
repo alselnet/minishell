@@ -6,54 +6,72 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/27 00:03:35 by orazafy          ###   ########.fr        #
+#    Updated: 2023/05/30 17:06:23 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -g3 -MMD -g -I include
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -g
+IFLAGS = -I$(INCDIR) -I$(LIBDIR)
+LFLAGS = -lreadline -L$(LIBDIR) -lft
 
-SRC = srcs/expand.c\
-srcs/define.c\
-srcs/define2.c\
-srcs/utils.c\
-srcs/minishell.c\
-srcs/tokens.c\
-srcs/tokens2.c\
-srcs/init.c\
-srcs/quit.c\
-srcs/lexing.c\
-srcs/parsing.c\
-srcs/temp.c\
-srcs/ft_environment_var_utils.c\
-srcs/ft_execute.c
+SRCDIR = srcs
+OBJDIR = objs
+BINDIR = bin
+INCDIR = include
+LIBDIR = libft
 
- 
-OBJS = ${SRC:.c=.o}
-DEPS = ${SRC:.c=.d}
+SRCS_FILES := define.c \
+		define2.c \
+		expand.c \
+		ft_environment_var_utils.c \
+		ft_execute.c \
+		init.c \
+		lexing.c \
+		minishell.c \
+		parsing.c \
+		quit.c \
+		temp.c \
+		tokens.c \
+		tokens2.c \
+		utils.c
 
-REMOVE = rm -f
+SRCS = $(addprefix $(SRCDIR)/, $(SRCS_FILES))
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-${NAME}: ${OBJS}
-		make -C srcs/libft
-		$(CC) $(CFLAGS) ${OBJS} libft.a -lreadline -o $(NAME)
+INCS = $(INCDIR)/minishell.h
 
--include $(DEPS)
+NAME = $(BINDIR)/minishell
 
-all:${NAME}
+RMR = rm -rf
+MKDIR_P = mkdir -p
 
-clean : 
-		make clean -C srcs/libft
-		${REMOVE} ${DEPS} ${OBJS} ${DEPS_BONUS}
+LIBFT = $(LIBDIR)/libft.a
 
-fclean : 
-		make fclean -C srcs/libft
-		${REMOVE} libft.a
-		${REMOVE} ${DEPS} ${OBJS} ${DEPS_BONUS} $(NAME)
+all: $(NAME)
+
+$(LIBFT):
+	cd $(LIBDIR) && make re
+
+$(NAME): $(OBJS) $(LIBFT) | $(BINDIR)
+	$(CC) $(CFLAGS) $(OBJS) $(IFLAGS) $(LIBS) $(LFLAGS) -o $(NAME)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS) | $(OBJDIR)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
+
+$(BINDIR):
+	$(MKDIR_P) $(BINDIR)
+
+$(OBJDIR):
+	$(MKDIR_P) $(OBJDIR)
+
+clean:
+		$(RMR) $(OBJDIR)
+
+fclean: clean
+		$(RMR) $(BINDIR)
+		$(RMR) $(LIBFT)
 
 re: fclean all
-
-re_b: fclean
 
 .PHONY: all clean fclean re
