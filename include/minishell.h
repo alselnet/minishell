@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/31 18:56:25 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:11:24 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ typedef struct s_data_env
 	int		stdin_closed;
 	int		stdout_closed;
 }	t_data_env;
+
+typedef struct s_minishell
+{
+	int	exit_status;
+	int monitor;
+}				t_minishell;
+
+extern t_minishell	g_minishell;
 
 char	**ft_strdup_env(char **envp);
 void	ft_print_env(t_data_env *s_data_env);

@@ -6,13 +6,13 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:26:51 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:20:41 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_monitor;
+t_minishell g_minishell;
 
 void	update_token_content(t_token *token, char *variable)
 {
@@ -109,7 +109,7 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 				&& ft_strlen(browse->content) == 2)
 			{
 				free(browse->content);
-				browse->content = ft_itoa(g_monitor);
+				browse->content = ft_itoa(g_minishell.exit_status);
 			}
 			else
 			{

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/31 19:07:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:22:01 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,11 +307,10 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	while (current_pid != -1)
 	{
 		current_pid = waitpid(cmd.pid, &status, 0);
-		// if (cmd.final_pid == current_pid)
-		// 	// final_status = status;
-		// {
-		// 	if (WIFEXITED(status))
-		// 		final_status = WEXITSTATUS(status);
-		// }
+		if (cmd.final_pid == current_pid)
+		{
+			if (WIFEXITED(status))
+				g_minishell.exit_status = WEXITSTATUS(status);
+		}
 	}
 }

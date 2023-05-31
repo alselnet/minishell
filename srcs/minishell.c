@@ -6,26 +6,24 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/31 18:44:51 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:26:53 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_monitor;
-
 int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 {
-	g_monitor = define_redirs(ltable, data_env);
-	if (g_monitor)
+	g_minishell.monitor = define_redirs(ltable, data_env);
+	if (g_minishell.monitor)
 		define_delims(ltable);
-	if (g_monitor)
-		g_monitor = define_files(ltable, data_env);
-	if (g_monitor)
-		g_monitor = define_cmds(ltable, data_env);
-	if (g_monitor)
+	if (g_minishell.monitor)
+		g_minishell.monitor = define_files(ltable, data_env);
+	if (g_minishell.monitor)
+		g_minishell.monitor = define_cmds(ltable, data_env);
+	if (g_minishell.monitor)
 		define_args(ltable);
-	if (!g_monitor)
+	if (!g_minishell.monitor)
 		return (0);
 	return (1);
 }
@@ -40,23 +38,23 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
-		g_monitor = create_token_list(ltable, data_env);
-		if (g_monitor)
-			g_monitor = parse_token_list(ltable, data_env);
-		if (g_monitor)
-			g_monitor = expand_token_list(ltable, data_env);
-		if (g_monitor)
-			g_monitor = define_token_types(ltable, data_env);
-		// if (g_monitor)
+		g_minishell.monitor = create_token_list(ltable, data_env);
+		if (g_minishell.monitor)
+			g_minishell.monitor = parse_token_list(ltable, data_env);
+		if (g_minishell.monitor)
+			g_minishell.monitor = expand_token_list(ltable, data_env);
+		if (g_minishell.monitor)
+			g_minishell.monitor = define_token_types(ltable, data_env);
+		// if (g_minishell.monitor)
 		// 	print_token_list(&ltable->tklist_head);
 		// ON VA RAJOUTER L EXEC
-		if (g_monitor)
+		if (g_minishell.monitor)
 			ft_execute(ltable->tklist_head, data_env);
-		if (g_monitor)
+		if (g_minishell.monitor)
 			tk_clear(&ltable->tklist_head);
 		free(ltable->input);
 	}
-	return (g_monitor);
+	return (g_minishell.monitor);
 }
 
 void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
@@ -69,6 +67,7 @@ void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_minishell.exit_status = 1;
 	}
 }
 
