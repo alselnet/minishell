@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 16:22:20 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:49:18 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,14 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 			check_access(browse, data_env);
 		while (browse && browse->type != 'R' && browse->type != 'D')
 			browse = browse->next;
+		if (browse && browse->content[0] == '<')
+		{
+			if (browse->next)
+			{
+				if (browse->next->next && !browse->next->next->type)
+					check_access(browse->next->next, data_env);
+			}
+		}
 		if (browse)
 			browse = browse->next;
 	}
