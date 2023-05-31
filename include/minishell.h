@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/31 19:11:24 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/01 00:58:06 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ typedef struct s_data_env
 	int		stdin_closed;
 	int		stdout_closed;
 }	t_data_env;
-
-typedef struct s_minishell
-{
-	int	exit_status;
-	int monitor;
-}				t_minishell;
-
-extern t_minishell	g_minishell;
 
 char	**ft_strdup_env(char **envp);
 void	ft_print_env(t_data_env *s_data_env);
@@ -119,6 +111,42 @@ typedef struct	s_cmd
 	int		first_arg_done;
 }				t_cmd;
 
+// global
+
+typedef struct s_minishell
+{
+	t_data_env	data_env;
+	t_cmd		cmd;
+	t_lexing	ltable;
+	int	exit_status;
+	int monitor;
+}				t_minishell;
+
+extern t_minishell	g_minishell;
+
+// ajout sur minishell.c
+void	ft_free_env(char **env, int size);
+void	ft_error_envp(char *error_msg, t_data_env *s_data_env);
+void	ft_init_data_env(t_data_env *s_data_env, char **envp);
+void	ft_init_g_minishell(t_minishell *g_minishell, char **envp);
+void	handler_function(int signum, siginfo_t *siginfo, void *ptr);
+void	ft_init_signals(void);
+
+// ft_execute.c
+void	ft_init_cmd(t_cmd *cmd);
+void	ft_fill_argc(t_cmd *cmd);
+char	*ft_strjoin_free(char *str1, char *str2);
+char	*ft_merge_cmd(t_token *lst);
+void	ft_error_no_such_file(char *file);
+void	ft_fill_cmd(t_cmd *cmd, t_token *lst);
+t_token	*ft_get_cmd(t_token *tklist_head, t_cmd *cmd);
+void	ft_free_cmd(t_cmd *cmd);
+void	ft_error_cmd_not_found(char *cmd);
+void	ft_fork(t_cmd *cmd, t_data_env *data_env);
+void	ft_error(void);
 void	ft_execute(t_token *tklist_head, t_data_env *data_env);
+
+// from define2.c
 char	*find_cmd_path(char	*cmd_name, char **envp);
+
 #endif
