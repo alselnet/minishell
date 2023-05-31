@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 19:03:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 18:44:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	while (1)
 	{
 		ltable->input = readline("> ");
-		if (!ltable->input || !ltable->input[0])
+		if (!ltable->input)
 			return (free_array(data_env->envp), printf("exit\n"));
+		if (ltable->input[0] == 0)
+			continue ;
 		add_history(ltable->input);
 		g_monitor = create_token_list(ltable, data_env);
 		if (g_monitor)

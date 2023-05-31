@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:26:42 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 18:04:02 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	define_files(t_lexing *ltable, t_data_env *data_env)
 {
 	t_token	*browse;
 
+	(void)data_env; //en attendant de tester le no invalid file
 	browse = ltable->tklist_head;
 	while (browse->next)
 		browse = browse->next;
@@ -61,11 +62,11 @@ int	define_files(t_lexing *ltable, t_data_env *data_env)
 		else if (browse->prev->content[0] == '<'
 			&& !browse->prev->content[1])
 		{
-			if (!access(browse->content, R_OK))
-				browse->type = 'F';
-			else
-				return (free_structs(ltable, data_env,
-						"Invalid infile\n", 1));
+			// if (!access(browse->content, R_OK))
+			browse->type = 'F';
+			// else
+			// 	return (free_structs(ltable, data_env,
+			// 			"Invalid infile\n", 1));
 		}
 		browse = browse->prev;
 	}

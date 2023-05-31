@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/05/30 19:06:25 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 19:07:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@ void	ft_init_cmd(t_cmd *cmd)
 	cmd->cmd_value = NULL;
 	cmd->argv = NULL;
 	cmd->pipe = 0;
-	cmd->infile = NULL;
-	cmd->outfile = NULL;
-	cmd->to_append = 0;
 	cmd->final_cmd = 0;
-	cmd->fd_in = 0;
-	cmd->fd_out = 0;
+	cmd->fd_in = -2;
+	cmd->error_fd_in = 0;
+	cmd->fd_out = -2;
 	cmd->pid = 0;
 	cmd->cmd_path = NULL;
 	cmd->final_pid = 0;
+	cmd->has_cmd = 0;
+	cmd->first_arg = NULL;
+	cmd->first_arg_done = 0;
 }
 
 void	ft_fill_argc(t_cmd *cmd)
@@ -104,6 +105,12 @@ char	*ft_merge_cmd(t_token *lst)
 	return (result);
 }
 
+void	ft_error_no_such_file(char *file)
+{
+	write(2, file, ft_strlen(file));
+	write(2, ": No such file or directory\n", 28);
+}
+
 int	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 {
 	if (lst->type == 'R')
@@ -111,18 +118,20 @@ int	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 		if (lst->content[0] == '<')
 		{
 			// We will have to make sure that after "<" we have a file
-			cmd->infile = ft_strdup(lst->next->content);
-			if (cmd->infile == NULL)
-				return (-1);
+			if (cmd->fd_in == -1)
+				return (0);
+			cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
+			if (cmd->fd_in == -1)
+				ft_error_no_such_file(lst->next->content);
 		}
 		if (lst->content[0] == '>')
 		{
 			// We will have to make sure that after ">" we have a file
-			cmd->outfile = ft_strdup(lst->next->content);
-			if (cmd->outfile == NULL)
-				return (-1);
 			if (lst->content[1] == '>')
-				cmd->to_append = 1;
+				// protect open !
+				cmd->fd_out = open(lst->next->content, O_CREAT | O_WRONLY | O_APPEND, 0664);
+			else
+				cmd->fd_out = open(lst->next->content, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 		}
 	}
 	if (lst->type == 'C')
@@ -130,6 +139,15 @@ int	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 		cmd->cmd_value = ft_merge_cmd(lst);
 		if (cmd->cmd_value == NULL)
 			return (-1);
+		cmd->has_cmd = 1;
+	}
+	if (lst->type == 'A')
+	{
+		if (cmd->first_arg_done != 1)
+			cmd->first_arg = ft_strdup(lst->content);
+		if (cmd->first_arg == NULL)
+			return (-1);
+		cmd->first_arg_done = 1;
 	}
 	return (0);
 }
@@ -150,8 +168,11 @@ t_token	*ft_get_cmd(t_token *tklist_head, t_cmd *cmd)
 		}
 		lst = lst->next;
 	}
-	ft_fill_argc(cmd);
-	cmd->argv = ft_split(cmd->cmd_value, ' ');
+	if (cmd->has_cmd == 1)
+	{
+		ft_fill_argc(cmd);
+		cmd->argv = ft_split(cmd->cmd_value, ' ');
+	}	
 	// error to handle
 	if (lst == NULL)
 	{
@@ -168,16 +189,21 @@ t_token	*ft_get_cmd(t_token *tklist_head, t_cmd *cmd)
 
 void	ft_free_cmd(t_cmd *cmd)
 {
-	if (cmd->infile != NULL)
-		free(cmd->infile);
-	if (cmd->outfile != NULL)
-		free(cmd->outfile);
 	if (cmd->argv != NULL)
 		free_array(cmd->argv);
 	if (cmd->cmd_value != NULL)
 		free(cmd->cmd_value);
 	if (cmd->cmd_path != NULL)
 		free(cmd->cmd_path);
+	if (cmd->first_arg != NULL)
+		free(cmd->first_arg);
+}
+
+void	ft_error_cmd_not_found(char *cmd)
+{
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": command not found\n", 20);
+	exit(127);
 }
 
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
@@ -200,21 +226,13 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 	}
 	else if (cmd->pid == 0)
 	{
-		if (cmd->infile != NULL)
+		if (cmd->fd_in != -2 && cmd->fd_in != -1)
 		{
-			cmd->fd_in = open(cmd->infile, O_RDONLY, 0500);
-			// protection for open ?
 			dup2(cmd->fd_in, STDIN_FILENO);
 			close(cmd->fd_in);
 		}
-		if (cmd->outfile != NULL)
+		if (cmd->fd_out != -2)
 		{
-			if (cmd->to_append == 0)
-				cmd->fd_out = open(cmd->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-				// protection for open ?
-			else
-				cmd->fd_out = open(cmd->outfile, O_CREAT | O_WRONLY | O_APPEND, 0664);
-				// protection for open ?
 			dup2(cmd->fd_out, STDOUT_FILENO);
 			close(cmd->fd_out);
 		}
@@ -224,11 +242,19 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 			dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 		}
+		if (cmd->fd_in == -1)
+		{
+			exit(1);
+		}
+			
+		if (cmd->has_cmd == 0)
+			ft_error_cmd_not_found(cmd->first_arg);
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 		// protection here ?
 		execve(cmd->cmd_path, cmd->argv, data_env->envp);
 		// // error to handle 
 		perror("");
+		exit(1);
 	}
 	else
 	{
@@ -242,8 +268,10 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 		{
 			dup2(data_env->stdin, STDIN_FILENO);
 			close(data_env->stdin);
+			data_env->stdin_closed = 1;
 			dup2(data_env->stdout, STDOUT_FILENO);
 			close(data_env->stdout);
+			data_env->stdout_closed = 1;
 		}	
 	}
 }
@@ -260,6 +288,8 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	// final_status = 0;
 	cmd.final_cmd = 0;
 	// IL FAUDRA FERMER CES DESCRIPTEURS DE FICHIER SI ON EXIT
+	data_env->stdin_closed = 0;
+	data_env->stdout_closed = 0;
 	data_env->stdin = dup(STDIN_FILENO);
 	data_env->stdout = dup(STDOUT_FILENO);
 	while (1)
@@ -278,89 +308,10 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	{
 		current_pid = waitpid(cmd.pid, &status, 0);
 		// if (cmd.final_pid == current_pid)
-		// 	final_status = status;
-		// for the global variable exit_status later
+		// 	// final_status = status;
+		// {
+		// 	if (WIFEXITED(status))
+		// 		final_status = WEXITSTATUS(status);
+		// }
 	}
 }
-
-// PROBLEMS
-
-// 1)
-
-// PROBLEM IN PARSING ---> CAT IS A COMMAND HERE
-// PROBLEM
-// < test cat | wc -l
-// -bash: test: No such file or directory
-//        0
-
-
-// < test cat | wc -l
-// token 0 contains <
-//         token type is R
-
-// token 1 contains test
-//         token type is F
-
-// token 2 contains cat
-//         token type is A
-
-// token 3 contains |
-//         token type is R
-
-
-// 2) =============================DONE==================
-// impossible to do valgrind with makefile result
-
-// 3)
-/*
-Our code:
-> cat < ezfk | wc -c
-Invalid infile
-> 
-
-Bash:
-$ cat < zefk | wc -c
-bash: zefk: No such file or directory
-       0
-
-
-*/
-
-// 4)
-/*
-same for 
-$jzkfhjzkefh cat | ls -l
-redirect error inside the pipe
-add a condition if cmd start with argument, execution is "write(2, ......)"
-*/
-
-// 5
-/*
-All errors to handle:
-create a global struct with all the data (cmd, data env, ltable etc), to be able to free in case of error
-BUT ALSO
-when will code exit builtin !! (we will need global variables)
-*/
-
-// 6 : update status later (inside the global struct)
-// status succeed is 0, not 1 ! (for $?)
-
-// 7:=============================DONE==================
-//when there is a pipe in readline, the code exit itself instead of showing a new prompt
-
-// 8: connect builtins when everyting is perfect with no builtins
-
-// 9: export, unset etc builtins need to have "C" as type
-
-//10 : // IL FAUDRA FERMER CES DESCRIPTEURS DE FICHIER SI ON EXIT
-	// data_env->stdin = dup(STDIN_FILENO);
-	// data_env->stdout = dup(STDOUT_FILENO);
-
-//PROTECTION DOUBLE CLOSE
-// add a flag to know if a fd has already been closed or not
-
-// 11 : protect ALL your dup, dup2
-
-//12: waitpid with SIGNALS !! WFSTATUS etc 
-
-//13: syntax error. Check how we handle it.

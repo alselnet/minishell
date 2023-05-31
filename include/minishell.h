@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 18:42:27 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/05/31 18:56:25 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_data_env
 	char	**envp;
 	int		stdin;
 	int		stdout;
+	int		stdin_closed;
+	int		stdout_closed;
 }	t_data_env;
 
 char	**ft_strdup_env(char **envp);
@@ -97,15 +99,16 @@ typedef struct	s_cmd
 	char	*cmd_value;
 	char	**argv;
 	int		pipe;
-	char	*infile;
-	char	*outfile;
-	int		to_append;
 	int		final_cmd;
 	int		fd_in;
+	int		error_fd_in;
 	int		fd_out;
 	int		pid;
 	char 	*cmd_path;
 	int		final_pid;
+	int		has_cmd;
+	char	*first_arg;
+	int		first_arg_done;
 }				t_cmd;
 
 void	ft_execute(t_token *tklist_head, t_data_env *data_env);
