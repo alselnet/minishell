@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/30 19:04:24 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/02 23:09:25 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,17 @@ BINDIR = bin
 INCDIR = include
 LIBDIR = libft
 
-SRCS_FILES := define.c \
+EXECDIR = execution
+PARSINGDIR = parsing
+
+EXEC_FILES = ft_execute.c
+
+PARSING_FILES = define.c \
 		define2.c \
 		expand.c \
 		ft_environment_var_utils.c \
-		ft_execute.c \
 		init.c \
 		lexing.c \
-		minishell.c \
 		parsing.c \
 		quit.c \
 		temp.c \
@@ -36,7 +39,9 @@ SRCS_FILES := define.c \
 		tokens2.c \
 		utils.c
 
-SRCS = $(addprefix $(SRCDIR)/, $(SRCS_FILES))
+EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
+PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))
+SRCS = $(addprefix $(SRCDIR)/, minishell.c $(EXEC) $(PARSING))
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 INCS = $(INCDIR)/minishell.h
@@ -57,6 +62,7 @@ $(NAME): $(OBJS) $(LIBFT) | $(BINDIR)
 	$(CC) $(CFLAGS) $(OBJS) $(IFLAGS) $(LIBS) $(LFLAGS) -o $(NAME)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS) | $(OBJDIR)
+	$(MKDIR_P) $(@D)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
 
 $(BINDIR):

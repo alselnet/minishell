@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/02 21:12:54 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/02 23:14:09 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env);
 // from define2.c
 char	*find_cmd_path(char	*cmd_name, char **envp);
 int		ft_strcmp(const char *s1, const char *s2);
+
+// separation as folders later
 
 
 #endif
