@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/02 18:24:12 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/02 22:08:04 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	{
 		ltable->input = readline("> ");
 		if (!ltable->input)
-			return (free_array(data_env->envp), printf("exit\n"));
+			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
@@ -76,23 +76,18 @@ void	ft_free_env(char **env, int size)
 	free(env);
 }
 
-// it's the builtin version, may need to adapt later or change inside builtins
-void	ft_error_envp(char *error_msg, t_data_env *s_data_env)
-{
-	perror(error_msg);
-	ft_free_env(s_data_env->envp, s_data_env->size);
-	g_minishell.exit_status = 1;
-	exit(EXIT_FAILURE);
-}
-
 void	ft_init_data_env(t_data_env *s_data_env, char **envp)
 {
 	s_data_env->size = ft_compute_env_len(envp);
 	s_data_env->envp = ft_strdup_env(envp);
 	if (s_data_env->envp == NULL)
-		ft_error_envp("Failed to allocate the requested memory", s_data_env);
-	s_data_env->stdin_closed = -1;
-	s_data_env->stdout_closed = -1;
+	{
+		perror("");
+		ft_free_env(s_data_env->envp, s_data_env->size);
+		exit(EXIT_FAILURE);
+	}
+	s_data_env->stdin = -2;
+	s_data_env->stdout = -2;
 }
 
 void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)

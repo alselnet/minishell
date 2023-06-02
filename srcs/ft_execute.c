@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/01 01:33:01 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/02 22:17:10 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	ft_init_cmd(t_cmd *cmd)
 	cmd->cmd_value = NULL;
 	cmd->argv = NULL;
 	cmd->pipe = 0;
+	cmd->pipefd[0] = -2;
+	cmd->pipefd[1] = -2;
 	cmd->final_cmd = 0;
 	cmd->fd_in = -2;
-	cmd->error_fd_in = 0;
 	cmd->fd_out = -2;
 	cmd->pid = 0;
 	cmd->cmd_path = NULL;
@@ -79,31 +80,27 @@ char	*ft_strjoin_free(char *str1, char *str2)
 	return (dest);
 }
 
-// Merge command, options and arguments
 char	*ft_merge_cmd(t_token *lst)
 {
 	char	*result;
 	
 	result = ft_strdup(lst->content);
 	if (result == NULL)
-		ft_error();
+		ft_error(1);
 	if (lst->next == NULL)
 		return (result);
-	if (lst->next->type != 'A')
-			return (result);
-	while (lst->next->type == 'A')
+	lst = lst->next;
+	while (lst != NULL && lst->content[0] != '|')
 	{
-		result = ft_strjoin_free(result, " ");
+		if (lst->type == 'A')
+			result = ft_strjoin_free(result, " ");
 		if (result == NULL)
-			ft_error();
-		result = ft_strjoin_free(result, lst->next->content);
+			ft_error(1);
+		if (lst->type == 'A')
+			result = ft_strjoin_free(result, lst->content);
 		if (result == NULL)
-			ft_error();
+			ft_error(1);
 		lst = lst->next;
-		if (lst == NULL)
-			break ;
-		if (lst->next == NULL)
-			break ;
 	}
 	return (result);
 }
@@ -122,25 +119,29 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 		{
 			if (cmd->fd_in == -1)
 				return ;
+			if (cmd->fd_in != -2)
+				close(cmd->fd_in);
 			cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
 			if (cmd->fd_in == -1)
 				ft_error_no_such_file(lst->next->content);
 		}
 		if (lst->content[0] == '>')
 		{
+			if (cmd->fd_out != -2)
+				close(cmd->fd_out);
 			if (lst->content[1] == '>')
 				cmd->fd_out = open(lst->next->content, O_CREAT | O_WRONLY | O_APPEND, 0664);
 			else
 				cmd->fd_out = open(lst->next->content, O_CREAT | O_WRONLY | O_TRUNC, 0664);
 			if (cmd->fd_out == -1)
-				ft_error();
+				ft_error(1);
 		}
 	}
 	if (lst->type == 'C')
 	{
 		cmd->cmd_value = ft_merge_cmd(lst);
 		if (cmd->cmd_value == NULL)
-			ft_error();
+			ft_error(1);
 		cmd->has_cmd = 1;
 	}
 	if (lst->type == 'A')
@@ -148,7 +149,7 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 		if (cmd->first_arg_done != 1)
 			cmd->first_arg = ft_strdup(lst->content);
 		if (cmd->first_arg == NULL)
-			ft_error();
+			ft_error(1);
 		cmd->first_arg_done = 1;
 	}
 }
@@ -170,7 +171,7 @@ t_token	*ft_get_cmd(t_token *tklist_head, t_cmd *cmd)
 		ft_fill_argc(cmd);
 		cmd->argv = ft_split(cmd->cmd_value, ' ');
 		if (cmd->argv == NULL)
-			ft_error();
+			ft_error(1);
 	}
 	if (lst == NULL)
 	{
@@ -201,94 +202,123 @@ void	ft_free_cmd(t_cmd *cmd)
 	cmd->first_arg = NULL;
 }
 
+void	ft_close(int *fd)
+{
+	close(*fd);
+	*fd = -2;
+}
+
+void ft_close_all_fds()
+{
+	t_cmd cmd;
+	t_data_env data_env;
+
+	cmd = g_minishell.cmd;
+	data_env = g_minishell.data_env;
+	if (data_env.stdin != -2 && data_env.stdin != -1)
+		ft_close(&data_env.stdin);
+	if (data_env.stdout != -2 && data_env.stdout != -1)
+		ft_close(&data_env.stdout);
+	if (cmd.fd_in != -2 && cmd.fd_in != -1)
+		ft_close(&cmd.fd_in);
+	if (cmd.fd_out != -2 && cmd.fd_out != -1)
+		ft_close(&cmd.fd_out);
+	if (cmd.pipefd[0] != -2 && cmd.pipefd[0] != -1)
+		ft_close(&cmd.pipefd[0]);
+	if (cmd.pipefd[1] != -2 && cmd.pipefd[1] != -1)
+		ft_close(&cmd.pipefd[1]);
+}
+
 void	ft_error_cmd_not_found(char *cmd)
 {
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": command not found\n", 20);
+	ft_close_all_fds();
 	exit(127);
 }
 
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 {
-	int pipefd[2];
-
 	if (cmd->pipe == 1 && cmd->fd_out == -2)
 	{
-		if (pipe(pipefd) == -1)
-			ft_error();	
+		if (pipe(cmd->pipefd) == -1)
+			ft_error(1);	
 	}
 	cmd->pid = fork();
 	if (cmd->final_cmd)
 		cmd->final_pid = cmd->pid;
 	if (cmd->pid < 0)
-		ft_error();
+		ft_error(1);
 	else if (cmd->pid == 0)
 	{
 		if (cmd->fd_in != -2 && cmd->fd_in != -1)
 		{
 			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-				ft_error();
-			close(cmd->fd_in);
+				ft_error(2);
+			ft_close(&cmd->fd_in);
 		}
 		if (cmd->fd_out != -2)
 		{
 			if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-				ft_error();
-			close(cmd->fd_out);
+				ft_error(2);
+			ft_close(&cmd->fd_out);
 		}
 		if (cmd->pipe == 1 && cmd->fd_out == -2)
 		{
-			close(pipefd[0]);
-			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-				ft_error();
-			close(pipefd[1]);
+			ft_close(&cmd->pipefd[0]);
+			if (dup2(cmd->pipefd[1], STDOUT_FILENO) == -1)
+				ft_error(2);
+			ft_close(&cmd->pipefd[1]);
 		}
 		if (cmd->fd_in == -1)
+		{
+			ft_close_all_fds();
 			exit(1);
+		}
+			
 		if (cmd->has_cmd == 0)
 			ft_error_cmd_not_found(cmd->first_arg);
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 		if (cmd->cmd_path == NULL)
-			ft_error();
+			ft_error(2);
 		execve(cmd->cmd_path, cmd->argv, data_env->envp);
-		perror("");
-		exit(1);
+		exit(2);
 	}
 	else
 	{
 		if (cmd->pipe == 1 && cmd->fd_out == -2)
 		{
-			close(pipefd[1]);
-			if (dup2(pipefd[0], STDIN_FILENO) == -1)
-				ft_error();
-			close(pipefd[0]);
+			ft_close(&cmd->pipefd[1]);
+			if (dup2(cmd->pipefd[0], STDIN_FILENO) == -1)
+				ft_error(1);
+			ft_close(&cmd->pipefd[0]);
 		}
 		if (cmd->final_cmd == 1)
 		{
 			if (dup2(data_env->stdin, STDIN_FILENO) == -1)
-				ft_error();
-			close(data_env->stdin);
-			data_env->stdin_closed = 1;
+				ft_error(1);
+			ft_close(&data_env->stdin);
 			if (dup2(data_env->stdout, STDOUT_FILENO) == -1)
-				ft_error();
-			close(data_env->stdout);
-			data_env->stdout_closed = 1;
-		}	
+				ft_error(1);
+			ft_close(&data_env->stdout);
+		}
+		if (cmd->fd_in != -2 && cmd->fd_in != -1)
+			ft_close(&cmd->fd_in);
+		if (cmd->fd_out != -2 && cmd->fd_out != -1)
+			ft_close(&cmd->fd_out);
 	}
 }
 
-void	ft_error(void)
+void	ft_error(int status)
 {
 	perror("");
-	if (g_minishell.data_env.stdin_closed == 0)
-		close(g_minishell.data_env.stdin);
-	if (g_minishell.data_env.stdout_closed == 0)
-		close(g_minishell.data_env.stdout);
+	ft_close_all_fds();
 	ft_free_cmd(&g_minishell.cmd);
 	ft_free_env(g_minishell.data_env.envp, g_minishell.data_env.size);
 	tk_clear(&g_minishell.ltable.tklist_head);
 	free(g_minishell.ltable.input);
-	exit(1);
+	rl_clear_history();
+	exit(status);
 }
 
 void	ft_execute(t_token *tklist_head, t_data_env *data_env)
@@ -302,12 +332,10 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	ft_init_cmd(&g_minishell.cmd);
 	data_env->stdin = dup(STDIN_FILENO);
 	if (data_env->stdin == -1)
-		ft_error();
-	data_env->stdin_closed = 0;
+		ft_error(1);
 	data_env->stdout = dup(STDOUT_FILENO);
 	if (data_env->stdout == -1)
-		ft_error();
-	data_env->stdout_closed = 0;
+		ft_error(1);
 	while (1)
 	{
 		ft_init_cmd(&g_minishell.cmd);
@@ -326,6 +354,11 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			if (WIFEXITED(status))
 				g_minishell.exit_status = WEXITSTATUS(status);
 		}
+		if (WIFEXITED(status))
+		{
+			if (WEXITSTATUS(status) == 2)
+				ft_error(1);
+		}		
 	}
 }
 
@@ -346,26 +379,7 @@ Par contre dans mon code d'exec, et les signaux et mes builtins, que l'on connec
 
 Il faut toujours corriger le début du parsing sur certains cas. 
 
-==> Par exemple, ici cat ca devrait etre commande
-
-< test cat | wc -l
-token 0 contains <
-        token type is R
-
-token 1 contains test
-        token type is F
-
-token 2 contains cat
-        token type is A
-
-token 3 contains |
-        token type is R
-
-
-
-==> Par exemple, les BUILTINS, il faut leur donner des types 'C
-
-==> le reste je sais plus..
+les histoires de guillemets etc
 
 -------------------------------------------------
 
@@ -382,5 +396,7 @@ $ echo $?
 HEREDOC à mettre en place
 
 --------------------------------------------------------
+
+ne pas oublier rl_clear_history si tu exit
 
 */
