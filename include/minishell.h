@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/05 16:55:10 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:34:23 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 // BUILTINS
 // ft_builtins_utils.c 
+void	ft_exit_builtin_with_stdout(void);
 void	ft_error_identifier(char *builtin, char *identifier);
-// void	ft_error(char *error_msg, t_data_env *s_data_env);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *s);
 

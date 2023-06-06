@@ -6,11 +6,22 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/05 16:54:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:33:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_exit_builtin_with_stdout(void)
+{
+	if (dup2(g_minishell.data_env.stdin, STDIN_FILENO) == -1)
+		ft_error(1);
+	close(g_minishell.data_env.stdin);
+	if (dup2(g_minishell.data_env.stdout, STDOUT_FILENO) == -1)
+		ft_error(1);
+	close(g_minishell.data_env.stdout);
+	exit(EXIT_SUCCESS);
+}
 
 void	ft_error_identifier(char *builtin, char *identifier)
 {
@@ -19,24 +30,6 @@ void	ft_error_identifier(char *builtin, char *identifier)
 	write(2, identifier, ft_strlen(identifier));
 	write(2, "': not a valid identifier\n", 26);
 }
-
-// void	ft_error(char *error_msg, t_data_env *s_data_env)
-// {
-// 	perror(error_msg);
-// 	ft_free_env(s_data_env->envp, s_data_env->size);
-// 	g_minishell.exit_status = 1;
-// 	exit(EXIT_FAILURE);
-// }
-
-// int	ft_strcmp(const char *s1, const char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while ((s1[i] == s2[i]) && s1[i] && s2[i])
-// 		i++;
-// 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-// }
 
 size_t	ft_strlen(const char *s)
 {
