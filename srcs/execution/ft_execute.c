@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/03 00:07:43 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:06:23 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,11 +290,19 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 		}
 		if (cmd->has_cmd == 0)
 			ft_error_cmd_not_found(cmd->first_arg);
+		/////// builtins that have stdout (they will exit by themself)
+		if (ft_strcmp("echo", g_minishell.cmd.argv[0]) == 0)
+			ft_echo(g_minishell.cmd.argc, g_minishell.cmd.argv);
+		else if (ft_strcmp("env", g_minishell.cmd.argv[0]) == 0)
+			ft_env(data_env->envp);
+		else if (ft_strcmp("pwd", g_minishell.cmd.argv[0]) == 0)
+			ft_pwd();
+		//////////////////////////////////////////////////////////////
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 		if (cmd->cmd_path == NULL)
 			ft_error(2);
 		execve(cmd->cmd_path, cmd->argv, data_env->envp);
-		exit(2);
+		ft_error(2);
 	}
 	else
 	{
@@ -324,11 +332,10 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 {
 	int		status;
-	int		current_pid;
+	int		is_builtin_without_stdout;
 	
 	status = 0;
-	current_pid = 0;
-	g_minishell.cmd.final_cmd = 0;
+	is_builtin_without_stdout = 0;
 	ft_init_cmd(&g_minishell.cmd);
 	data_env->stdin = dup(STDIN_FILENO);
 	if (data_env->stdin == -1)
@@ -340,26 +347,52 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	{
 		ft_init_cmd(&g_minishell.cmd);
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd);
-		ft_fork(&g_minishell.cmd, data_env);
+		if (g_minishell.cmd.argv != NULL)
+		{
+			if (ft_strcmp("cd", g_minishell.cmd.argv[0]) == 0)
+			{
+				ft_cd(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				is_builtin_without_stdout = 1;
+			}
+			else if (ft_strcmp("unset", g_minishell.cmd.argv[0]) == 0)
+			{
+				ft_unset(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				is_builtin_without_stdout = 1;
+			}	
+			else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0)
+			{
+				ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				is_builtin_without_stdout = 1;
+			}
+		}
+		if (is_builtin_without_stdout == 0)
+		{
+			ft_fork(&g_minishell.cmd, data_env);
+			if (waitpid(g_minishell.cmd.pid, &status, 0) == -1)
+				ft_error(1);
+			if (g_minishell.cmd.final_pid != 0)
+			{
+				if (WIFEXITED(status))
+					g_minishell.exit_status = WEXITSTATUS(status);
+			}
+			if (WIFEXITED(status))
+			{
+				if (WEXITSTATUS(status) == 2)
+					ft_error(1);
+			}
+			// else if (WIFSIGNALED(status))
+			// {
+			//     if (WTERMSIG(status) == SIGINT)
+			// 		printf("OUAIS");
+			// 	// if (WTERMISG(status) == SIGQUIT) 
+			// }
+		}
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
 		ft_free_cmd(&g_minishell.cmd);
+		is_builtin_without_stdout = 0;
 	}
 	ft_free_cmd(&g_minishell.cmd);
-	while (current_pid != -1)
-	{
-		current_pid = waitpid(g_minishell.cmd.pid, &status, 0);
-		if (g_minishell.cmd.final_pid == current_pid)
-		{
-			if (WIFEXITED(status))
-				g_minishell.exit_status = WEXITSTATUS(status);
-		}
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status) == 2)
-				ft_error(1);
-		}		
-	}
 }
 
 

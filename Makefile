@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/02 23:09:25 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/05 16:51:05 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,13 @@ LIBDIR = libft
 
 EXECDIR = execution
 PARSINGDIR = parsing
+BUILTINSDIR = builtins
 
 EXEC_FILES = ft_execute.c
 
 PARSING_FILES = define.c \
 		define2.c \
 		expand.c \
-		ft_environment_var_utils.c \
 		init.c \
 		lexing.c \
 		parsing.c \
@@ -39,9 +39,23 @@ PARSING_FILES = define.c \
 		tokens2.c \
 		utils.c
 
+BUILTINS_FILES = ft_builtins_utils_2.c \
+				ft_builtins_utils.c \
+				ft_cd_utils.c \
+				ft_cd.c \
+				ft_echo.c \
+				ft_env.c \
+				ft_environment_utils_2.c \
+				ft_environment_utils.c \
+				ft_export_utils.c \
+				ft_export.c \
+				ft_pwd.c \
+				ft_unset.c
+
 EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
 PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))
-SRCS = $(addprefix $(SRCDIR)/, minishell.c $(EXEC) $(PARSING))
+BUILTINS = $(addprefix $(BUILTINSDIR)/, $(BUILTINS_FILES))
+SRCS = $(addprefix $(SRCDIR)/, minishell.c $(EXEC) $(PARSING) $(BUILTINS))
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 INCS = $(INCDIR)/minishell.h

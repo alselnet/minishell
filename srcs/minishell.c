@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/03 00:07:58 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:52:59 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,6 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		free(ltable->input);
 	}
 	return (g_minishell.monitor);
-}
-
-// Take exactly this one (I need this version for builtins)
-void	ft_free_env(char **env, int size)
-{
-	int	i;
-
-	i = 0;
-	if (env == NULL)
-		return ;
-	while (i < size)
-	{
-		if (env[i] != NULL)
-		{
-			free(env[i]);
-			env[i] = NULL;
-		}
-		i++;
-	}
-	free(env);
 }
 
 void	ft_init_data_env(t_data_env *s_data_env, char **envp)
