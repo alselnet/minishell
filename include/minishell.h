@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/06 18:00:27 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 19:34:47 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <signal.h>
 # include <errno.h>
 
-//ENV
+/////////////////////////// ENVIRONMENT //////////////////////////////////
 typedef struct s_data_env
 {
 	int		size;
@@ -34,7 +34,8 @@ typedef struct s_data_env
 	int		stdout;
 }	t_data_env;
 
-//PARSING & INDEXING
+/////////////////////////////// PARSING //////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 typedef struct s_token //liste doublement chainée contenant deux variables
 {
 	char			*content;
@@ -50,42 +51,64 @@ typedef struct s_lexing
 	int		tklist_size;
 }	t_lexing;
 
-/*adapations de libft_bonus*/
-t_token	*tk_new(char	*content);
-int		tk_size(t_token *token);
-t_token	*tk_last(t_token *token);
-void	tk_add_back(t_token **head, t_token *new);
-void	tk_delone(t_token *token);
-void	tk_clear(t_token **head);
+// define.c
+int		define_redirs(t_lexing *ltable, t_data_env *data_env);
+void	define_delims(t_lexing *ltable);
+int		define_files(t_lexing *ltable, t_data_env *data_env);
 
-/*nouvelles fonctions*/
-void	tk_deftype(t_token *token, char *type);
-void	tk_addto(t_token **head, t_token *new, int pos);
-void	tk_moveto(t_token	**head, t_token *token, int pos);
-t_token	*tk_merge(t_token **head, t_token *token1, t_token *token2);
+// define2.c
+void	define_args(t_lexing *ltable);
+char	*find_cmd_path(char	*cmd_name, char **envp);
+int		merge_flags(t_lexing *ltable);
+int		ft_strcmp(const char *s1, const char *s2);
+int		check_access(t_token *token, t_data_env *data_env);
+int		define_cmds(t_lexing *ltable, t_data_env *data_env);
 
-//fonctions temporaires de test
+// expand.c
+void	update_token_content(t_token *token, char *variable);
+int		expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env);
+char	*clean_up_quotes(char *oldcontent, t_lexing *ltable, t_data_env *data_env);
+int		format_tokens(t_lexing *ltable, t_data_env *data_env);
+int		expand_token_list(t_lexing *ltable, t_data_env *data_env);
+
+// lexing.c
+int		create_redir_token(t_lexing *ltable, t_data_env *data_env, int *reader);
+int		find_quote_len(t_lexing *ltable, int reader, char quote_char);
+int		create_quoted_token(t_lexing *ltable, t_data_env *data_env, int *reader);
+int		create_regular_token(t_lexing *ltable, t_data_env *data_env, int *reader);
+int		create_token_list(t_lexing *ltable, t_data_env *data_env);
+
+// parsing.c
+char	last_char(char *str);
+int		parse_token_list(t_lexing *ltable, t_data_env *data_env);
+
+// quit.c
+int		free_array(char **arr);
+int		free_structs(t_lexing *ltable, t_data_env *data_env, char *error_msg, char mode);
+
+// temp.c
 void	print_token_list(t_token **head);
 void	rev_print_token_list(t_token **last, t_token **head);
 
-//UTILS
-void	init_table(t_lexing *table);
+// tokens.c
+t_token	*tk_new(char *content);
+int		tk_size(t_token *token);
+t_token	*tk_last(t_token *token);
+void	tk_delone(t_token *token);
+void	tk_clear(t_token **head);
+
+// tokens2.c
+
+void	tk_add_back(t_token **head, t_token *new);
+void	tk_addto(t_token **head, t_token *new, int pos);
+void	tk_moveto(t_token **head, t_token *token, int pos);
+t_token	*tk_merge(t_token **head, t_token *token1, t_token *token2);
+
+// utils.c
 char	*extract_variable_value(char **env);
-int		free_array(char **arr);
-int		free_structs(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg, char mode);
 
-//PARSING
-int		create_token_list(t_lexing *table, t_data_env *data_env);
-int		parse_token_list(t_lexing *ltable, t_data_env *data_env);
-int		expand_token_list(t_lexing *ltable, t_data_env *data_env);
-void	define_args(t_lexing *ltable);
-int		define_cmds(t_lexing *ltable, t_data_env *data_env);
-int		define_files(t_lexing *ltable, t_data_env *data_env);
-int		define_redirs(t_lexing *ltable, t_data_env *data_env);
-void	define_delims(t_lexing *ltable);
-
-// EXECUTE
+/////////////////////////////// EXECUTION ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 typedef struct	s_cmd
 {
 	int		argc;
@@ -104,26 +127,6 @@ typedef struct	s_cmd
 	int		first_arg_done;
 }				t_cmd;
 
-// global
-
-typedef struct s_minishell
-{
-	t_data_env	data_env;
-	t_cmd		cmd;
-	t_lexing	ltable;
-	int	exit_status;
-	int monitor;
-}				t_minishell;
-
-extern t_minishell	g_minishell;
-
-// ajout sur minishell.c
-void	ft_error_envp(char *error_msg, t_data_env *s_data_env);
-void	ft_init_data_env(t_data_env *s_data_env, char **envp);
-void	ft_init_g_minishell(t_minishell *g_minishell, char **envp);
-void	handler_function(int signum, siginfo_t *siginfo, void *ptr);
-void	ft_init_signals(void);
-
 // ft_execute.c
 void	ft_init_cmd(t_cmd *cmd);
 void	ft_fill_argc(t_cmd *cmd);
@@ -138,13 +141,9 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env);
 void	ft_error(int status);
 void	ft_execute(t_token *tklist_head, t_data_env *data_env);
 
-// from define2.c
-char	*find_cmd_path(char	*cmd_name, char **envp);
-int		ft_strcmp(const char *s1, const char *s2);
+/////////////////////////////// BUILTINS /////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
-// separation as folders later
-
-// BUILTINS
 // ft_builtins_utils.c 
 void	ft_exit_builtin_with_stdout(void);
 void	ft_error_identifier(char *builtin, char *identifier);
@@ -206,5 +205,35 @@ int		ft_check_var_format_unset(char **argv, int *j);
 int		ft_unset_with_arg(char **argv, t_data_env *s_data_env, int j);
 void	ft_unset(int argc, char **argv, t_data_env *s_data_env);
 
+/////////////////////////////// SIGNALS //////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// ft_signals.c
+void	handler_function(int signum, siginfo_t *siginfo, void *ptr);
+void	ft_init_signals(void);
+
+/////////////////////////// GLOBAL VARIABLE //////////////////////////////
+typedef struct s_minishell
+{
+	t_data_env	data_env;
+	t_cmd		cmd;
+	t_lexing	ltable;
+	int	exit_status;
+	int monitor;
+}				t_minishell;
+
+extern t_minishell	g_minishell;
+
+/////////////////////////////// MAIN / INIT //////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+// ft_init.c
+void	init_table(t_lexing *ltable);
+void	ft_init_data_env(t_data_env *s_data_env, char **envp);
+void	ft_init_g_minishell(t_minishell *g_minishell, char **envp);
+
+// minishell.c
+int		define_token_types(t_lexing *ltable, t_data_env *data_env);
+int		minishell(t_lexing *ltable, t_data_env *data_env);
 
 #endif

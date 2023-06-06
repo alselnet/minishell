@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/05 16:51:05 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/06 19:34:04 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,13 @@ LIBDIR = libft
 EXECDIR = execution
 PARSINGDIR = parsing
 BUILTINSDIR = builtins
+SIGNALSDIR = signals
 
 EXEC_FILES = ft_execute.c
 
 PARSING_FILES = define.c \
 		define2.c \
 		expand.c \
-		init.c \
 		lexing.c \
 		parsing.c \
 		quit.c \
@@ -52,10 +52,13 @@ BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_pwd.c \
 				ft_unset.c
 
+SIGNALS_FILES = ft_signals.c
+
 EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
 PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))
 BUILTINS = $(addprefix $(BUILTINSDIR)/, $(BUILTINS_FILES))
-SRCS = $(addprefix $(SRCDIR)/, minishell.c $(EXEC) $(PARSING) $(BUILTINS))
+SIGNALS = $(addprefix $(SIGNALSDIR)/, $(SIGNALS_FILES))
+SRCS = $(addprefix $(SRCDIR)/, minishell.c ft_init.c $(EXEC) $(PARSING) $(BUILTINS) $(SIGNALS))
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 INCS = $(INCDIR)/minishell.h

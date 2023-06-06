@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/06 18:40:21 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 19:38:00 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,55 +55,6 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		free(ltable->input);
 	}
 	return (g_minishell.monitor);
-}
-
-void	ft_init_data_env(t_data_env *s_data_env, char **envp)
-{
-	s_data_env->size = ft_compute_env_len(envp);
-	s_data_env->envp = ft_strdup_env(envp);
-	if (s_data_env->envp == NULL)
-	{
-		perror("");
-		ft_free_env(s_data_env->envp, s_data_env->size);
-		exit(EXIT_FAILURE);
-	}
-	s_data_env->stdin = -2;
-	s_data_env->stdout = -2;
-}
-
-void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)
-{
-	g_minishell->exit_status = 0;
-	g_minishell->monitor = 0;
-	ft_init_data_env(&g_minishell->data_env, envp);
-	init_table(&g_minishell->ltable);
-}
-
-void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
-{
-	(void)ptr;
-	(void)siginfo;
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_minishell.exit_status = 1;
-	}
-}
-
-void	ft_init_signals(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_sigaction = handler_function;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_SIGINFO;
-	if (sigaction(SIGINT, &sa, 0) == -1)
-		exit(1);
-	if (sigaction(SIGQUIT, &sa, 0) == -1)
-		exit(1);
 }
 
 int	main(int argc, char **argv, char **envp)

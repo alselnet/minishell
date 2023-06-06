@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 18:22:12 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:46:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 	ft_update_oldpwd(s_data_env);
 	if (argc == 1)
 	{
-		ft_cd_without_arg(s_data_env);
-		return ;
+		if (ft_cd_without_arg(s_data_env) == -1)
+			return ;
 	}
 	else
 	{

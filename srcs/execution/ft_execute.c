@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 18:40:35 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 19:37:33 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,6 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 		}
 		if (cmd->has_cmd == 0)
 			ft_error_cmd_not_found(cmd->first_arg);
-		/////// builtins that have stdout (they will exit by themself)
 		if (ft_strcmp("echo", g_minishell.cmd.argv[0]) == 0)
 			ft_echo(g_minishell.cmd.argc, g_minishell.cmd.argv);
 		else if (ft_strcmp("env", g_minishell.cmd.argv[0]) == 0)
@@ -299,7 +298,6 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 			ft_pwd();
 		else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0 && g_minishell.cmd.argc == 1)
 			ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
-		//////////////////////////////////////////////////////////////
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 		if (cmd->cmd_path == NULL)
 			ft_error(2);
@@ -328,9 +326,11 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 {
 	int		status;
 	int		is_builtin_without_stdout;
+	int		pipe_before;
 	
 	status = 0;
 	is_builtin_without_stdout = 0;
+	pipe_before = 0;
 	ft_init_cmd(&g_minishell.cmd);
 	data_env->stdin = dup(STDIN_FILENO);
 	if (data_env->stdin == -1)
@@ -346,7 +346,8 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		{
 			if (ft_strcmp("cd", g_minishell.cmd.argv[0]) == 0)
 			{
-				ft_cd(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				if (pipe_before != 1)
+					ft_cd(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
 				is_builtin_without_stdout = 1;
 			}
 			else if (ft_strcmp("unset", g_minishell.cmd.argv[0]) == 0)
@@ -392,6 +393,10 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			ft_close(&data_env->stdout);
 			break ;
 		}
+		if (g_minishell.cmd.pipe == 1)
+			pipe_before = 1;
+		else
+			pipe_before = 0;
 		ft_free_cmd(&g_minishell.cmd);
 		is_builtin_without_stdout = 0;
 	}
