@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 18:08:15 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:22:12 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,30 @@ int	ft_cd_without_arg(t_data_env *s_data_env)
 		return (-1);
 	}
 	if (chdir(new_path) != 0)
-	{
-		perror("");
-		g_minishell.exit_status = 1;
-		return (-1);
-	}	
+		ft_error(1);
 	return (0);
+}
+
+void	ft_cd_too_many_args(void)
+{
+	write(2, "cd: too many arguments\n", 23);
+	g_minishell.exit_status = 1;
 }
 
 void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 {
 	char	*pwd;
 
-	if (ft_update_oldpwd(s_data_env) == -1)
+	if (argc > 2)
+	{
+		ft_cd_too_many_args();
 		return ;
+	}
+	ft_update_oldpwd(s_data_env);
 	if (argc == 1)
 	{
-		if (ft_cd_without_arg(s_data_env) == -1)
-			return ;
+		ft_cd_without_arg(s_data_env);
+		return ;
 	}
 	else
 	{
@@ -70,8 +76,6 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 		}
 	}
 	pwd = ft_get_pwd();
-	if (pwd == NULL)
-		return ;
 	ft_update_pwd(pwd, s_data_env);
 	g_minishell.exit_status = 0;
 }

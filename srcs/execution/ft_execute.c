@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 17:49:09 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:25:43 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void	ft_error(int status)
 	ft_free_env(g_minishell.data_env.envp, g_minishell.data_env.size);
 	tk_clear(&g_minishell.ltable.tklist_head);
 	free(g_minishell.ltable.input);
-	// rl_clear_history();
+	rl_clear_history();
 	exit(status);
 }
 
