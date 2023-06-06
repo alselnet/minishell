@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/05 17:42:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:08:15 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,29 @@ void	ft_error_file(char *builtin, char *file)
 	write(2, ": No such file or directory\n", 28);
 }
 
-int	ft_cd_without_arg(char **argv)
+int	ft_cd_without_arg(t_data_env *s_data_env)
 {
 	char	*new_path;
+	int		i;
 
-	new_path = getenv("HOME");
-	if (new_path == NULL)
+	i = 0;
+	while (s_data_env->envp[i])
 	{
-		perror("");
+		if (ft_strcmp_env("HOME=", s_data_env->envp[i]) == 0)
+			break ;
+		i++;
+	}
+	if (s_data_env->envp[i] != NULL)
+		new_path = s_data_env->envp[i] + 5;
+	else
+	{
 		g_minishell.exit_status = 1;
+		write(2, "cd: HOME not set\n", 17);
 		return (-1);
 	}
 	if (chdir(new_path) != 0)
 	{
-		ft_error_file("cd", argv[1]);
+		perror("");
 		g_minishell.exit_status = 1;
 		return (-1);
 	}	
@@ -48,7 +57,7 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 		return ;
 	if (argc == 1)
 	{
-		if (ft_cd_without_arg(argv) == -1)
+		if (ft_cd_without_arg(s_data_env) == -1)
 			return ;
 	}
 	else

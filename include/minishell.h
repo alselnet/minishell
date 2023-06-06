@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/06 17:34:23 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:00:27 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 
 // ft_cd.c
 void	ft_error_file(char *builtin, char *file);
-int		ft_cd_without_arg(char **argv);
+int		ft_cd_without_arg(t_data_env *s_data_env);
 void	ft_cd(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_cd_utils.c

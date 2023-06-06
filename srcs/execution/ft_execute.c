@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 17:43:17 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:49:09 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,5 +435,16 @@ HEREDOC à mettre en place
 --------------------------------------------------------
 
 ne pas oublier rl_clear_history si tu exit
+
+------
+
+echo $HOME
+Variable not found
+
+le vrai bash:
+$ echo $VAVA
+
+$
+
 
 */
