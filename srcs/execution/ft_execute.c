@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 18:25:43 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 18:40:35 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,15 +317,6 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 				ft_error(1);
 			ft_close(&cmd->pipefd[0]);
 		}
-		if (cmd->final_cmd == 1)
-		{
-			if (dup2(data_env->stdin, STDIN_FILENO) == -1)
-				ft_error(1);
-			ft_close(&data_env->stdin);
-			if (dup2(data_env->stdout, STDOUT_FILENO) == -1)
-				ft_error(1);
-			ft_close(&data_env->stdout);
-		}
 		if (cmd->fd_in != -2 && cmd->fd_in != -1)
 			ft_close(&cmd->fd_in);
 		if (cmd->fd_out != -2 && cmd->fd_out != -1)
@@ -392,7 +383,15 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			// }
 		}
 		if (g_minishell.cmd.final_cmd == 1)
+		{
+			if (dup2(data_env->stdin, STDIN_FILENO) == -1)
+				ft_error(1);
+			ft_close(&data_env->stdin);
+			if (dup2(data_env->stdout, STDOUT_FILENO) == -1)
+				ft_error(1);
+			ft_close(&data_env->stdout);
 			break ;
+		}
 		ft_free_cmd(&g_minishell.cmd);
 		is_builtin_without_stdout = 0;
 	}
