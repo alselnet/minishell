@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/05 17:37:47 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:43:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	ft_export_without_arg(t_data_env *s_data_env)
 
 	dup_env = ft_strdup_env(s_data_env->envp);
 	if (dup_env == NULL)
-	{
-		g_minishell.exit_status = 1;
-		return ;
-	}	
+		ft_error(2);
 	i = 0;
 	while (i < s_data_env->size)
 	{
@@ -71,7 +68,7 @@ void	ft_export(int argc, char **argv, t_data_env *s_data_env)
 	if (argc == 1)
 	{
 		ft_export_without_arg(s_data_env);
-		return ;
+		ft_exit_builtin_with_stdout();
 	}
 	j = 1;
 	while (j < argc)

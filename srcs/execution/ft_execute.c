@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 16:06:23 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:43:17 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void	ft_error(int status)
 	ft_free_env(g_minishell.data_env.envp, g_minishell.data_env.size);
 	tk_clear(&g_minishell.ltable.tklist_head);
 	free(g_minishell.ltable.input);
-	rl_clear_history();
+	// rl_clear_history();
 	exit(status);
 }
 
@@ -297,10 +297,14 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 			ft_env(data_env->envp);
 		else if (ft_strcmp("pwd", g_minishell.cmd.argv[0]) == 0)
 			ft_pwd();
+		else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0 && g_minishell.cmd.argc == 1)
+			ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
 		//////////////////////////////////////////////////////////////
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 		if (cmd->cmd_path == NULL)
 			ft_error(2);
+		close(g_minishell.data_env.stdin);
+		close(g_minishell.data_env.stdout);
 		execve(cmd->cmd_path, cmd->argv, data_env->envp);
 		ft_error(2);
 	}
@@ -359,7 +363,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 				ft_unset(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
 				is_builtin_without_stdout = 1;
 			}	
-			else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0)
+			else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0 && g_minishell.cmd.argc > 1)
 			{
 				ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
 				is_builtin_without_stdout = 1;

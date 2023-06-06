@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 17:33:03 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:38:33 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	ft_exit_builtin_with_stdout(void)
 {
-	if (dup2(g_minishell.data_env.stdin, STDIN_FILENO) == -1)
-		ft_error(1);
 	close(g_minishell.data_env.stdin);
-	if (dup2(g_minishell.data_env.stdout, STDOUT_FILENO) == -1)
-		ft_error(1);
 	close(g_minishell.data_env.stdout);
 	exit(EXIT_SUCCESS);
 }

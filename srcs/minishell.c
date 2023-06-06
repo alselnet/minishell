@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/06 15:52:59 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/06 17:40:49 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	{
 		ltable->input = readline("> ");
 		if (!ltable->input)
-			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
-			// return (free_array(data_env->envp), printf("exit\n"));
+			// return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
+			return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
@@ -79,36 +79,36 @@ void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)
 	init_table(&g_minishell->ltable);
 }
 
-void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
-{
-	(void)ptr;
-	(void)siginfo;
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_minishell.exit_status = 1;
-	}
-}
+// void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
+// {
+// 	(void)ptr;
+// 	(void)siginfo;
+// 	if (signum == SIGINT)
+// 	{
+// 		write(1, "\n", 1);
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0);
+// 		rl_redisplay();
+// 		g_minishell.exit_status = 1;
+// 	}
+// }
 
-void	ft_init_signals(void)
-{
-	struct sigaction	sa;
+// void	ft_init_signals(void)
+// {
+// 	struct sigaction	sa;
 
-	sa.sa_sigaction = handler_function;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_SIGINFO;
-	if (sigaction(SIGINT, &sa, 0) == -1)
-		exit(1);
-	if (sigaction(SIGQUIT, &sa, 0) == -1)
-		exit(1);
-}
+// 	sa.sa_sigaction = handler_function;
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_flags = SA_SIGINFO;
+// 	if (sigaction(SIGINT, &sa, 0) == -1)
+// 		exit(1);
+// 	if (sigaction(SIGQUIT, &sa, 0) == -1)
+// 		exit(1);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
-	ft_init_signals();
+	// ft_init_signals();
 	ft_init_g_minishell(&g_minishell, envp);
 	(void) argv;
 	if (argc != 1)
