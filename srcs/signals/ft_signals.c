@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:04:03 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 19:45:10 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/08 00:56:16 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,21 @@
 void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 {
 	(void)ptr;
-	(void)siginfo;
 	if (signum == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_minishell.exit_status = 1;
+		if (siginfo->si_pid == 0)
+		{
+			write(1, "\n", 1);
+			g_minishell.exit_status = 130;
+		}
+		else
+		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+			g_minishell.exit_status = 1;
+		}
 	}
 }
 

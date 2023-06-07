@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 19:41:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/08 01:12:58 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,11 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		{
 			ft_fork(&g_minishell.cmd, data_env);
 			if (waitpid(g_minishell.cmd.pid, &status, 0) == -1)
-				ft_error(1);
+			{
+				if (errno != EINTR)
+					ft_error(1);
+				break ;
+			}
 			if (g_minishell.cmd.final_pid != 0)
 			{
 				if (WIFEXITED(status))
@@ -376,23 +380,9 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 				if (WEXITSTATUS(status) == 2)
 					ft_error(1);
 			}
-			// else if (WIFSIGNALED(status))
-			// {
-			//     if (WTERMSIG(status) == SIGINT)
-			// 		printf("OUAIS");
-			// 	// if (WTERMISG(status) == SIGQUIT) 
-			// }
 		}
 		if (g_minishell.cmd.final_cmd == 1)
-		{
-			if (dup2(data_env->stdin, STDIN_FILENO) == -1)
-				ft_error(1);
-			ft_close(&data_env->stdin);
-			if (dup2(data_env->stdout, STDOUT_FILENO) == -1)
-				ft_error(1);
-			ft_close(&data_env->stdout);
 			break ;
-		}
 		if (g_minishell.cmd.pipe == 1)
 			pipe_before = 1;
 		else
@@ -400,6 +390,13 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		ft_free_cmd(&g_minishell.cmd);
 		is_builtin_without_stdout = 0;
 	}
+	if (dup2(data_env->stdin, STDIN_FILENO) == -1)
+		ft_error(1);
+	ft_close(&data_env->stdin);
+	if (dup2(data_env->stdout, STDOUT_FILENO) == -1)
+		ft_error(1);
+	ft_close(&data_env->stdout);
+	ft_close_all_fds();
 	ft_free_cmd(&g_minishell.cmd);
 }
 
@@ -450,5 +447,12 @@ $ echo $VAVA
 
 $
 
+------------
 
+dans tout notre code (parsing, biutlins etc) il faut protéger les recherches d'env. 
+parce que si l'user fait "unset" ca enleve toutes les variables d'environnement. Donc ca segfault dans les parties qui cherchent dans env. 
+
+-----
+
+ouvrir/close tous les OUTfiles avant d'entrer dans exec (besoin pour créer le outfile avant meme de commencer l'exec s'il n existe pas)
 */

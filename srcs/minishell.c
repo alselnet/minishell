@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/06 19:38:00 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/08 01:32:43 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 
 int	main(int argc, char **argv, char **envp)
 {
+	if (envp == NULL)
+		return (1);
+	if (envp[0] == NULL)
+		return (1);
 	ft_init_signals();
 	ft_init_g_minishell(&g_minishell, envp);
 	(void) argv;
