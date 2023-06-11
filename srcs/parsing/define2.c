@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/02 18:30:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/11 18:02:42 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	check_access(t_token *token, t_data_env *data_env)
 		token->type = 'C';
 	else if (ft_strcmp("echo", token->content) == 0)
 		token->type = 'C';
-	// else if (ft_strcmp("exit", token->content) == 0)
-	// 	token->type = 'C';
+	else if (ft_strcmp("exit", token->content) == 0)
+		token->type = 'C';
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/08 01:12:58 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/11 20:59:25 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,6 +327,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	int		status;
 	int		is_builtin_without_stdout;
 	int		pipe_before;
+	int		null_fd;
 	
 	status = 0;
 	is_builtin_without_stdout = 0;
@@ -348,6 +349,8 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			{
 				if (pipe_before != 1)
 					ft_cd(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				if (pipe_before == 1)
+					g_minishell.exit_status = 0;
 				is_builtin_without_stdout = 1;
 			}
 			else if (ft_strcmp("unset", g_minishell.cmd.argv[0]) == 0)
@@ -359,6 +362,30 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			{
 				ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
 				is_builtin_without_stdout = 1;
+			}
+			// "Exit" builtin code à peaufiner encore...
+			else if (ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0)
+			{
+				if (pipe_before != 1)
+					ft_exit(g_minishell.cmd.argc, g_minishell.cmd.argv);
+				if (g_minishell.cmd.argc > 2 && pipe_before == 1)
+				{
+					write(2, "exit: too many arguments\n", 25);
+					g_minishell.exit_status = 1;
+				}
+				else if (g_minishell.cmd.argc == 2 && pipe_before == 1)
+					g_minishell.exit_status = ft_atoi_exit(g_minishell.cmd.argv[1]);
+				is_builtin_without_stdout = 1;
+			}
+			if (is_builtin_without_stdout == 1)
+			{
+				null_fd = open("/dev/null", O_RDONLY);
+				if (dup2(null_fd, STDIN_FILENO) == -1)
+				{
+					close(null_fd);
+					ft_error(1);
+				}
+				close(null_fd);
 			}
 		}
 		if (is_builtin_without_stdout == 0)
@@ -401,10 +428,10 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 }
 
 
-// CTRL + D pour exit pour l'instant. Plus tard, ce sera CTRL + D ou le builtin exit
-
 // Pour Alex:
 /*
+
+A VOIR:
 
 g_monitor, c'est le contraire le status. C'est 0 si tout va bien, et 1 si ca va mal.
 (en code en général, 0 tout va bien, positif ca va mal. Comme dans un main, return 0 si aucun pb)
@@ -435,7 +462,7 @@ HEREDOC à mettre en place
 
 --------------------------------------------------------
 
-ne pas oublier rl_clear_history si tu exit
+ne pas oublier rl_clear_history si on exit
 
 ------
 
@@ -455,4 +482,20 @@ parce que si l'user fait "unset" ca enleve toutes les variables d'environnement.
 -----
 
 ouvrir/close tous les OUTfiles avant d'entrer dans exec (besoin pour créer le outfile avant meme de commencer l'exec s'il n existe pas)
+
+----
+
+exit builtin à peaufiner encore...
+
+--- 
+unset selon les bash, le check_var_format n'est pas nécessaire.
+
+--- 
+protection si path n'existe pas ?
+
+--- 
+comment simuler l'erreur status 126 ?
+
+----
+
 */

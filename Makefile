@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/06 19:34:04 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/11 19:03:49 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_export_utils.c \
 				ft_export.c \
 				ft_pwd.c \
-				ft_unset.c
+				ft_unset.c \
+				ft_exit.c
 
 SIGNALS_FILES = ft_signals.c
 

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/08 01:41:04 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/11 20:43:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
-# include <errno.h>
 
 /////////////////////////// ENVIRONMENT //////////////////////////////////
 typedef struct s_data_env
@@ -136,9 +135,11 @@ void	ft_error_no_such_file(char *file);
 void	ft_fill_cmd(t_cmd *cmd, t_token *lst);
 t_token	*ft_get_cmd(t_token *tklist_head, t_cmd *cmd);
 void	ft_free_cmd(t_cmd *cmd);
+void	ft_close(int *fd);
+void	ft_close_all_fds();
 void	ft_error_cmd_not_found(char *cmd);
-void	ft_fork(t_cmd *cmd, t_data_env *data_env);
 void	ft_error(int status);
+void	ft_fork(t_cmd *cmd, t_data_env *data_env);
 void	ft_execute(t_token *tklist_head, t_data_env *data_env);
 
 /////////////////////////////// BUILTINS /////////////////////////////////
@@ -205,6 +206,12 @@ void	ft_unset_without_arg(t_data_env *s_data_env);
 int		ft_check_var_format_unset(char **argv, int *j);
 int		ft_unset_with_arg(char **argv, t_data_env *s_data_env, int j);
 void	ft_unset(int argc, char **argv, t_data_env *s_data_env);
+
+// ft_exit.c
+int		ft_char_to_int(char *str);
+int		ft_atoi_exit(char *str);
+void	ft_exit_utils(int status);
+void	ft_exit(int	argc, char **argv);
 
 /////////////////////////////// SIGNALS //////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
