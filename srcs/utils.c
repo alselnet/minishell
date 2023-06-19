@@ -6,11 +6,42 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 18:26:50 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:18:40 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char	*fetch_oldcontent_end(char *oldcontent)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*end;
+
+	i = 0;
+	j = 0;
+	k = -1;
+	while (oldcontent[i] && oldcontent[i] != '$')
+		i++;
+	i++;
+	while (oldcontent[i] && ft_isalnum(oldcontent[i]))
+		i++;
+	while (oldcontent[i])
+	{
+		i++;
+		j++;
+	}
+	if (!j)
+		return (0);
+	end = ft_calloc(sizeof(char), j + 1);
+	while (oldcontent [i] && ++k < j)
+	{
+		end[k] = oldcontent[i];
+		i ++;
+	}
+	return (end);
+}
 
 char	*extract_variable_value(char **env)
 {

@@ -6,14 +6,15 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/25 18:27:25 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/19 16:51:51 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -D BUFFER_SIZE=32
-SRCS = ft_isinbase.c\
+SRCS = ft_isalnum.c\
+ft_isinbase.c\
 ft_itoa.c\
 ft_putstr_fd.c\
 ft_split.c\
@@ -26,7 +27,6 @@ ft_strmatch.c\
 ft_strncmp.c\
 ft_strnstr.c\
 ft_strrev.c\
-ft_strtrim.c\
 get_next_line.c\
 get_next_line_utils.c\
 

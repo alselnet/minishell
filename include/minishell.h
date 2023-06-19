@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 17:22:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:03:17 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	rev_print_token_list(t_token **last, t_token **head);
 //UTILS
 void	init_table(t_lexing *table);
 char	*extract_variable_value(char **env);
+char	*fetch_oldcontent_end(char *oldcontent);
 int		free_array(char **arr);
 int		free_structs(t_lexing *ltable, t_data_env *data_env,
 			char *error_msg, char mode);

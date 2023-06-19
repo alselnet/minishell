@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 18:38:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/19 19:45:12 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,35 @@
 
 extern int	g_monitor;
 
-void	update_token_content(t_token *token, char *variable)
+int	update_token_content(t_token *token, char *variable)
 {
 	int		i;
 	char	*newcontent;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
+	tmp = fetch_oldcontent_end(token->content);
 	while (token->content[i])
 		i++;
 	while (token->content[--i] != '$')
 		token->content[i] = 0;
 	token->content[i] = 0;
-	newcontent = ft_strjoin(token->content, variable);
+	tmp2 = ft_strjoin(token->content, variable);
+	if (!tmp2)
+		return (0);
+	if (tmp)
+		newcontent = ft_strjoin(tmp2, tmp);
+	else 
+		newcontent = tmp2;
+	if (!newcontent)
+		return (0);
+	if (tmp)
+		free(tmp);
+	free(tmp2);
 	free(token->content);
 	token->content = newcontent;
+	return (1);
 }
 
 int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
@@ -43,7 +58,7 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	while (cursor && *cursor != '$')
 		cursor++;
 	cursor++;
-	while (*(cursor + i))
+	while (*(cursor + i) && (ft_isalnum(*(cursor + i))))
 		i++;
 	while (env && *env && ft_strncmp(cursor, *env, i - 1) != 0)
 		env++;
@@ -51,8 +66,9 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 		return (free_structs(ltable, data_env, "Variable not found\n", 1));
 	variable = extract_variable_value(env);
 	if (!variable)
-		return (free_structs(ltable, data_env, "Variable expand failed\n", 1));
-	update_token_content(token, variable);
+		return (free_structs(ltable, data_env, "Expand allocation failed\n", 1));
+	if (!update_token_content(token, variable))
+		return (free_structs(ltable, data_env, "Expand allocation failed\n", 1));
 	free(variable);
 	return (1);
 }
@@ -62,12 +78,15 @@ char	*clean_up_quotes(char *oldcontent,
 {
 	char	*newcontent;
 
-	newcontent = ft_strtrim(oldcontent, "\'\"");
+	if (ft_strlen(oldcontent) < 2)
+		return (0);
+	newcontent = ft_calloc(sizeof(char), ft_strlen(oldcontent) - 1);
 	if (!newcontent)
 	{
 		free_structs(ltable, data_env, "Variable expand failed\n", 1);
 		return (0);
 	}
+	ft_strlcpy(newcontent, oldcontent + 1, ft_strlen(oldcontent) - 1);
 	return (newcontent);
 }
 
@@ -86,7 +105,7 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)
-				return (0);
+				return (1);
 			free(browse->content);
 			browse->content = no_quote_content;
 		}

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 17:21:06 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/19 17:31:36 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ int	define_files(t_lexing *ltable, t_data_env *data_env)
 		else if (browse->prev->content[0] == '<'
 			&& !browse->prev->content[1])
 		{
-			if (!access(browse->content, R_OK))
 				browse->type = 'F';
-			else
-				return (free_structs(ltable, data_env,
-						"Invalid infile\n", 1));
 		}
 		browse = browse->prev;
 	}
