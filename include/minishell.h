@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/11 20:43:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:55:29 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,10 @@ void	ft_free_env(char **env, int size);
 void	ft_print_export(char *str);
 void	ft_get_env_min(char **min, int *pos_min, int size, char **env);
 int		ft_print_env_min(char **env, int size);
-int		ft_check_var_format_export(char **argv, int *j);
+int		ft_check_is_first_digit(char **argv, int *j, char *cmd);
 
 // ft_export.c
+int		ft_check_var_format_export(char **argv, int *j);
 void	ft_export_without_arg(t_data_env *s_data_env);
 void	ft_export_with_arguments(char **argv, t_data_env *s_data_env, int j);
 void	ft_export(int argc, char **argv, t_data_env *s_data_env);
@@ -202,16 +203,19 @@ void	ft_export(int argc, char **argv, t_data_env *s_data_env);
 void	ft_pwd(void);
 
 // ft_unset.c
-void	ft_unset_without_arg(t_data_env *s_data_env);
 int		ft_check_var_format_unset(char **argv, int *j);
 int		ft_unset_with_arg(char **argv, t_data_env *s_data_env, int j);
 void	ft_unset(int argc, char **argv, t_data_env *s_data_env);
 
+// ft_exit_utils.c
+int		ft_check_all_digits(char *str);
+void	ft_error_numeric(char *builtin, char *identifier);
+void	ft_check_numeric_arg(char **argv);
+
 // ft_exit.c
-int		ft_char_to_int(char *str);
-int		ft_atoi_exit(char *str);
-void	ft_exit_utils(int status);
-void	ft_exit(int	argc, char **argv);
+unsigned char	ft_atoi_exit(char *str);
+void			ft_exit_utils(int status, int is_error);
+void			ft_exit(int	argc, char **argv);
 
 /////////////////////////////// SIGNALS //////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

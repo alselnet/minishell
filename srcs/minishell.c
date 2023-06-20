@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/08 01:32:43 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:59:12 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (argc != 1)
 	{
-		printf("./minishell doesn't take any arguments\n");
+		write(2, "./minishell doesn't take any arguments\n", 39);
 		return (free_array(g_minishell.data_env.envp));
 	}
 	minishell(&g_minishell.ltable, &g_minishell.data_env);

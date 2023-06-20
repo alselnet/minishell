@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/11 20:59:25 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:58:26 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 			ft_pwd();
 		else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0 && g_minishell.cmd.argc == 1)
 			ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
-		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
+		cmd->cmd_path = find_cmd_path(cmd->argv[0], g_minishell.data_env.envp);
 		if (cmd->cmd_path == NULL)
 			ft_error(2);
 		close(g_minishell.data_env.stdin);
@@ -328,6 +328,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	int		is_builtin_without_stdout;
 	int		pipe_before;
 	int		null_fd;
+	int		i;
 	
 	status = 0;
 	is_builtin_without_stdout = 0;
@@ -347,33 +348,84 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		{
 			if (ft_strcmp("cd", g_minishell.cmd.argv[0]) == 0)
 			{
-				if (pipe_before != 1)
+				if (pipe_before != 1 && g_minishell.cmd.pipe != 1)
 					ft_cd(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
-				if (pipe_before == 1)
+				else
+				{
 					g_minishell.exit_status = 0;
+					if (g_minishell.cmd.argc > 2)
+						ft_cd_too_many_args();
+					i = 0;
+					if (g_minishell.cmd.argc == 1)
+					{
+						while (g_minishell.data_env.envp[i])
+						{
+							if (ft_strcmp_env("HOME=", g_minishell.data_env.envp[i]) == 0)
+								break ;
+							i++;
+						}
+						if (g_minishell.data_env.envp[i] == NULL)
+						{
+							g_minishell.exit_status = 1;
+							write(2, "cd: HOME not set\n", 17);
+						}
+					}
+					else
+					{
+						if (access(g_minishell.cmd.argv[1], F_OK) == -1)
+						{
+							ft_error_file("cd", g_minishell.cmd.argv[1]);
+							g_minishell.exit_status = 1;
+						}
+					}
+				}
 				is_builtin_without_stdout = 1;
 			}
 			else if (ft_strcmp("unset", g_minishell.cmd.argv[0]) == 0)
 			{
-				ft_unset(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				if (pipe_before != 1 && g_minishell.cmd.pipe != 1)
+					ft_unset(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				else
+				{
+					int j = 1;
+					g_minishell.exit_status = 0;
+					while (j < g_minishell.cmd.argc)
+					{
+						if (ft_check_var_format_unset(g_minishell.cmd.argv, &j) == -1)
+							continue;
+						j++;
+					}
+				}	
 				is_builtin_without_stdout = 1;
-			}	
+			}
 			else if (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0 && g_minishell.cmd.argc > 1)
 			{
-				ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				if (pipe_before != 1 && g_minishell.cmd.pipe != 1)
+					ft_export(g_minishell.cmd.argc, g_minishell.cmd.argv, data_env);
+				else
+				{
+					int j = 1;
+					g_minishell.exit_status = 0;
+					while (j < g_minishell.cmd.argc)
+					{
+						if (ft_check_var_format_export(g_minishell.cmd.argv, &j) == -1)
+							continue ;
+						j++;
+					}
+				}
 				is_builtin_without_stdout = 1;
 			}
 			// "Exit" builtin code à peaufiner encore...
 			else if (ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0)
 			{
-				if (pipe_before != 1)
+				if (pipe_before != 1 && g_minishell.cmd.pipe != 1)
 					ft_exit(g_minishell.cmd.argc, g_minishell.cmd.argv);
-				if (g_minishell.cmd.argc > 2 && pipe_before == 1)
+				if (g_minishell.cmd.argc > 2 && (pipe_before == 1 && g_minishell.cmd.pipe == 1))
 				{
 					write(2, "exit: too many arguments\n", 25);
 					g_minishell.exit_status = 1;
 				}
-				else if (g_minishell.cmd.argc == 2 && pipe_before == 1)
+				else if (g_minishell.cmd.argc == 2 && (pipe_before == 1 && g_minishell.cmd.pipe == 1))
 					g_minishell.exit_status = ft_atoi_exit(g_minishell.cmd.argv[1]);
 				is_builtin_without_stdout = 1;
 			}

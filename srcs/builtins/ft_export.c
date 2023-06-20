@@ -6,11 +6,39 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 17:43:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:38:02 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_check_var_format_export(char **argv, int *j)
+{
+	int	i;
+	
+	if (ft_check_is_first_digit(argv, j, "export") == -1)
+		return (-1);
+	if (ft_srch('=', argv[*j]) < 1)
+	{
+		if (ft_srch('=', argv[*j]) == 0)
+			ft_error_identifier("export", argv[*j]);
+		(*j)++;
+		return (-1);
+	}
+	i = 0;
+	while (argv[*j][i] && argv[*j][i] != '=')
+	{
+		if (ft_isalnum(argv[*j][i]) == 0 && (argv[*j][i] != '_'))
+		{
+			ft_error_identifier("export", argv[*j]);
+			(*j)++;
+			return (-1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 
 void	ft_export_without_arg(t_data_env *s_data_env)
 {

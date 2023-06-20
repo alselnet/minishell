@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:23:19 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/05 17:35:44 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:37:21 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,13 @@ int	ft_print_env_min(char **env, int size)
 	return (pos_min);
 }
 
-int	ft_check_var_format_export(char **argv, int *j)
+int	ft_check_is_first_digit(char **argv, int *j, char *cmd)
 {
-	int	i;
-
-	if (ft_srch('=', argv[*j]) < 1)
+	if (ft_isdigit(argv[*j][0]) == 1)
 	{
-		ft_error_identifier("export", argv[*j]);
-		g_minishell.exit_status = 1;
+		ft_error_identifier(cmd, argv[*j]);
 		(*j)++;
 		return (-1);
-	}
-	i = 0;
-	while (argv[*j][i] && argv[*j][i] != '=')
-	{
-		if (ft_isalnum(argv[*j][i]) == 0 && (argv[*j][i] != '_'))
-		{
-			ft_error_identifier("export", argv[*j]);
-			g_minishell.exit_status = 1;
-			(*j)++;
-			return (-1);
-		}
-		i++;
 	}
 	return (0);
 }
