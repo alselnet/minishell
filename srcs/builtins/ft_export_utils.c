@@ -6,11 +6,22 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:23:19 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/20 17:37:21 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:00:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_check_identifier(char **argv, int *j, int i)
+{
+	if (ft_isalnum(argv[*j][i]) == 0 && (argv[*j][i] != '_'))
+	{
+		ft_error_identifier("export", argv[*j]);
+		(*j)++;
+		return (-1);
+	}
+	return (0);
+}
 
 void	ft_print_export(char *str)
 {

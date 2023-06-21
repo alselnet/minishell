@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/20 19:56:30 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/21 18:38:54 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,18 +26,27 @@ PARSINGDIR = parsing
 BUILTINSDIR = builtins
 SIGNALSDIR = signals
 
-EXEC_FILES = ft_execute.c
+EXEC_FILES = ft_close.c \
+			ft_error_exec.c \
+			ft_execute_bis.c \
+			ft_execute_ter.c \
+			ft_execute.c \
+			ft_fill_cmd.c \
+			ft_fork.c \
+			ft_free_cmd.c \
+			ft_get_cmd.c \
+			ft_init_cmd.c \
 
 PARSING_FILES = define.c \
-		define2.c \
-		expand.c \
-		lexing.c \
-		parsing.c \
-		quit.c \
-		temp.c \
-		tokens.c \
-		tokens2.c \
-		utils.c
+				define2.c \
+				expand.c \
+				lexing.c \
+				parsing.c \
+				quit.c \
+				temp.c \
+				tokens.c \
+				tokens2.c \
+				utils.c
 
 BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_builtins_utils.c \

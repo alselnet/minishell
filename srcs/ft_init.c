@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 19:35:07 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:05:12 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ void	init_table(t_lexing *ltable)
 	ltable->input = 0;
 	ltable->tklist_size = 0;
 }
-

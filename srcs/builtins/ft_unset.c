@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:05:57 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/20 17:38:11 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/21 13:24:13 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_check_var_format_unset(char **argv, int *j)
 
 	is_broken = 0;
 	i = 0;
-	// if (ft_check_is_first_digit(argv, j, "unset") == -1)
-	// 	return (-1);
+	if (ft_check_is_first_digit(argv, j, "unset") == -1)
+		return (-1);
 	while (argv[*j][i])
 	{
 		if (ft_isalnum(argv[*j][i]) == 0 && (argv[*j][i] != '_'))

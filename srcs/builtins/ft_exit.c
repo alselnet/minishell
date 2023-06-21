@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:03:41 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/20 19:58:56 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:45:10 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ unsigned char	ft_atoi_exit(char *str)
 {
 	int	nb;
 	int	i;
-	
+
 	if (*str == '+' || *str == '-')
 		str++;
 	i = 1;
@@ -46,7 +46,7 @@ void	ft_exit_utils(int status, int is_error)
 	exit(status);
 }
 
-void	ft_exit(int	argc, char **argv)
+void	ft_exit(int argc, char **argv)
 {
 	if (argc > 2)
 	{
@@ -62,5 +62,4 @@ void	ft_exit(int	argc, char **argv)
 		ft_check_numeric_arg(argv);
 		ft_exit_utils(ft_atoi_exit(argv[1]), 0);
 	}
-		
 }
