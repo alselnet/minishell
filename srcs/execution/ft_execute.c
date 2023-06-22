@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 18:41:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:30:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 
 	builtin_done = 0;
 	pipe_before = 0;
-	ft_init_cmd(&g_minishell.cmd);
 	ft_std_backup(data_env);
 	while (1)
 	{

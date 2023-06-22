@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 18:23:47 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:55:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void	ft_redirections(t_cmd *cmd)
 	if (cmd->fd_out != -2)
 		ft_close(&cmd->fd_out);
 	if (cmd->fd_in == -1)
-	{
-		ft_close_all_fds();
-		exit(1);
-	}
+		ft_exit_utils(1, 1);
 }
 
 void	ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env)

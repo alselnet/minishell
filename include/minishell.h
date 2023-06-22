@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/21 19:01:04 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:52:47 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void			ft_init_cmd(t_cmd *cmd);
 //////////////////////////////////////////////////////////////////////////
 
 // ft_builtins_utils.c 
-void			ft_exit_builtin_with_stdout(void);
 void			ft_error_identifier(char *builtin, char *identifier);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s);
@@ -257,11 +256,11 @@ void			ft_unset(int argc, char **argv, t_data_env *s_data_env);
 // ft_exit_utils.c
 int				ft_check_all_digits(char *str);
 void			ft_error_numeric(char *builtin, char *identifier);
-void			ft_check_numeric_arg(char **argv);
+int				ft_check_numeric_arg(char **argv, int inside_pipe);
 
 // ft_exit.c
 unsigned char	ft_atoi_exit(char *str);
-void			ft_exit_utils(int status, int is_error);
+void			ft_exit_utils(int status, int no_exit_written);
 void			ft_exit(int argc, char **argv);
 
 /////////////////////////////// SIGNALS //////////////////////////////////

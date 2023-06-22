@@ -6,18 +6,11 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 13:27:13 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:50:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_exit_builtin_with_stdout(void)
-{
-	close(g_minishell.data_env.stdin);
-	close(g_minishell.data_env.stdout);
-	exit(EXIT_SUCCESS);
-}
 
 void	ft_error_identifier(char *builtin, char *identifier)
 {

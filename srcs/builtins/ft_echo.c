@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 13:26:47 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:50:33 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ void	ft_echo(int argc, char **argv)
 	}
 	if (has_option != 1)
 		printf("\n");
-	ft_exit_builtin_with_stdout();
+	ft_exit_utils(EXIT_SUCCESS, 1);
 }

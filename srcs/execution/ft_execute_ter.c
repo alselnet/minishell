@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:30:25 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 18:42:38 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:27:00 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,16 @@ int	ft_exec_exit(int pipe_before, t_cmd *cmd)
 		ft_exit(cmd->argc, cmd->argv);
 	if (cmd->argc > 2 && (pipe_before == 1 || cmd->pipe == 1))
 	{
+		if (ft_check_numeric_arg(cmd->argv, 1) == -1)
+			return (1);
 		write(2, "exit: too many arguments\n", 25);
 		g_minishell.exit_status = 1;
 	}
 	else if (cmd->argc == 2 && (pipe_before == 1 || cmd->pipe == 1))
+	{
+		if (ft_check_numeric_arg(cmd->argv, 1) == -1)
+			return (1);
 		g_minishell.exit_status = ft_atoi_exit(cmd->argv[1]);
+	}
 	return (1);
 }

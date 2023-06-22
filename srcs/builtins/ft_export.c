@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 17:05:29 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:50:33 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_export(int argc, char **argv, t_data_env *s_data_env)
 	if (argc == 1)
 	{
 		ft_export_without_arg(s_data_env);
-		ft_exit_builtin_with_stdout();
+		ft_exit_utils(EXIT_SUCCESS, 1);
 	}
 	j = 1;
 	while (j < argc)

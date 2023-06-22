@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:25:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 18:45:13 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:58:41 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	ft_error_cmd_not_found(char *cmd)
 {
 	write(2, cmd, ft_strlen(cmd));
 	write(2, ": command not found\n", 20);
-	ft_close_all_fds();
-	exit(127);
+	ft_exit_utils(127, 1);
 }
 
 void	ft_error(int status)
