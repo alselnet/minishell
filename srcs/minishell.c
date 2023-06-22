@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/19 16:44:18 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:36:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 	if (g_monitor)
 		define_delims(ltable);
 	if (g_monitor)
-		g_monitor = define_files(ltable, data_env);
+		g_monitor = define_files(ltable);
 	if (g_monitor)
 		g_monitor = define_cmds(ltable, data_env);
 	if (g_monitor)

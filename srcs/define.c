@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/19 17:31:36 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:33:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	define_delims(t_lexing *ltable)
 	}
 }
 
-int	define_files(t_lexing *ltable, t_data_env *data_env)
+int	define_files(t_lexing *ltable)
 {
 	t_token	*browse;
 

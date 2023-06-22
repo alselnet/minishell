@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/19 19:45:12 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/22 16:19:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,16 @@ extern int	g_monitor;
 
 int	update_token_content(t_token *token, char *variable)
 {
-	int		i;
-	char	*newcontent;
-	char	*tmp;
-	char	*tmp2;
-
-	i = 0;
-	tmp = fetch_oldcontent_end(token->content);
-	while (token->content[i])
-		i++;
-	while (token->content[--i] != '$')
-		token->content[i] = 0;
-	token->content[i] = 0;
-	tmp2 = ft_strjoin(token->content, variable);
-	if (!tmp2)
-		return (0);
-	if (tmp)
-		newcontent = ft_strjoin(tmp2, tmp);
-	else 
-		newcontent = tmp2;
-	if (!newcontent)
-		return (0);
-	if (tmp)
-		free(tmp);
-	free(tmp2);
-	free(token->content);
-	token->content = newcontent;
+	if (!check_token_end(token))
+	{
+		if (!update_content_full(token, variable))
+			return (0);
+	}
+	else if (check_token_end(token))
+	{
+		if (!update_content_partial(token, variable))
+			return (0);
+	}
 	return (1);
 }
 
@@ -69,7 +53,6 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 		return (free_structs(ltable, data_env, "Expand allocation failed\n", 1));
 	if (!update_token_content(token, variable))
 		return (free_structs(ltable, data_env, "Expand allocation failed\n", 1));
-	free(variable);
 	return (1);
 }
 
