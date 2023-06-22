@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 14:56:15 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:59:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (envp[0] == NULL)
 		return (1);
-	// ft_init_signals();
+	ft_init_signals();
 	ft_init_g_minishell(&g_minishell, envp);
 	(void) argv;
 	if (argc != 1)
