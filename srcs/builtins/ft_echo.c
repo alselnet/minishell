@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:50:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:54:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	ft_echo(int argc, char **argv)
 		i = 1;
 	while (i < argc)
 	{
-		printf("%s", argv[i]);
+		write(1, argv[i], ft_strlen(argv[i]));
 		if (i++ != argc - 1)
-			printf(" ");
+			write(1, " ", 1);
 	}
 	if (has_option != 1)
-		printf("\n");
+		write(1, "\n", 1);
 	ft_exit_utils(EXIT_SUCCESS, 1);
 }
