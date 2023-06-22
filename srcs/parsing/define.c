@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/02 23:17:55 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:35:58 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	define_redirs(t_lexing *ltable, t_data_env *data_env)
 	{
 		if (browse->type && browse->type == browse->next->type)
 			return (free_structs(ltable, data_env,
-					"Consecutive redirections\n", 1));
+					"Syntax error\n", 1));
 		browse = browse->next;
 	}
 	return (1);
@@ -47,11 +47,10 @@ void	define_delims(t_lexing *ltable)
 	}
 }
 
-int	define_files(t_lexing *ltable, t_data_env *data_env)
+int	define_files(t_lexing *ltable)
 {
 	t_token	*browse;
 
-	(void)data_env; //en attendant de tester le no invalid file
 	browse = ltable->tklist_head;
 	while (browse->next)
 		browse = browse->next;
@@ -62,11 +61,7 @@ int	define_files(t_lexing *ltable, t_data_env *data_env)
 		else if (browse->prev->content[0] == '<'
 			&& !browse->prev->content[1])
 		{
-			// if (!access(browse->content, R_OK))
 			browse->type = 'F';
-			// else
-			// 	return (free_structs(ltable, data_env,
-			// 			"Invalid infile\n", 1));
 		}
 		browse = browse->prev;
 	}

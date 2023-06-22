@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 14:59:55 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 19:04:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_minishell	g_minishell;
 
 int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 {
@@ -18,7 +20,7 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 	if (g_minishell.monitor)
 		define_delims(ltable);
 	if (g_minishell.monitor)
-		g_minishell.monitor = define_files(ltable, data_env);
+		g_minishell.monitor = define_files(ltable);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_cmds(ltable, data_env);
 	if (g_minishell.monitor)
@@ -34,8 +36,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	{
 		ltable->input = readline("> ");
 		if (!ltable->input)
-			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
-			// return (free_array(data_env->envp), printf("exit\n"));
+			//return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
+			return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
@@ -63,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (envp[0] == NULL)
 		return (1);
-	ft_init_signals();
+	//ft_init_signals();
 	ft_init_g_minishell(&g_minishell, envp);
 	(void) argv;
 	if (argc != 1)

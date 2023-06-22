@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:00:32 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/23 15:33:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:17:39 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd, int *count);
 int			ft_putstr_fd(char *s, int fd);
 char		*ft_strchr(const char *s, int c);
+int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strdup(const char *s);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		*ft_strjoin(char const *s1, char const *s2);

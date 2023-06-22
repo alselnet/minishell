@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
+#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/30 16:54:00 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/22 18:43:23 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ ft_strdup.c\
 ft_strjoin.c\
 ft_strlcpy.c\
 ft_strlen.c\
+ft_strcmp.c\
 ft_strmatch.c\
 ft_strncmp.c\
 ft_strnstr.c\

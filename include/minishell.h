@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 13:52:47 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 19:08:37 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,34 @@ typedef struct s_lexing
 // define.c
 int				define_redirs(t_lexing *ltable, t_data_env *data_env);
 void			define_delims(t_lexing *ltable);
-int				define_files(t_lexing *ltable, t_data_env *data_env);
+int				define_files(t_lexing *ltable);
 
 // define2.c
 void			define_args(t_lexing *ltable);
 char			*find_cmd_path(char	*cmd_name, char **envp);
 int				merge_flags(t_lexing *ltable);
-int				ft_strcmp(const char *s1, const char *s2);
 int				check_access(t_token *token, t_data_env *data_env);
 int				define_cmds(t_lexing *ltable, t_data_env *data_env);
 
+// define3.c
+int				access_builtin(t_token *token);
+
 // expand.c
-void			update_token_content(t_token *token, char *variable);
+int			update_token_content(t_token *token, char *variable);
 int				expand_token(
 					t_token *token, t_lexing *ltable, t_data_env *data_env);
 char			*clean_up_quotes(
 					char *oldcontent, t_lexing *ltable, t_data_env *data_env);
 int				format_tokens(t_lexing *ltable, t_data_env *data_env);
 int				expand_token_list(t_lexing *ltable, t_data_env *data_env);
+
+//expand2.c
+char			*extract_variable_value(char **env);
+char			*fetch_oldcontent_end(char *oldcontent);
+int				check_token_end(t_token *token);
+int				update_content_full(t_token *token, char *variable);
+int				update_content_partial(t_token *token, char *variable);
+
 
 // lexing.c
 int				create_redir_token(
@@ -108,9 +118,6 @@ void			tk_add_back(t_token **head, t_token *new);
 void			tk_addto(t_token **head, t_token *new, int pos);
 void			tk_moveto(t_token **head, t_token *token, int pos);
 t_token			*tk_merge(t_token **head, t_token *token1, t_token *token2);
-
-// utils.c
-char			*extract_variable_value(char **env);
 
 /////////////////////////////// EXECUTION ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

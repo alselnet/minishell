@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/11 18:02:42 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:29:54 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,11 @@ int	merge_flags(t_lexing *ltable)
 	return (1);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	i;
-
-	i = 0;
-	while ((s1[i] == s2[i]) && s1[i] && s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
 int	check_access(t_token *token, t_data_env *data_env)
 {
 	char	*cmd_path;
 
-	if (!access(token->content, X_OK))
+	if (!access(token->content, X_OK) || !access_builtin(token))
 		token->type = 'C';
 	else
 	{
@@ -98,20 +88,6 @@ int	check_access(t_token *token, t_data_env *data_env)
 			free(cmd_path);
 		}
 	}
-	if (ft_strcmp("cd", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("pwd", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("unset", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("env", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("export", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("echo", token->content) == 0)
-		token->type = 'C';
-	else if (ft_strcmp("exit", token->content) == 0)
-		token->type = 'C';
 	return (1);
 }
 
@@ -126,7 +102,7 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 			check_access(browse, data_env);
 		while (browse && browse->type != 'R' && browse->type != 'D')
 			browse = browse->next;
-		if (browse && browse->content[0] == '<')
+		if (browse && browse->content[0] == '<') // a regarder
 		{
 			if (browse->next)
 			{

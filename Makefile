@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
+#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/21 18:38:54 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/22 18:20:27 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,15 @@ EXEC_FILES = ft_close.c \
 
 PARSING_FILES = define.c \
 				define2.c \
+				define3.c \
 				expand.c \
+				expand2.c \
 				lexing.c \
 				parsing.c \
 				quit.c \
 				temp.c \
 				tokens.c \
 				tokens2.c \
-				utils.c
 
 BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_builtins_utils.c \

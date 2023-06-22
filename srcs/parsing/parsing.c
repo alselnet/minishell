@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:13 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:38:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		if (browse->content[0] == '\''
 			&& (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\''))
-			return (free_structs(ltable, data_env, "error : single \'\n", 1));
+			return (free_structs(ltable, data_env, "Syntax error\n", 1));
 		else if (browse->content[0] == '\"' && (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\"'))
-			return (free_structs(ltable, data_env, "error : single \"\n", 1));
+			return (free_structs(ltable, data_env, "Syntax error\n", 1));
 		else if (ft_strmatch(browse->content, "<|>"))
 		{
 			if (!browse->next || (!browse->prev && browse->content[0] != '<')
 				|| (ft_strlen(browse->content) > 1
 					&& browse->content[0] != browse->content[1]))
 				return (free_structs(ltable, data_env,
-						"wrong redirection\n", 1));
+						"Syntax error\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
 				return (free_structs(ltable, data_env, "|| not supported\n", 1));
 		}
