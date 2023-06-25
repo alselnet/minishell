@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/25 19:11:46 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:18:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	cursor++;
 	while (*(cursor + i) && (ft_isalnum(*(cursor + i))))
 		i++;
-	while (env && *env && ft_strncmp(cursor, *env, i - 1) != 0)
+	while (env && *env && ft_strenvcmp(cursor, *env, i) != 0)
 		env++;
 	if (!*env || !**env)
 		token = tk_delone_and_link(&ltable->tklist_head, token);

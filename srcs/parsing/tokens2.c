@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/25 18:56:32 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:29:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,6 @@ t_token	*tk_delone_and_link(t_token **head, t_token *token)
 		token->next->prev = token->prev;
 		ret = token->prev;
 	}
-	tk_delone(token);	
+	tk_delone(token);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/22 18:43:23 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/25 19:21:23 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ ft_putstr_fd.c\
 ft_split.c\
 ft_substr.c\
 ft_strdup.c\
+ft_strenvcmp.c\
 ft_strjoin.c\
 ft_strlcpy.c\
 ft_strlen.c\
