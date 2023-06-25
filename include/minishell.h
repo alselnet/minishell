@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 19:08:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:49:44 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void			tk_add_back(t_token **head, t_token *new);
 void			tk_addto(t_token **head, t_token *new, int pos);
 void			tk_moveto(t_token **head, t_token *token, int pos);
 t_token			*tk_merge(t_token **head, t_token *token1, t_token *token2);
+t_token			*tk_delone_and_link(t_token **head, t_token *token);
 
 /////////////////////////////// EXECUTION ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
