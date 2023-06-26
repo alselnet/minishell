@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/25 19:19:35 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/26 21:15:54 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ $(OBJDIR):
 
 clean:
 		$(RMR) $(OBJDIR)
+		cd $(LIBDIR) && make clean
 
 fclean: clean
 		$(RMR) $(BINDIR)

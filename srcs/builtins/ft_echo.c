@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 14:54:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/26 21:16:42 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	ft_echo(int argc, char **argv)
 	has_option = 0;
 	if (argc == 1)
 	{
-		printf("\n");
-		return ;
+		write(1, "\n", 1);
+		ft_exit_utils(EXIT_SUCCESS, 1);
 	}
 	has_option = ft_check_option(argv[1]);
 	if ((argc == 2) && (has_option == 1))
-		return ;
+		ft_exit_utils(EXIT_SUCCESS, 1);
 	if (has_option == 1)
 		i = 2;
 	else

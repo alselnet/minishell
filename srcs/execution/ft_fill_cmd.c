@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 16:05:58 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/26 21:20:31 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 
 void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 {
-	char	*outfile;
-
 	if (lst->content[0] == '<')
 	{
 		if (cmd->fd_in == -1)
@@ -47,6 +45,13 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 		if (cmd->fd_in == -1)
 			ft_error_no_such_file(lst->next->content);
 	}
+	ft_fill_cmd_for_type_r2(cmd, lst);
+}
+
+void	ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst)
+{
+	char	*outfile;
+
 	outfile = lst->next->content;
 	if (lst->content[0] == '>')
 	{
