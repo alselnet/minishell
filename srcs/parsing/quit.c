@@ -6,11 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 13:49:16 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:37:53 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	free_array(char **arr)
 {
@@ -31,5 +31,6 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	if (mode == 2)
 		free_array(data_env->envp);
 	ft_putstr_fd(error_msg, 2);
+	g_minishell.exit_status = 258;
 	return (0);
 }

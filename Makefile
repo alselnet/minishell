@@ -3,56 +3,111 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/05/25 18:00:13 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/26 21:15:54 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -g3 -MMD -g -I include
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -g
+IFLAGS = -I$(INCDIR) -I$(LIBDIR)
+LFLAGS = -lreadline -L$(LIBDIR) -lft
 
-SRC = srcs/expand.c\
-srcs/define.c\
-srcs/define2.c\
-srcs/utils.c\
-srcs/minishell.c\
-srcs/tokens.c\
-srcs/tokens2.c\
-srcs/init.c\
-srcs/quit.c\
-srcs/lexing.c\
-srcs/parsing.c\
-srcs/temp.c\
-srcs/ft_environment_var_utils.c\
+SRCDIR = srcs
+OBJDIR = objs
+BINDIR = bin
+INCDIR = include
+LIBDIR = libft
 
- 
-OBJS = ${SRC:.c=.o}
-DEPS = ${SRC:.c=.d}
+EXECDIR = execution
+PARSINGDIR = parsing
+BUILTINSDIR = builtins
+SIGNALSDIR = signals
 
-REMOVE = rm -f
+EXEC_FILES = ft_close.c \
+			ft_error_exec.c \
+			ft_execute_bis.c \
+			ft_execute_ter.c \
+			ft_execute.c \
+			ft_fill_cmd.c \
+			ft_fork.c \
+			ft_free_cmd.c \
+			ft_get_cmd.c \
+			ft_init_cmd.c \
 
-${NAME}: ${OBJS}
-		make -C srcs/libft
-		$(CC) $(CFLAGS) ${OBJS} libft.a -lreadline -o $(NAME)
+PARSING_FILES = define.c \
+				define2.c \
+				define3.c \
+				expand.c \
+				expand2.c \
+				lexing.c \
+				parsing.c \
+				quit.c \
+				temp.c \
+				tokens.c \
+				tokens2.c \
 
--include $(DEPS)
+BUILTINS_FILES = ft_builtins_utils_2.c \
+				ft_builtins_utils.c \
+				ft_cd_utils.c \
+				ft_cd.c \
+				ft_echo.c \
+				ft_env.c \
+				ft_environment_utils_2.c \
+				ft_environment_utils.c \
+				ft_export_utils.c \
+				ft_export.c \
+				ft_pwd.c \
+				ft_unset.c \
+				ft_exit_utils.c \
+				ft_exit.c
 
-all:${NAME}
+SIGNALS_FILES = ft_signals.c
 
-clean : 
-		make clean -C srcs/libft
-		${REMOVE} ${DEPS} ${OBJS} ${DEPS_BONUS}
+EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
+PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))
+BUILTINS = $(addprefix $(BUILTINSDIR)/, $(BUILTINS_FILES))
+SIGNALS = $(addprefix $(SIGNALSDIR)/, $(SIGNALS_FILES))
+SRCS = $(addprefix $(SRCDIR)/, minishell.c ft_init.c $(EXEC) $(PARSING) $(BUILTINS) $(SIGNALS))
+OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-fclean : 
-		make fclean -C srcs/libft
-		${REMOVE} libft.a
-		${REMOVE} ${DEPS} ${OBJS} ${DEPS_BONUS} $(NAME)
+INCS = $(INCDIR)/minishell.h
+
+NAME = $(BINDIR)/minishell
+
+RMR = rm -rf
+MKDIR_P = mkdir -p
+
+LIBFT = $(LIBDIR)/libft.a
+
+all: $(NAME)
+
+$(LIBFT):
+	cd $(LIBDIR) && make re
+
+$(NAME): $(OBJS) $(LIBFT) | $(BINDIR)
+	$(CC) $(CFLAGS) $(OBJS) $(IFLAGS) $(LIBS) $(LFLAGS) -o $(NAME)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCS) | $(OBJDIR)
+	$(MKDIR_P) $(@D)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@ 
+
+$(BINDIR):
+	$(MKDIR_P) $(BINDIR)
+
+$(OBJDIR):
+	$(MKDIR_P) $(OBJDIR)
+
+clean:
+		$(RMR) $(OBJDIR)
+		cd $(LIBDIR) && make clean
+
+fclean: clean
+		$(RMR) $(BINDIR)
+		cd $(LIBDIR) && make fclean
 
 re: fclean all
-
-re_b: fclean
 
 .PHONY: all clean fclean re

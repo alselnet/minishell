@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:19:06 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 14:02:23 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:27:24 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_token	*tk_new(char *content)
 {

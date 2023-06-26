@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 19:30:15 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/19 17:39:24 by aselnet          ###   ########.fr       */
+/*   Created: 2023/06/22 18:16:19 by aselnet           #+#    #+#             */
+/*   Updated: 2023/06/22 18:16:43 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "libft.h"
 
-void	init_table(t_lexing *ltable)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	ltable->tklist_head = 0;
-	ltable->input = 0;
-	ltable->tklist_size = 0;
+	int	i;
+
+	i = 0;
+	while ((s1[i] == s2[i]) && s1[i] && s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

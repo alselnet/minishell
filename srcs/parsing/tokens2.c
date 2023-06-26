@@ -6,11 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 15:25:45 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:29:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	tk_add_back(t_token **head, t_token *new)
 {
@@ -87,4 +87,32 @@ t_token	*tk_merge(t_token **head, t_token *token1, t_token *token2)
 	tk_delone(token1);
 	tk_delone(token2);
 	return (new);
+}
+
+t_token	*tk_delone_and_link(t_token **head, t_token *token)
+{
+	t_token	*ret;
+
+	ret = 0;
+	if (!token || !head || !*head)
+		return (0);
+	else if (!token->next && token->prev)
+	{
+		token->prev->next = 0;
+		ret = token->prev;
+	}
+	else if (token->next && !token->prev)
+	{
+		*head = token->next;
+		token->next->prev = 0;
+		ret = *head;
+	}
+	else if (token->next && token->prev)
+	{
+		token->prev->next = token->next;
+		token->next->prev = token->prev;
+		ret = token->prev;
+	}
+	tk_delone(token);
+	return (ret);
 }

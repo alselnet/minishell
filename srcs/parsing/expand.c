@@ -6,28 +6,25 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/25 18:38:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:47:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-extern int	g_monitor;
-
-void	update_token_content(t_token *token, char *variable)
+int	update_token_content(t_token *token, char *variable)
 {
-	int		i;
-	char	*newcontent;
-
-	i = 0;
-	while (token->content[i])
-		i++;
-	while (token->content[--i] != '$')
-		token->content[i] = 0;
-	token->content[i] = 0;
-	newcontent = ft_strjoin(token->content, variable);
-	free(token->content);
-	token->content = newcontent;
+	if (!check_token_end(token))
+	{
+		if (!update_content_full(token, variable))
+			return (0);
+	}
+	else if (check_token_end(token))
+	{
+		if (!update_content_partial(token, variable))
+			return (0);
+	}
+	return (1);
 }
 
 int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
@@ -43,17 +40,19 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	while (cursor && *cursor != '$')
 		cursor++;
 	cursor++;
-	while (*(cursor + i))
+	while (*(cursor + i) && (ft_isalnum(*(cursor + i))))
 		i++;
-	while (env && *env && ft_strncmp(cursor, *env, i - 1) != 0)
+	while (env && *env && ft_strenvcmp(cursor, *env, i) != 0)
 		env++;
 	if (!*env || !**env)
-		return (free_structs(ltable, data_env, "Variable not found\n", 1));
+		token = tk_delone_and_link(&ltable->tklist_head, token);
+	if (!*env || !**env)
+		return (1);
 	variable = extract_variable_value(env);
 	if (!variable)
-		return (free_structs(ltable, data_env, "Variable expand failed\n", 1));
-	update_token_content(token, variable);
-	free(variable);
+		return (free_structs(ltable, data_env, "cannot allocate memory\n", 1));
+	if (!update_token_content(token, variable))
+		return (free_structs(ltable, data_env, "cannot allocate memory\n", 1));
 	return (1);
 }
 
@@ -62,12 +61,15 @@ char	*clean_up_quotes(char *oldcontent,
 {
 	char	*newcontent;
 
-	newcontent = ft_strtrim(oldcontent, "\'\"");
+	if (ft_strlen(oldcontent) < 2)
+		return (0);
+	newcontent = ft_calloc(sizeof(char), ft_strlen(oldcontent) - 1);
 	if (!newcontent)
 	{
-		free_structs(ltable, data_env, "Variable expand failed\n", 1);
+		free_structs(ltable, data_env, "cannot allocate memory", 1);
 		return (0);
 	}
+	ft_strlcpy(newcontent, oldcontent + 1, ft_strlen(oldcontent) - 1);
 	return (newcontent);
 }
 
@@ -86,7 +88,7 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)
-				return (0);
+				return (1); // a verifier
 			free(browse->content);
 			browse->content = no_quote_content;
 		}
@@ -109,7 +111,7 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 				&& ft_strlen(browse->content) == 2)
 			{
 				free(browse->content);
-				browse->content = ft_itoa(g_monitor);
+				browse->content = ft_itoa(g_minishell.exit_status);
 			}
 			else
 			{

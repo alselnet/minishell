@@ -6,11 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/24 17:23:31 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:48:10 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 char	last_char(char *str)
 {
@@ -33,19 +33,43 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		if (browse->content[0] == '\''
 			&& (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\''))
-			return (free_structs(ltable, data_env, "error : single \'\n", 1));
+			return (free_structs(ltable, data_env, "syntax error\n", 1));
 		else if (browse->content[0] == '\"' && (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\"'))
-			return (free_structs(ltable, data_env, "error : single \"\n", 1));
+			return (free_structs(ltable, data_env, "syntax error\n", 1));
 		else if (ft_strmatch(browse->content, "<|>"))
 		{
 			if (!browse->next || (!browse->prev && browse->content[0] != '<')
 				|| (ft_strlen(browse->content) > 1
 					&& browse->content[0] != browse->content[1]))
 				return (free_structs(ltable, data_env,
-						"wrong redirection\n", 1));
+						"syntax error\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
 				return (free_structs(ltable, data_env, "|| not supported\n", 1));
+		}
+		browse = browse->next;
+	}
+	return (1);
+}
+
+int	init_outfiles(t_lexing *ltable)
+{
+	t_token	*browse;
+	int		fd;
+
+	fd = 0;
+	browse = ltable->tklist_head;
+	while (browse)
+	{
+		if (browse->type == 'R' && browse->content[0] == '>')
+		{
+			if (browse->next)
+			{
+				fd = open (browse->next->content, O_CREAT | O_WRONLY, 0664);
+				if (fd < 0)
+					return (0);
+				close (fd);
+			}
 		}
 		browse = browse->next;
 	}
