@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 18:20:30 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:02:54 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 18:19:25 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_path(char **envp)
 	i = -1;
 	while (envp[++i])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5))
+		if (!ft_strncmp(envp[i], "PATH=", 5))
 			return (0);
 	}
 	return (1);
