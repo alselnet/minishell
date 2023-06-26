@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:16:49 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:57:24 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 	{
 		write(2, "./minishell doesn't take any arguments\n", 39);
-		return (free_array(g_minishell.data_env.envp));
+		free_array(g_minishell.data_env.envp);
+		return (127);
 	}
 	minishell(&g_minishell.ltable, &g_minishell.data_env);
 	return (0);

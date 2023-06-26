@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:05:19 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:46:54 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 	}
 	if (!merge_flags(ltable))
 		return (free_structs(ltable, data_env,
-				"Token merge failure\n", 1));
+				"cannot allocate memory\n", 1));
 	return (1);
 }

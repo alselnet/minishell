@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:17 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:37:53 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	if (mode == 2)
 		free_array(data_env->envp);
 	ft_putstr_fd(error_msg, 2);
+	g_minishell.exit_status = 258;
 	return (0);
 }

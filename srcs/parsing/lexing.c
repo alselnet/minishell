@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:06 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:47:55 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	create_redir_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 		new = tk_new(ft_substr(ltable->input, *reader, 1));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"Unable to allocate token content\n", 1));
+				"cannot allocate memory\n", 1));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader = *reader + 1;
 	return (1);
@@ -56,11 +56,11 @@ int	create_quoted_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 	quote_char = ltable->input[*reader];
 	quote_len = find_quote_len(ltable, *reader, quote_char);
 	if (!quote_len)
-		return (free_structs(ltable, data_env, "Syntax error\n", 1));
+		return (free_structs(ltable, data_env, "syntax error\n", 1));
 	new = tk_new(ft_substr(ltable->input, *reader, quote_len));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"Unable to allocate token content\n", 1));
+				"cannot allocate memory\n", 1));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader += quote_len;
 	return (1);
@@ -78,11 +78,11 @@ int	create_regular_token(t_lexing *ltable,
 		&& !ft_isinbase(ltable->input[*reader + count], "<|>\'\" \t"))
 		count++ ;
 	if (!count)
-		return (free_structs(ltable, data_env, "Token length count error\n", 1));
+		return (free_structs(ltable, data_env, "token length count error\n", 1));
 	new = tk_new(ft_substr(ltable->input, *reader, count));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"Unable to allocate token content\n", 1));
+				"cannot allocate memory\n", 1));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader += count;
 	return (1);
