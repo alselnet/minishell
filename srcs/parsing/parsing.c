@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 18:38:29 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:16:44 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 						"Syntax error\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
 				return (free_structs(ltable, data_env, "|| not supported\n", 1));
+		}
+		browse = browse->next;
+	}
+	return (1);
+}
+
+int	init_outfiles(t_lexing *ltable)
+{
+	t_token	*browse;
+	int		fd;
+
+	fd = 0;
+	browse = ltable->tklist_head;
+	while (browse)
+	{
+		if (browse->type == 'R' && browse->content[0] == '>')
+		{
+			if (browse->next)
+			{
+				fd = open (browse->next->content, O_CREAT | O_WRONLY, 0664);
+				if (fd < 0)
+					return (0);
+				close (fd);
+			}
 		}
 		browse = browse->next;
 	}

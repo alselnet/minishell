@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 02:57:32 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:16:54 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int				create_token_list(t_lexing *ltable, t_data_env *data_env);
 // parsing.c
 char			last_char(char *str);
 int				parse_token_list(t_lexing *ltable, t_data_env *data_env);
+int				init_outfiles(t_lexing *ltable);
 
 // quit.c
 int				free_array(char **arr);
