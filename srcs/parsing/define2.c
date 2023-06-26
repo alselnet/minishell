@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 18:29:54 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 03:05:19 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,6 @@ void	define_args(t_lexing *ltable)
 			browse->type = 'A';
 		browse = browse->next;
 	}
-}
-
-char	*find_cmd_path(char	*cmd_name, char **envp)
-{
-	int		i;
-	char	*cmd;
-	char	*cmd_path;
-	char	**possible_paths;
-
-	while (ft_strncmp("PATH", *envp, 4) != 0)
-		envp++;
-	possible_paths = ft_split(*envp + 5, ':');
-	i = -1;
-	while (possible_paths[++i])
-	{
-		cmd = ft_strjoin("/", cmd_name);
-		cmd_path = ft_strjoin(possible_paths[i], cmd);
-		if (access(cmd_path, X_OK) == 0)
-		{
-			free_array(possible_paths);
-			free (cmd);
-			return (cmd_path);
-		}
-		free (cmd);
-		free (cmd_path);
-	}
-	free_array(possible_paths);
-	return (0);
 }
 
 int	merge_flags(t_lexing *ltable)
@@ -73,11 +45,11 @@ int	merge_flags(t_lexing *ltable)
 	return (1);
 }
 
-int	check_access(t_token *token, t_data_env *data_env)
+void	check_access(t_token *token, t_data_env *data_env)
 {
 	char	*cmd_path;
 
-	if (!access(token->content, X_OK) || !access_builtin(token))
+	if (!access(token->content, X_OK))
 		token->type = 'C';
 	else
 	{
@@ -88,14 +60,15 @@ int	check_access(t_token *token, t_data_env *data_env)
 			free(cmd_path);
 		}
 	}
-	return (1);
 }
 
-int	define_cmds(t_lexing *ltable, t_data_env *data_env)
+void	access_cmds(t_lexing *ltable, t_data_env *data_env)
 {
 	t_token	*browse;
 
 	browse = ltable->tklist_head;
+	if (check_path(data_env->envp))
+		return ;
 	while (browse)
 	{
 		if (!browse->type)
@@ -112,6 +85,24 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 		}
 		if (browse)
 			browse = browse->next;
+	}
+	return ;
+}
+
+int	define_cmds(t_lexing *ltable, t_data_env *data_env)
+{
+	t_token	*browse;
+
+	browse = ltable->tklist_head;
+	access_cmds(ltable, data_env);
+	while (browse)
+	{
+		if (!browse->type)
+		{
+			if (!check_builtins(browse))
+				browse->type = 'C';
+		}
+		browse = browse->next;
 	}
 	if (!merge_flags(ltable))
 		return (free_structs(ltable, data_env,

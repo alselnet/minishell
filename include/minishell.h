@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/25 18:49:44 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/26 02:57:32 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,17 @@ int				define_files(t_lexing *ltable);
 
 // define2.c
 void			define_args(t_lexing *ltable);
-char			*find_cmd_path(char	*cmd_name, char **envp);
 int				merge_flags(t_lexing *ltable);
-int				check_access(t_token *token, t_data_env *data_env);
+void			check_access(t_token *token, t_data_env *data_env);
 int				define_cmds(t_lexing *ltable, t_data_env *data_env);
 
 // define3.c
-int				access_builtin(t_token *token);
+int				check_builtins(t_token *token);
+int				check_path(char **envp);
+char			*find_cmd_path(char	*cmd_name, char **envp);
 
 // expand.c
-int			update_token_content(t_token *token, char *variable);
+int				update_token_content(t_token *token, char *variable);
 int				expand_token(
 					t_token *token, t_lexing *ltable, t_data_env *data_env);
 char			*clean_up_quotes(
