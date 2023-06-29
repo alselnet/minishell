@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/26 19:00:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:33:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_echo(int argc, char **argv)
 	has_option = 0;
 	if (argc == 1)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		ft_exit_utils(EXIT_SUCCESS, 1);
 	}
 	has_option = ft_check_option(argv[1]);

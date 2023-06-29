@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/29 08:58:48 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:23:55 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int				ft_exe_builtin1(
 // ft_fill_cmd.c
 void			ft_fill_cmd(t_cmd *cmd, t_token *lst);
 void			ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst);
+void			ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst);
 char			*ft_merge_cmd(t_token *lst);
 char			*ft_strjoin_free(char *str1, char *str2);
 

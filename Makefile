@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/29 09:05:01 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/29 09:25:27 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,7 @@ $(OBJDIR):
 
 clean:
 		$(RMR) $(OBJDIR)
+		cd $(LIBDIR) && make clean
 
 fclean: clean
 		$(RMR) $(BINDIR)

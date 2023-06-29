@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/29 09:14:17 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:27:53 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 
 void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 {
-	char	*outfile;
-
 	if (lst->content[0] == '<')
 	{
 		if (cmd->fd_in == -1)
@@ -50,6 +48,13 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 		if (cmd->fd_in == -1)
 			ft_error_no_such_file(lst->next->content);
 	}
+	ft_fill_cmd_for_type_r2(cmd, lst);
+}
+
+void	ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst)
+{
+	char	*outfile;
+
 	outfile = lst->next->content;
 	if (lst->content[0] == '>')
 	{
