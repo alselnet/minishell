@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/29 07:57:33 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:58:48 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_cmd
 	int		has_cmd;
 	char	*first_arg;
 	int		first_arg_done;
+	int		fd_heredoc;
 }				t_cmd;
 
 // ft_close.c
@@ -203,6 +204,9 @@ void			ft_fill_argc(t_cmd *cmd);
 
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);
+
+//ft_heredoc.c
+void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head);
 
 /////////////////////////////// BUILTINS /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

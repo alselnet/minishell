@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:31:47 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 16:07:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/29 08:59:05 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	ft_init_cmd(t_cmd *cmd)
 	cmd->has_cmd = 0;
 	cmd->first_arg = NULL;
 	cmd->first_arg_done = 0;
+	cmd->fd_heredoc = -2;
 }

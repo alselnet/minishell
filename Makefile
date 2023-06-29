@@ -6,12 +6,12 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/29 07:55:48 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/29 09:05:01 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=32
 IFLAGS = -I$(INCDIR) -I$(LIBDIR)
 LFLAGS = -lreadline -L$(LIBDIR) -lft
 
@@ -36,6 +36,7 @@ EXEC_FILES = ft_close.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
 			ft_init_cmd.c \
+			ft_heredoc.c \
 
 PARSING_FILES = define.c \
 				define2.c \

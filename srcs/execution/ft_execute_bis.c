@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:28:04 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/29 07:38:36 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:14:43 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd)
 		ft_error(1);
 	ft_close(&data_env->stdout);
 	ft_close_all_fds();
-	//ft_unlink(hdoc);
+	unlink(".hdoc.txt");
 	ft_free_cmd(cmd);
 }
