@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:16:54 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/29 07:57:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_token //liste doublement chainée contenant deux variables
 	struct s_token	*prev;
 	struct s_token	*next;
 	char			type;
+	char			join_prev;
+	char			join_next;
 }	t_token;
 
 typedef struct s_lexing
@@ -93,10 +95,13 @@ int				create_regular_token(
 					t_lexing *ltable, t_data_env *data_env, int *reader);
 int				create_token_list(t_lexing *ltable, t_data_env *data_env);
 
+//lexing2.c
+void			define_joins(t_lexing *ltable, t_token *quoted, int reader, int quote_len);
+
 // parsing.c
 char			last_char(char *str);
 int				parse_token_list(t_lexing *ltable, t_data_env *data_env);
-int				init_outfiles(t_lexing *ltable);
+int				init_outfiles(t_lexing *ltable, t_data_env *data_env);
 
 // quit.c
 int				free_array(char **arr);
@@ -121,6 +126,9 @@ void			tk_addto(t_token **head, t_token *new, int pos);
 void			tk_moveto(t_token **head, t_token *token, int pos);
 t_token			*tk_merge(t_token **head, t_token *token1, t_token *token2);
 t_token			*tk_delone_and_link(t_token **head, t_token *token);
+
+//tokens3.c
+t_token			*tk_merge_quote(t_token **head, t_token *token1, t_token *token2);
 
 /////////////////////////////// EXECUTION ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

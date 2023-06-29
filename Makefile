@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/25 19:19:35 by aselnet          ###   ########.fr        #
+#    Updated: 2023/06/29 07:55:48 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,11 +43,13 @@ PARSING_FILES = define.c \
 				expand.c \
 				expand2.c \
 				lexing.c \
+				lexing2.c \
 				parsing.c \
 				quit.c \
 				temp.c \
 				tokens.c \
 				tokens2.c \
+				tokens3.c \
 
 BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_builtins_utils.c \
