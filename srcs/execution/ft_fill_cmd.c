@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/26 21:20:31 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/29 09:27:53 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 			return ;
 		if (cmd->fd_in != -2)
 			close(cmd->fd_in);
-		cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
+		if (lst->content[1] == '<')
+			cmd->fd_in = open (".hdoc.txt",O_RDONLY, 0500);
+		else
+			cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
 		if (cmd->fd_in == -1)
 			ft_error_no_such_file(lst->next->content);
 	}

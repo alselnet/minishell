@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/25 19:29:29 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:10:00 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,13 @@ t_token	*tk_delone_and_link(t_token **head, t_token *token)
 		*head = token->next;
 		token->next->prev = 0;
 		ret = *head;
+	}
+	else if (!token->prev && !token->next)
+	{
+		tk_delone(token);
+		g_minishell.exit_status = 0;
+		*head = 0;
+		return (0);
 	}
 	else if (token->next && token->prev)
 	{

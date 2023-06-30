@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:55:55 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/30 17:12:09 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ void	ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env)
 
 void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
 {
-	cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
+	if (!access(cmd->argv[0], X_OK))
+		cmd->cmd_path = cmd->argv[0];
+	else
+		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 	if (cmd->cmd_path == NULL)
 		ft_error(2);
 	close(data_env->stdin);

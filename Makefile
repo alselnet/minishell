@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
+#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/26 21:15:54 by orazafy          ###   ########.fr        #
+#    Updated: 2023/06/30 15:06:17 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=32
 IFLAGS = -I$(INCDIR) -I$(LIBDIR)
 LFLAGS = -lreadline -L$(LIBDIR) -lft
 
@@ -36,6 +36,7 @@ EXEC_FILES = ft_close.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
 			ft_init_cmd.c \
+			ft_heredoc.c \
 
 PARSING_FILES = define.c \
 				define2.c \
@@ -43,11 +44,13 @@ PARSING_FILES = define.c \
 				expand.c \
 				expand2.c \
 				lexing.c \
+				lexing2.c \
 				parsing.c \
 				quit.c \
 				temp.c \
 				tokens.c \
 				tokens2.c \
+				tokens3.c \
 
 BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_builtins_utils.c \

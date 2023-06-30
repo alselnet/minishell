@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:48:10 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 15:22:21 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,41 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 	return (1);
 }
 
+int	join_quotes(t_lexing *ltable, t_data_env *data_env)
+{
+	t_token	*browse;
+
+	browse = ltable->tklist_head;
+	while (browse)
+	{
+		if (browse->join_prev)
+		{
+			browse = tk_merge_quote(&ltable->tklist_head,
+					browse->prev, browse);
+			if (!browse)
+				return (free_structs(ltable, data_env,
+						"cannot allocate memory\n", 4));
+		}
+		if (browse->join_next)
+		{
+			browse = tk_merge_quote(&ltable->tklist_head,
+					browse, browse->next);
+			if (!browse)
+				return (free_structs(ltable, data_env,
+						"cannot allocate memory\n", 4));
+		}
+		browse = browse ->next;
+	}
+	return (1);
+}
+
 int	init_outfiles(t_lexing *ltable)
 {
 	t_token	*browse;
 	int		fd;
 
 	fd = 0;
+
 	browse = ltable->tklist_head;
 	while (browse)
 	{

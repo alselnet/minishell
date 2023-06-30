@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:46:50 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:06:09 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	define_redirs(t_lexing *ltable, t_data_env *data_env)
 		browse = browse->next;
 	}
 	browse = ltable->tklist_head;
-	while (browse->next)
+	while (browse->next) // deplacer vers parsing
 	{
 		if (browse->type && browse->type == browse->next->type)
 			return (free_structs(ltable, data_env,

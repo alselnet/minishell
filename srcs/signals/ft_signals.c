@@ -6,11 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:04:03 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 18:42:15 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 14:06:26 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* #include "minishell.h"
+#include "minishell.h"
 
 void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 {
@@ -44,4 +44,4 @@ void	ft_init_signals(void)
 		exit(1);
 	if (sigaction(SIGQUIT, &sa, 0) == -1)
 		exit(1);
-} */
+}

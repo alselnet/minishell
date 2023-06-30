@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 13:51:13 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 17:22:35 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	create_quoted_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 		return (free_structs(ltable, data_env,
 				"cannot allocate memory\n", 3));
 	tk_add_back(&ltable->tklist_head, new);
+	define_joins(ltable, new, *reader, quote_len);
 	*reader += quote_len;
 	return (1);
 }

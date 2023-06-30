@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   lexing2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 17:22:39 by aselnet          ###   ########.fr       */
+/*   Created: 2023/06/29 07:12:50 by aselnet           #+#    #+#             */
+/*   Updated: 2023/06/29 08:07:05 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	free_array(char **arr)
+void	define_joins(t_lexing *ltable, t_token *quoted,
+	int reader, int quote_len)
 {
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		free(arr[i]);
-	free (arr);
-	return (0);
-}
-
-int	free_structs(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg,	char mode)
-{
-	tk_clear(&ltable->tklist_head);
-	if (mode == 2 || mode == 4)
-		free_array(data_env->envp);
-	ft_putstr_fd(error_msg, 2);
-	if (mode == 3 || mode == 4)
-		exit(EXIT_FAILURE);
-	g_minishell.exit_status = 258;
-	return (0);
+	if (ltable->input[reader + quote_len] && ltable->input[reader + quote_len]
+		!= ' ' && ltable->input[reader + quote_len] != '\t')
+			quoted->join_next = 1;
+	if (!reader)
+		return ;
+	else if (ltable->input [reader - 1] != ' '
+		&& ltable->input[reader - 1] != '\t')
+		quoted->join_prev = 1;
 }

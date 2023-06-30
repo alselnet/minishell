@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:25:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 18:41:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:59:47 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void	ft_error(int status)
 	ft_free_env(g_minishell.data_env.envp, g_minishell.data_env.size);
 	tk_clear(&g_minishell.ltable.tklist_head);
 	free(g_minishell.ltable.input);
-	//rl_clear_history();
+	rl_clear_history();
 	exit(status);
 }

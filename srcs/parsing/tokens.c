@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:19:06 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:24 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/29 07:18:17 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_token	*tk_new(char *content)
 	new->type = 0;
 	new->prev = 0;
 	new->next = 0;
+	new->join_prev = 0;
+	new->join_next = 0;
 	return (new);
 }
 
