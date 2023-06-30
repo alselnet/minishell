@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:37:53 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:50:41 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ int	free_array(char **arr)
 int	free_structs(t_lexing *ltable, t_data_env *data_env,
 			char *error_msg,	char mode)
 {
-	if (mode == 1 || mode == 2)
-		tk_clear(&ltable->tklist_head);
-	if (mode == 2)
+	tk_clear(&ltable->tklist_head);
+	if (mode == 2 || mode == 4)
 		free_array(data_env->envp);
 	ft_putstr_fd(error_msg, 2);
+	if (mode == 3 || mode == 4)
+		exit(EXIT_FAILURE);
 	g_minishell.exit_status = 258;
 	return (0);
 }

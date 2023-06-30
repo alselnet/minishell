@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:47:01 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:54:20 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 		return (1);
 	variable = extract_variable_value(env);
 	if (!variable)
-		return (free_structs(ltable, data_env, "cannot allocate memory\n", 1));
+		return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
 	if (!update_token_content(token, variable))
-		return (free_structs(ltable, data_env, "cannot allocate memory\n", 1));
+		return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
 	return (1);
 }
 
@@ -66,7 +66,7 @@ char	*clean_up_quotes(char *oldcontent,
 	newcontent = ft_calloc(sizeof(char), ft_strlen(oldcontent) - 1);
 	if (!newcontent)
 	{
-		free_structs(ltable, data_env, "cannot allocate memory", 1);
+		free_structs(ltable, data_env, "cannot allocate memory", 3);
 		return (0);
 	}
 	ft_strlcpy(newcontent, oldcontent + 1, ft_strlen(oldcontent) - 1);
@@ -88,7 +88,7 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)
-				return (1); // a verifier
+				return (1); 
 			free(browse->content);
 			browse->content = no_quote_content;
 		}

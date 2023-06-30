@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:57:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:57:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	{
 		ltable->input = readline("> ");
 		if (!ltable->input)
-			//return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
-			return (free_array(data_env->envp), printf("exit\n"));
+			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n")); //comment on mac
+			//return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);

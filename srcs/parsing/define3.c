@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 18:20:30 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 18:19:25 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:57:39 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,4 @@ int	check_path(char **envp)
 			return (0);
 	}
 	return (1);
-}
-
-char	*find_cmd_path(char	*cmd_name, char **envp)
-{
-	int		i;
-	char	*cmd;
-	char	*cmd_path;
-	char	**possible_paths;
-
-	while (ft_strncmp("PATH", *envp, 4) != 0)
-		envp++;
-	possible_paths = ft_split(*envp + 5, ':');
-	i = -1;
-	while (possible_paths[++i])
-	{
-		cmd = ft_strjoin("/", cmd_name);
-		cmd_path = ft_strjoin(possible_paths[i], cmd);
-		if (access(cmd_path, X_OK) == 0)
-		{
-			free_array(possible_paths);
-			free (cmd);
-			return (cmd_path);
-		}
-		free (cmd);
-		free (cmd_path);
-	}
-	free_array(possible_paths);
-	return (0);
 }

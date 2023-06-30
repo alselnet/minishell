@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 03:47:55 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:51:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	create_redir_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 		new = tk_new(ft_substr(ltable->input, *reader, 1));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"cannot allocate memory\n", 1));
+				"cannot allocate memory\n", 3));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader = *reader + 1;
 	return (1);
@@ -60,7 +60,7 @@ int	create_quoted_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 	new = tk_new(ft_substr(ltable->input, *reader, quote_len));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"cannot allocate memory\n", 1));
+				"cannot allocate memory\n", 3));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader += quote_len;
 	return (1);
@@ -82,7 +82,7 @@ int	create_regular_token(t_lexing *ltable,
 	new = tk_new(ft_substr(ltable->input, *reader, count));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
-				"cannot allocate memory\n", 1));
+				"cannot allocate memory\n", 3));
 	tk_add_back(&ltable->tklist_head, new);
 	*reader += count;
 	return (1);

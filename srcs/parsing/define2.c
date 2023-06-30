@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/26 21:30:56 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/06/30 13:56:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	merge_flags(t_lexing *ltable)
 	return (1);
 }
 
-int	check_access(t_token *token, t_data_env *data_env)
+void	check_access(t_token *token, t_data_env *data_env)
 {
 	char	*cmd_path;
 
@@ -88,7 +88,7 @@ int	check_access(t_token *token, t_data_env *data_env)
 			free(cmd_path);
 		}
 	}
-	return (1);
+	return ;
 }
 
 int	define_cmds(t_lexing *ltable, t_data_env *data_env)
@@ -107,6 +107,6 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 	}
 	if (!merge_flags(ltable))
 		return (free_structs(ltable, data_env,
-				"Token merge failure\n", 1));
+				"cannot allocate memory", 3));
 	return (1);
 }
