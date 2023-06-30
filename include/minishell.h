@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/29 09:23:55 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 15:22:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void			define_joins(t_lexing *ltable, t_token *quoted, int reader, int quote_len
 // parsing.c
 char			last_char(char *str);
 int				parse_token_list(t_lexing *ltable, t_data_env *data_env);
-int				init_outfiles(t_lexing *ltable, t_data_env *data_env);
+int				init_outfiles(t_lexing *ltable);
+int				join_quotes(t_lexing *ltable, t_data_env *data_env);
 
 // quit.c
 int				free_array(char **arr);

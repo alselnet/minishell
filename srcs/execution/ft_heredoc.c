@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/29 09:14:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:55:35 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*gnl(void)
 	buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
 	if (!buffer)
 		return (0);
-	read(0, buffer, BUFFER_SIZE);
+	read(g_minishell.data_env.stdin, buffer, BUFFER_SIZE);
 	return (buffer);
 }
 
