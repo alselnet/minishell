@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/30 15:06:17 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/02 22:47:51 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ EXEC_FILES = ft_close.c \
 			ft_execute_bis.c \
 			ft_execute_ter.c \
 			ft_execute.c \
+			ft_fill_cmd_type_r.c \
 			ft_fill_cmd.c \
 			ft_fork.c \
 			ft_free_cmd.c \

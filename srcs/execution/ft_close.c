@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:19:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 16:05:49 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/03 00:20:43 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,6 @@ void	ft_close_all_fds(void)
 		ft_close(&cmd.pipefd[0]);
 	if (cmd.pipefd[1] != -2 && cmd.pipefd[1] != -1)
 		ft_close(&cmd.pipefd[1]);
+	if (cmd.fd_heredoc != -2 && cmd.fd_heredoc != -1)
+		ft_close(&cmd.fd_heredoc);
 }

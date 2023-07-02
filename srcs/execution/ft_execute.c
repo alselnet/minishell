@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/29 09:07:55 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 00:27:34 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,42 +28,44 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		builtin_done = ft_exe_builtin1(&g_minishell.cmd, data_env, pipe_before);
 		ft_set_stdin_to_null(builtin_done);
 		if (builtin_done == 0)
-		{
-			if (ft_exec_cmd(&g_minishell.cmd, data_env) == -1)
-				break ;
-		}
+			ft_fork(&g_minishell.cmd, data_env);
+		else
+			g_minishell.status_done = 1;
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
 		pipe_before = ft_init_pipe_before(&g_minishell.cmd);
 		ft_free_cmd(&g_minishell.cmd);
 		builtin_done = 0;
 	}
+	ft_waitpid(&g_minishell.cmd);
 	ft_restore_before_next_prompt(data_env, &g_minishell.cmd);
 }
 
-int	ft_exec_cmd(t_cmd *cmd, t_data_env *data_env)
+void	ft_waitpid(t_cmd *cmd)
 {
+	int	res;
 	int	status;
 
+	res = 0;
 	status = 0;
-	ft_fork(cmd, data_env);
-	if (waitpid(cmd->pid, &status, 0) == -1)
+	while (res != -1 || errno != ECHILD)
 	{
-		if (errno != EINTR)
-			ft_error(1);
-		return (-1);
-	}
-	if (cmd->final_pid != 0)
-	{
+		res = waitpid(-1, &status, 0);
+		if (res == cmd->final_pid)
+		{
+			if (WIFEXITED(status))
+				g_minishell.exit_status = WEXITSTATUS(status);
+			g_minishell.status_done = 1;
+		}
 		if (WIFEXITED(status))
-			g_minishell.exit_status = WEXITSTATUS(status);
-	}
-	if (WIFEXITED(status))
-	{
-		if (WEXITSTATUS(status) == 2)
+		{
+			if (WEXITSTATUS(status) == 200)
+				ft_error(1);
+		}
+		if (res == -1 && (errno != EINTR && errno != ECHILD))
 			ft_error(1);
 	}
-	return (0);
+	return ;
 }
 
 int	ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env, int pipe_before)

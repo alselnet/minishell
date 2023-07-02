@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:50:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/02 23:36:11 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_pwd(void)
 	if (cwd == NULL)
 	{
 		perror("");
-		ft_error(2);
+		ft_error(200);
 	}
 	printf("%s\n", current_path);
 	ft_exit_utils(EXIT_SUCCESS, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 17:21:46 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/02 23:35:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 {
 	while (1)
 	{
+		g_minishell.status_done = 0;
 		ltable->input = readline("> ");
 		if (!ltable->input)
 			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n")); //comment on mac
-			//return (free_array(data_env->envp), printf("exit\n"));
+			// return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
@@ -50,8 +51,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 			g_minishell.monitor = expand_token_list(ltable, data_env);
 		if (g_minishell.monitor)
 			g_minishell.monitor = define_token_types(ltable, data_env);
-		if (g_minishell.monitor)
-			print_token_list(&ltable->tklist_head);
+		// if (g_minishell.monitor)
+		// 	print_token_list(&ltable->tklist_head);
 		if (g_minishell.monitor)
 			g_minishell.monitor = init_outfiles(ltable);
 		if (g_minishell.monitor)

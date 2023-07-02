@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 17:20:41 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 00:22:48 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ t_token			*tk_merge_quote(t_token **head, t_token *token1, t_token *token2);
 typedef struct s_cmd
 {
 	int		argc;
-	char	*cmd_value;
 	char	**argv;
 	int		pipe;
 	int		pipefd[2];
@@ -178,16 +177,20 @@ int				ft_exec_exit(int pipe_before, t_cmd *cmd);
 
 // ft_execute.c
 void			ft_execute(t_token *tklist_head, t_data_env *data_env);
+void			ft_waitpid(t_cmd *cmd);
 int				ft_exec_cmd(t_cmd *cmd, t_data_env *data_env);
 int				ft_exe_builtin1(
 					t_cmd *cmd, t_data_env *data_env, int pipe_before);
 
-// ft_fill_cmd.c
-void			ft_fill_cmd(t_cmd *cmd, t_token *lst);
+// ft_fill_cmd_type_r.c
 void			ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst);
 void			ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst);
-char			*ft_merge_cmd(t_token *lst);
-char			*ft_strjoin_free(char *str1, char *str2);
+
+// ft_fill_cmd.c
+void			ft_fill_cmd(t_cmd *cmd, t_token *lst);
+void			ft_fill_argc_argv(t_cmd *cmd, t_token *lst);
+void			ft_split_cmd_option(t_cmd *cmd, t_token *lst);
+void			ft_malloc_argv(t_cmd *cmd, t_token *lst);
 
 // ft_fork.c
 void			ft_fork(t_cmd *cmd, t_data_env *data_env);
@@ -201,8 +204,6 @@ void			ft_free_cmd(t_cmd *cmd);
 
 // ft_get_cmd.c
 t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd);
-void			ft_fill_argc_argv(t_cmd *cmd);
-void			ft_fill_argc(t_cmd *cmd);
 
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);
@@ -292,6 +293,7 @@ void			ft_exit(int argc, char **argv);
 
 // ft_signals.c
 void			handler_function(int signum, siginfo_t *siginfo, void *ptr);
+void			ft_sigquit(int signum, siginfo_t *siginfo);
 void			ft_init_signals(void);
 
 /////////////////////////// GLOBAL VARIABLE //////////////////////////////
@@ -302,6 +304,7 @@ typedef struct s_minishell
 	t_lexing	ltable;
 	int			exit_status;
 	int			monitor;
+	int			status_done;
 }				t_minishell;
 
 extern t_minishell	g_minishell;

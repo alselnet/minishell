@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/21 19:05:12 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/02 21:30:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)
 {
 	g_minishell->exit_status = 0;
 	g_minishell->monitor = 0;
+	g_minishell->status_done = 0;
 	ft_init_data_env(&g_minishell->data_env, envp);
 	init_table(&g_minishell->ltable);
 }
