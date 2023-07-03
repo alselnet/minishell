@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:29:42 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:55:32 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	link_tokens(t_token **head, t_token *token, t_token *ret)
 	{
 		tk_delone(token);
 		g_minishell.exit_status = 0;
-		*head = 0;
+		*head = ret;
 		return (0);
 	}
 	else if (token->next && token->prev)
