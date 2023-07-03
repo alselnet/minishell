@@ -29,7 +29,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		ft_set_stdin_to_null(builtin_done);
 		if (builtin_done == 0)
 			ft_fork(&g_minishell.cmd, data_env);
-		else
+		else if (builtin_done == 1 && g_minishell.cmd.final_cmd == 1)
 			g_minishell.status_done = 1;
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
