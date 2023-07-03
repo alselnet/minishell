@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 15:22:21 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:22:28 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	init_outfiles(t_lexing *ltable)
 	int		fd;
 
 	fd = 0;
-
 	browse = ltable->tklist_head;
 	while (browse)
 	{
@@ -102,5 +101,25 @@ int	init_outfiles(t_lexing *ltable)
 		}
 		browse = browse->next;
 	}
+	return (1);
+}
+
+int	parse_redirections(t_lexing *ltable, t_data_env *data_env)
+{
+	t_token	*browse;
+
+	browse = ltable->tklist_head;
+	while (browse->next)
+	{
+		if (browse->type == 'R' && browse->next->type == 'R')
+		{
+			if (browse->content[0] != '|' && browse->next->content[0] != '<')
+				return (free_structs(ltable, data_env,
+						"syntax error\n", 1));
+		}
+		browse = browse->next;
+	}
+	if (!init_outfiles(ltable))
+		return (0);
 	return (1);
 }

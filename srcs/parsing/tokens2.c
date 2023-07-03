@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 16:10:00 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:29:42 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,43 +60,9 @@ void	tk_moveto(t_token **head, t_token *token, int pos)
 	tk_addto(head, token, pos);
 }
 
-t_token	*tk_merge(t_token **head, t_token *token1, t_token *token2)
+int	link_tokens(t_token **head, t_token *token, t_token *ret)
 {
-	t_token	*new;
-	char	*new_content;
-	char	*tmp;
-
-	tmp = ft_strjoin(token1->content, " ");
-	if (!tmp)
-		return (0);
-	new_content = ft_strjoin(tmp, token2->content);
-	if (!new_content)
-		return (0);
-	free (tmp);
-	new = tk_new(new_content);
-	if (!new)
-		return (0);
-	new->prev = token1->prev;
-	new->next = token2->next;
-	if (new->prev)
-		new->prev->next = new;
-	else
-		*head = new;
-	if (new->next)
-		new->next->prev = new;
-	tk_delone(token1);
-	tk_delone(token2);
-	return (new);
-}
-
-t_token	*tk_delone_and_link(t_token **head, t_token *token)
-{
-	t_token	*ret;
-
-	ret = 0;
-	if (!token || !head || !*head)
-		return (0);
-	else if (!token->next && token->prev)
+	if (!token->next && token->prev)
 	{
 		token->prev->next = 0;
 		ret = token->prev;
@@ -120,6 +86,18 @@ t_token	*tk_delone_and_link(t_token **head, t_token *token)
 		token->next->prev = token->prev;
 		ret = token->prev;
 	}
+	return (1);
+}
+
+t_token	*tk_delone_and_link(t_token **head, t_token *token)
+{
+	t_token	*ret;
+
+	ret = 0;
+	if (!token || !head || !*head)
+		return (0);
+	if (!link_tokens(head, token, ret))
+		return (0);
 	tk_delone(token);
 	return (ret);
 }

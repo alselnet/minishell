@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 16:55:35 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:22:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*gnl(void)
 
 t_token	*has_heredoc(t_token *tklist_head)
 {
-	t_token *browse;
+	t_token	*browse;
 
 	browse = tklist_head;
 	while (browse && browse->content[0] != '|')
@@ -37,16 +37,21 @@ t_token	*has_heredoc(t_token *tklist_head)
 	return (0);
 }
 
-void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head)
+void	unlink_heredoc(t_cmd *cmd)
 {
-	t_token	*redir;
-	char	*line;
-
 	if (cmd->fd_heredoc != -2)
 	{
 		cmd->fd_heredoc = -2;
 		unlink(".hdoc.txt");
 	}
+}
+
+void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head)
+{
+	t_token	*redir;
+	char	*line;
+
+	unlink_heredoc(cmd);
 	redir = has_heredoc(tklist_head);
 	if (!redir)
 		return ;
@@ -60,7 +65,7 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head)
 		if (!line)
 			ft_error(1);
 		if (ft_strncmp(redir->next->content,
-			line, ft_strlen(redir->next->content) - 1) == 0)
+				line, ft_strlen(redir->next->content) - 1) == 0)
 			break ;
 		write(cmd->fd_heredoc, line, BUFFER_SIZE);
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 17:22:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:24:49 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 	while (browse)
 	{
 		if (browse->content && (ft_isinbase('\'', browse->content)
-			|| ft_isinbase('\"', browse->content)))
+				|| ft_isinbase('\"', browse->content)))
 		{
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)
-				return (1); 
+				return (1);
 			free(browse->content);
 			browse->content = no_quote_content;
 		}
@@ -113,11 +113,9 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 				free(browse->content);
 				browse->content = ft_itoa(g_minishell.exit_status);
 			}
-			else
-			{
-				if (!expand_token(browse, ltable, data_env) || !ltable->tklist_head)
-					return (0);
-			}
+			else if (!expand_token(browse, ltable, data_env)
+				|| !ltable->tklist_head)
+				return (0);
 		}
 		browse = browse->next;
 	}

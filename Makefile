@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/06/30 15:06:17 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/03 15:06:38 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_exit_utils.c \
 				ft_exit.c
 
-SIGNALS_FILES = ft_signals.c
+//SIGNALS_FILES = ft_signals.c
 
 EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
 PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))

@@ -6,13 +6,13 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/30 16:06:09 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:15:05 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	define_redirs(t_lexing *ltable, t_data_env *data_env)
+int	define_redirs(t_lexing *ltable)
 {
 	t_token	*browse;
 
@@ -21,14 +21,6 @@ int	define_redirs(t_lexing *ltable, t_data_env *data_env)
 	{
 		if (ft_isinbase(browse->content[0], "<|>"))
 			browse->type = 'R';
-		browse = browse->next;
-	}
-	browse = ltable->tklist_head;
-	while (browse->next) // deplacer vers parsing
-	{
-		if (browse->type && browse->type == browse->next->type)
-			return (free_structs(ltable, data_env,
-					"syntax error\n", 1));
 		browse = browse->next;
 	}
 	return (1);
