@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:18:19 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:36:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 {
 	while (1)
 	{
+		g_minishell.status_done = 0;
 		ltable->input = readline("> ");
 		if (!ltable->input)
 			//return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
@@ -50,8 +51,8 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 			g_minishell.monitor = expand_token_list(ltable, data_env);
 		if (g_minishell.monitor)
 			g_minishell.monitor = define_token_types(ltable, data_env);
-		if (g_minishell.monitor)
-			print_token_list(&ltable->tklist_head);
+		// if (g_minishell.monitor)
+		// 	print_token_list(&ltable->tklist_head);
 		if (g_minishell.monitor)
 			g_minishell.monitor = parse_redirections(ltable, data_env);
 		if (g_minishell.monitor)

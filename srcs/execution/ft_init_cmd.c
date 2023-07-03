@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:31:47 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/29 08:59:05 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 00:25:54 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_init_cmd(t_cmd *cmd)
 {
 	cmd->argc = 0;
-	cmd->cmd_value = NULL;
 	cmd->argv = NULL;
 	cmd->pipe = 0;
 	cmd->pipefd[0] = -2;

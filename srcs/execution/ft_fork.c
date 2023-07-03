@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/30 17:12:09 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 00:39:17 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 {
-	if (cmd->pipe == 1 && cmd->fd_out == -2)
+	if (cmd->pipe == 1 && cmd->fd_out == -2 && cmd->fd_out != -1)
 	{
 		if (pipe(cmd->pipefd) == -1)
 			ft_error(1);
@@ -41,24 +41,26 @@ void	ft_redirections(t_cmd *cmd)
 	if (cmd->fd_in != -2 && cmd->fd_in != -1)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			ft_error(2);
+			ft_error(200);
 		ft_close(&cmd->fd_in);
 	}
-	if (cmd->fd_out != -2)
+	if (cmd->fd_out != -2 && cmd->fd_out != -1)
 	{
 		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-			ft_error(2);
+			ft_error(200);
 	}
-	if (cmd->pipe == 1 && cmd->fd_out == -2)
+	if (cmd->pipe == 1 && cmd->fd_out == -2 && cmd->fd_out != -1)
 	{
 		ft_close(&cmd->pipefd[0]);
 		if (dup2(cmd->pipefd[1], STDOUT_FILENO) == -1)
-			ft_error(2);
+			ft_error(200);
 		ft_close(&cmd->pipefd[1]);
 	}
-	if (cmd->fd_out != -2)
+	if (cmd->fd_out != -2 && cmd->fd_out != -1)
 		ft_close(&cmd->fd_out);
 	if (cmd->fd_in == -1)
+		ft_exit_utils(1, 1);
+	if (cmd->fd_out == -1)
 		ft_exit_utils(1, 1);
 }
 
@@ -81,11 +83,11 @@ void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
 	else
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 	if (cmd->cmd_path == NULL)
-		ft_error(2);
+		ft_error(200);
 	close(data_env->stdin);
 	close(data_env->stdout);
 	execve(cmd->cmd_path, cmd->argv, data_env->envp);
-	ft_error(2);
+	ft_error(200);
 }
 
 void	ft_after_fork_parent(t_cmd *cmd)

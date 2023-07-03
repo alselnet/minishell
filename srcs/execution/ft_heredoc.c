@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:22:23 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:34:31 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,24 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head)
 		return ;
 	cmd->fd_heredoc = open(".hdoc.txt", O_CREAT | O_WRONLY, 0664);
 	if (cmd->fd_heredoc < 0)
-		ft_error (1);
+		ft_error(1);
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
 		line = gnl();
 		if (!line)
 			ft_error(1);
+		if (*line == 0)
+		{
+			write(1, "\n", 1);
+			free(line);
+			break ;
+		}
 		if (ft_strncmp(redir->next->content,
 				line, ft_strlen(redir->next->content) - 1) == 0)
 			break ;
 		write(cmd->fd_heredoc, line, BUFFER_SIZE);
 		free(line);
 	}
-	close (cmd->fd_heredoc);
+	ft_close (&cmd->fd_heredoc);
 }

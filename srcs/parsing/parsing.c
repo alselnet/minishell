@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:22:28 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:34:43 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	init_outfiles(t_lexing *ltable)
 			{
 				fd = open (browse->next->content, O_CREAT | O_WRONLY, 0664);
 				if (fd < 0)
-					return (0);
+					return (1);
 				close (fd);
 			}
 		}

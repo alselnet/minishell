@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/03 15:21:56 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:35:48 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 		ft_fill_cmd_for_type_r(cmd, lst);
 	if (lst->type == 'C')
 	{
-		cmd->cmd_value = ft_merge_cmd(lst);
-		if (cmd->cmd_value == NULL)
-			ft_error(1);
+		ft_fill_argc_argv(cmd, lst);
 		cmd->has_cmd = 1;
 	}
 	if (lst->type == 'A')
@@ -33,90 +31,61 @@ void	ft_fill_cmd(t_cmd *cmd, t_token *lst)
 	}
 }
 
-void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
+void	ft_fill_argc_argv(t_cmd *cmd, t_token *lst)
 {
-	if (lst->content[0] == '<')
-	{
-		if (cmd->fd_in == -1)
-			return ;
-		if (cmd->fd_in != -2)
-			close(cmd->fd_in);
-		if (lst->content[1] == '<')
-			cmd->fd_in = open(".hdoc.txt", O_RDONLY, 0500);
-		else
-			cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
-		if (cmd->fd_in == -1)
-			ft_error_no_such_file(lst->next->content);
-	}
-	ft_fill_cmd_for_type_r2(cmd, lst);
-}
-
-void	ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst)
-{
-	char	*outfile;
-
-	outfile = lst->next->content;
-	if (lst->content[0] == '>')
-	{
-		if (cmd->fd_out != -2)
-			close(cmd->fd_out);
-		if (lst->content[1] == '>')
-			cmd->fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0664);
-		else
-			cmd->fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-		if (cmd->fd_out == -1)
-			ft_error(1);
-	}
-}
-
-char	*ft_merge_cmd(t_token *lst)
-{
-	char	*result;
-
-	result = ft_strdup(lst->content);
-	if (result == NULL)
-		ft_error(1);
+	ft_malloc_argv(cmd, lst);
+	ft_split_cmd_option(cmd, lst);
 	if (lst->next == NULL)
-		return (result);
+		return ;
 	lst = lst->next;
 	while (lst != NULL && lst->content[0] != '|')
 	{
 		if (lst->type == 'A')
-			result = ft_strjoin_free(result, " ");
-		if (result == NULL)
-			ft_error(1);
-		if (lst->type == 'A')
-			result = ft_strjoin_free(result, lst->content);
-		if (result == NULL)
+			cmd->argv[cmd->argc++] = ft_strdup(lst->content);
+		if (cmd->argv[cmd->argc - 1] == NULL)
 			ft_error(1);
 		lst = lst->next;
 	}
-	return (result);
 }
 
-char	*ft_strjoin_free(char *str1, char *str2)
+void	ft_split_cmd_option(t_cmd *cmd, t_token *lst)
 {
-	ssize_t	i;
-	ssize_t	j;
-	ssize_t	len1;
-	ssize_t	len2;
-	char	*dest;
+	int		space_pos;
+	int		len_option;
+	char	*content;
 
-	len1 = ft_strlen(str1);
-	len2 = ft_strlen(str2);
-	dest = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
-	if (dest == NULL)
-		return (NULL);
-	i = 0;
-	while (str1[i])
+	content = lst->content;
+	space_pos = ft_srch(' ', content);
+	len_option = ft_strlen(content + space_pos + 1);
+	if (space_pos != -1)
 	{
-		dest[i] = str1[i];
-		i++;
+		cmd->argv[cmd->argc++] = ft_substr(content, 0, space_pos);
+		cmd->argv[cmd->argc++] = ft_substr(content, space_pos + 1, len_option);
+		if (cmd->argv[cmd->argc - 1] == NULL
+			|| cmd->argv[cmd->argc - 2] == NULL)
+			ft_error(1);
 	}
-	j = 0;
-	while (str2[j])
-		dest[i++] = str2[j++];
-	dest[i] = 0;
-	free(str1);
-	return (dest);
+	else
+		cmd->argv[cmd->argc++] = ft_strdup(content);
+	if (cmd->argv[cmd->argc - 1] == NULL)
+		ft_error(1);
+}
+
+void	ft_malloc_argv(t_cmd *cmd, t_token *lst)
+{
+	int	argc;
+
+	argc = 1;
+	if (ft_srch(' ', lst->content) != -1)
+		argc++;
+	while (lst != NULL && lst->content[0] != '|')
+	{
+		if (lst->type == 'A')
+			argc++;
+		lst = lst->next;
+	}
+	cmd->argv = (char **)malloc(sizeof(char *) * (argc + 1));
+	if (cmd->argv == NULL)
+		ft_error(1);
+	cmd->argv[argc] = NULL;
 }
