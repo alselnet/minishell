@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:52:26 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:31:15 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:56:11 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	ft_check_numeric_arg(char **argv, int inside_pipe)
 		if (inside_pipe != 1)
 			write(2, "exit\n", 5);
 		ft_error_numeric("exit", argv[1]);
-		g_minishell.exit_status = 255;
+		g_minishell.exit_status = 2;
 		if (inside_pipe != 1)
-			ft_exit_utils(255, 1);
+			ft_exit_utils(2, 1);
 		return (-1);
 	}
 	return (0);
