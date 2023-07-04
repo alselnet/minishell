@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:56:46 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 12:26:50 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 12:57:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,11 @@ int	ft_check_has_oldpwd(char **envp)
 		return (0);
 }
 
-char	**ft_strdup_env(char **envp, int take_oldpwd)
+char	**ft_strdup_env_2(char **envp, char **env, int size, int take_oldpwd)
 {
-	int		size;
-	char	**env;
-	int		i;
-	int		j;
-	int 	has_oldpwd;
+	int	i;
+	int	j;
 
-	size = ft_compute_env_len(envp);
-	has_oldpwd = ft_check_has_oldpwd(envp);
-	if (has_oldpwd == 1 && take_oldpwd == 0)
-		size--;
-	env = (char **)malloc(sizeof(char *) * (size + 1));
-	if (env == NULL)
-		return (NULL);
 	i = 0;
 	j = 0;
 	while (envp[i])
@@ -79,7 +69,7 @@ char	**ft_strdup_env(char **envp, int take_oldpwd)
 		if ((ft_strcmp_env("OLDPWD=", envp[i]) == 0) && take_oldpwd == 0)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		env[j++] = ft_strdup(envp[i]);
 		if (env[j - 1] == NULL)
@@ -91,4 +81,20 @@ char	**ft_strdup_env(char **envp, int take_oldpwd)
 	}
 	env[size] = NULL;
 	return (env);
+}
+
+char	**ft_strdup_env(char **envp, int take_oldpwd)
+{
+	int		size;
+	char	**env;
+	int		has_oldpwd;
+
+	size = ft_compute_env_len(envp);
+	has_oldpwd = ft_check_has_oldpwd(envp);
+	if (has_oldpwd == 1 && take_oldpwd == 0)
+		size--;
+	env = (char **)malloc(sizeof(char *) * (size + 1));
+	if (env == NULL)
+		return (NULL);
+	return (ft_strdup_env_2(envp, env, size, take_oldpwd));
 }
