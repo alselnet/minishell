@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/03 00:27:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 11:41:50 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	ft_waitpid(t_cmd *cmd)
 		if (res == -1 && (errno != EINTR && errno != ECHILD))
 			ft_error(1);
 	}
-	return ;
 }
 
 int	ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env, int pipe_before)
