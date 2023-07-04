@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 12:56:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 19:25:28 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int				check_token_end(t_token *token);
 int				update_content_full(t_token *token, char *variable);
 int				update_content_partial(t_token *token, char *variable);
 
-
 // lexing.c
 int				create_redir_token(
 					t_lexing *ltable, t_data_env *data_env, int *reader);
@@ -96,7 +95,9 @@ int				create_regular_token(
 int				create_token_list(t_lexing *ltable, t_data_env *data_env);
 
 //lexing2.c
-void			define_joins(t_lexing *ltable, t_token *quoted, int reader, int quote_len);
+void			define_joins(
+					t_lexing *ltable, t_token *quoted,
+					int reader, int quote_len);
 
 // parsing.c
 char			last_char(char *str);
@@ -129,7 +130,8 @@ t_token			*tk_delone_and_link(t_token **head, t_token *token);
 
 //tokens3.c
 t_token			*tk_merge(t_token **head, t_token *token1, t_token *token2);
-t_token			*tk_merge_quote(t_token **head, t_token *token1, t_token *token2);
+t_token			*tk_merge_quote(
+					t_token **head, t_token *token1, t_token *token2);
 
 /////////////////////////////// EXECUTION ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -236,7 +238,7 @@ void			ft_cd(int argc, char **argv, t_data_env *s_data_env);
 int				ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
 int				ft_update_oldpwd(t_data_env *s_data_env);
 void			ft_update_pwd(char *pwd, t_data_env *s_data_env);
-char			*ft_get_pwd(void);
+char			*ft_get_pwd(char **argv, char **envp);
 
 // ft_echo.c
 int				ft_check_option(char *str);
@@ -249,7 +251,8 @@ void			ft_env(char **envp);
 int				ft_strcmp_env(const char *s1, const char *s2);
 int				ft_compute_env_len(char **envp);
 int				ft_check_has_oldpwd(char **envp);
-char			**ft_strdup_env_2(char **envp, char **env, int size, int take_oldpwd);
+char			**ft_strdup_env_2(
+					char **envp, char **env, int size, int take_oldpwd);
 char			**ft_strdup_env(char **envp, int take_oldpwd);
 
 // ft_environment_utils.c
@@ -273,7 +276,8 @@ void			ft_export_with_arguments(
 void			ft_export(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_pwd.c
-void			ft_pwd(void);
+char			*ft_retrieve_pwd_env(char **envp);
+void			ft_pwd(char **envp);
 
 // ft_unset.c
 int				ft_check_var_format_unset(char **argv, int *j);
