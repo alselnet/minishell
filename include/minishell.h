@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 16:36:44 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:41:26 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,9 @@ int				ft_srch(char const c, char const *str);
 char			*ft_strjoin(char const *s1, char const *s2);
 
 // ft_cd.c
-void			ft_error_file(char *builtin, char *file);
 int				ft_cd_without_arg(t_data_env *s_data_env);
 void			ft_cd_too_many_args(void);
+int				ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env);
 void			ft_cd(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_cd_utils.c

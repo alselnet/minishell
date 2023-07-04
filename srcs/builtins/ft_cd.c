@@ -6,19 +6,11 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/06 18:46:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:43:37 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_error_file(char *builtin, char *file)
-{
-	write(2, builtin, ft_strlen(builtin));
-	write(2, ": ", 2);
-	write(2, file, ft_strlen(file));
-	write(2, ": No such file or directory\n", 28);
-}
 
 int	ft_cd_without_arg(t_data_env *s_data_env)
 {
@@ -41,7 +33,10 @@ int	ft_cd_without_arg(t_data_env *s_data_env)
 		return (-1);
 	}
 	if (chdir(new_path) != 0)
-		ft_error(1);
+	{
+		g_minishell.exit_status = 1;
+		return (perror("cd: chdir"), -1);
+	}
 	return (0);
 }
 
@@ -49,6 +44,25 @@ void	ft_cd_too_many_args(void)
 {
 	write(2, "cd: too many arguments\n", 23);
 	g_minishell.exit_status = 1;
+}
+
+int	ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env)
+{
+	if (argc == 1)
+	{
+		if (ft_cd_without_arg(s_data_env) == -1)
+			return (-1);
+	}
+	else
+	{
+		if (chdir(argv[1]) != 0)
+		{
+			perror("cd: chdir");
+			g_minishell.exit_status = 1;
+			return (-1);
+		}
+	}
+	return (0);
 }
 
 void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
@@ -60,22 +74,13 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 		ft_cd_too_many_args();
 		return ;
 	}
-	ft_update_oldpwd(s_data_env);
-	if (argc == 1)
-	{
-		if (ft_cd_without_arg(s_data_env) == -1)
-			return ;
-	}
-	else
-	{
-		if (chdir(argv[1]) != 0)
-		{
-			ft_error_file("cd", argv[1]);
-			g_minishell.exit_status = 1;
-			return ;
-		}
-	}
+	if (ft_update_oldpwd(s_data_env) == -1)
+		return ;
+	if (ft_go_to_dir(argc, argv, s_data_env) == -1)
+		return ;
 	pwd = ft_get_pwd();
+	if (pwd == NULL)
+		return ;
 	ft_update_pwd(pwd, s_data_env);
 	g_minishell.exit_status = 0;
 }

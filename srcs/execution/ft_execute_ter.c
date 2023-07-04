@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:30:25 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:27:00 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 10:42:48 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exec_cd_utils(t_cmd *cmd, t_data_env *data_env)
 	{
 		if (access(cmd->argv[1], F_OK) == -1)
 		{
-			ft_error_file("cd", cmd->argv[1]);
+			perror("cd");
 			g_minishell.exit_status = 1;
 		}
 	}
