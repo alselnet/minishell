@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 11:41:50 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 17:06:59 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	while (1)
 	{
 		ft_init_cmd(&g_minishell.cmd);
-		fetch_heredoc(&g_minishell.cmd, tklist_head);
+		fetch_heredoc(&g_minishell.cmd, tklist_head, data_env);
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd);
 		builtin_done = ft_exe_builtin1(&g_minishell.cmd, data_env, pipe_before);
 		ft_set_stdin_to_null(builtin_done);

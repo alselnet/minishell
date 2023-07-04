@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/06/22 18:54:04 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 18:38:18 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,57 +68,51 @@ char	*extract_variable_value(char **env)
 	return (value);
 }
 
-int	check_token_end(t_token *token)
+int	check_token_end(char *content)
 {
 	int	i;
 
 	i = 0;
-	while (token->content[i] && token->content[i] != '$')
+	while (content[i] && content[i] != '$')
 		i++;
-	if (token->content[i])
+	if (content[i])
 		i++;
-	while (token->content[i] && ft_isalnum(token->content[i]))
+	while (content[i] && ft_isalnum(content[i]))
 		i++;
-	if (token->content[i])
+	if (content[i])
 		return (1);
 	return (0);
 }
 
-int	update_content_full(t_token *token, char *variable)
+char	*update_content_full(char *content, char *variable)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (token->content[i] && token->content[i] != '$')
+	while (content[i] && content[i] != '$')
 		i++;
-	while (token->content [i])
-	{
-		token->content[i] = 0;
-		i++;
-	}
-	tmp = ft_strjoin(token->content, variable);
+	content[i] = 0;
+	tmp = ft_strjoin(content, variable);
 	if (!tmp)
 		return (0);
-	free(token->content);
+	free(content);
 	free(variable);
-	token->content = tmp;
-	return (1);
+	return (tmp);
 }
 
-int	update_content_partial(t_token *token, char *variable)
+char	*update_content_partial(char *content, char *variable)
 {
 	char	*end;
 	char	*tmp;
 
-	end = fetch_oldcontent_end(token->content);
-	if (!update_content_full(token, variable))
+	end = fetch_oldcontent_end(content);
+	if (!update_content_full(content, variable))
 		return (0);
-	tmp = ft_strjoin(token->content, end);
+	tmp = ft_strjoin(content, end);
 	if (!tmp)
 		return (0);
-	free(token->content);
+	free(content);
 	free(end);
-	token->content = tmp;
-	return (1);
+	return (tmp);
 }

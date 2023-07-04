@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 12:56:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 18:22:51 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_token //liste doublement chainée contenant deux variables
 	struct s_token	*prev;
 	struct s_token	*next;
 	char			type;
+	char			delim_quote;
 	char			join_prev;
 	char			join_next;
 }	t_token;
@@ -70,7 +71,7 @@ char			*find_cmd_path(char	*cmd_name, char **envp);
 
 // expand.c
 int				update_token_content(t_token *token, char *variable);
-int				expand_token(
+t_token			*expand_token(
 					t_token *token, t_lexing *ltable, t_data_env *data_env);
 char			*clean_up_quotes(
 					char *oldcontent, t_lexing *ltable, t_data_env *data_env);
@@ -80,10 +81,12 @@ int				expand_token_list(t_lexing *ltable, t_data_env *data_env);
 //expand2.c
 char			*extract_variable_value(char **env);
 char			*fetch_oldcontent_end(char *oldcontent);
-int				check_token_end(t_token *token);
-int				update_content_full(t_token *token, char *variable);
-int				update_content_partial(t_token *token, char *variable);
+char			*update_content_full(char *content, char *variable);
+char			*update_content_partial(char *content, char *variable);
+int				check_token_end(char *content);
 
+//expand3.c
+t_token			*expand_process(t_lexing *ltable, t_data_env *data_env, t_token *browse);
 
 // lexing.c
 int				create_redir_token(
@@ -208,8 +211,8 @@ t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd);
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);
 
-//ft_heredoc.c
-void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head);
+//heredoc.c
+void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env);
 
 /////////////////////////////// BUILTINS /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

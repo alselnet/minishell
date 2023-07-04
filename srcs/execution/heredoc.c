@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_heredoc.c                                       :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 14:13:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 18:38:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*gnl(void)
 	return (buffer);
 }
 
-t_token	*has_heredoc(t_token **cursor)
+t_token	*fetch_delim(t_token **cursor)
 {
 	t_token	*browse;
 
@@ -33,7 +33,7 @@ t_token	*has_heredoc(t_token **cursor)
 		if (browse->content[0] == '<' && browse->content[1] == '<')
 		{
 			*cursor = browse;
-			return (browse);
+			return (browse->next);
 		}
 		browse = browse->next;
 	}
@@ -41,16 +41,44 @@ t_token	*has_heredoc(t_token **cursor)
 	return (0);
 }
 
-void	unlink_heredoc(t_cmd *cmd)
+int	expand_heredoc(char *line, t_data_env *data_env)
 {
-	if (cmd->fd_heredoc != -2)
-	{
-		cmd->fd_heredoc = -2;
-		unlink(".hdoc.txt");
-	}
+	char	*cursor;
+	char	**env;
+	char	*variable;
+	int		i;
+
+	i = 0;
+	cursor = line;
+	env = data_env->envp;
+	while (*cursor && *cursor != '$')
+		cursor++;
+	cursor++;
+	while (*(cursor + i) && (ft_isalnum(*(cursor + i))))
+		i++;
+	while (env && *env && ft_strenvcmp(cursor, *env, i) != 0)
+		env++;
+	if (!*env || !**env)
+		return (1);
+	variable = extract_variable_value(env);
+	if (!variable)
+		return (0); // add free + exit
+	if (!update_content_partial(line, variable))
+		return (0);
+	return (1);
 }
 
-void	heredoc_process(t_cmd *cmd, t_token *redir)
+int	process_line(char *line, t_token *delim, t_data_env *data_env)
+{
+	if (delim->delim_quote || !ft_isinbase('$', line)
+		|| ft_isinbase(line[0], "\'"))
+		return (1);
+	if (!expand_heredoc(line, data_env))
+		return (0);
+	return (1);
+}
+
+void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 {
 	char	*line;
 
@@ -59,15 +87,17 @@ void	heredoc_process(t_cmd *cmd, t_token *redir)
 		write(1, "heredoc> ", 9);
 		line = gnl();
 		if (!line)
-			ft_error(1);
+			return ;
 		if (*line == 0)
 		{
 			write(1, "\n", 1);
 			free(line);
 			return ;
 		}
-		if (ft_strncmp(redir->next->content,
-				line, ft_strlen(redir->next->content) - 1) == 0)
+		if (!process_line(line, delim, data_env))
+			return ;
+		if (ft_strncmp(delim->content,
+				line, ft_strlen(delim->content) - 1) == 0)
 		{
 			free(line);
 			return ;
@@ -77,26 +107,30 @@ void	heredoc_process(t_cmd *cmd, t_token *redir)
 	}
 }
 
-void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head)
+void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 {
-	t_token	*redir;
+	t_token	*delim;
 	t_token	*browse;
 
 	browse = tklist_head;
-	unlink_heredoc(cmd);
-	redir = has_heredoc(&browse);
-	if (!redir)
+	if (cmd->fd_heredoc != -2)
+	{
+		cmd->fd_heredoc = -2;
+		unlink(".hdoc.txt");
+	}
+	delim = fetch_delim(&browse);
+	if (!delim)
 		return ;
-	while (redir)
+	while (delim)
 	{
 		cmd->fd_heredoc = open(".hdoc.txt", O_CREAT | O_WRONLY, 0664);
 		if (cmd->fd_heredoc < 0)
 			ft_error(1);
-		heredoc_process(cmd, redir);
+		heredoc_process(cmd, data_env, delim);
 		if (browse && browse->content[0] != '|')
 		{
 			browse = browse->next;
-			redir = has_heredoc(&browse);
+			delim = fetch_delim(&browse);
 		}
 		ft_close (&cmd->fd_heredoc);
 	}

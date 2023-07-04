@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
+#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/04 11:03:50 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/04 15:28:53 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ PARSINGDIR = parsing
 BUILTINSDIR = builtins
 SIGNALSDIR = signals
 
-EXEC_FILES = ft_close.c \
+EXEC_FILES = heredoc.c \
+			heredoc2.c \
+			ft_close.c \
 			ft_error_exec.c \
 			ft_execute_bis.c \
 			ft_execute_ter.c \
@@ -37,13 +39,13 @@ EXEC_FILES = ft_close.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
 			ft_init_cmd.c \
-			ft_heredoc.c \
 
 PARSING_FILES = define.c \
 				define2.c \
 				define3.c \
 				expand.c \
 				expand2.c \
+				expand3.c \
 				lexing.c \
 				lexing2.c \
 				parsing.c \

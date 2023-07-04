@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 16:55:32 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 18:18:05 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	tk_moveto(t_token **head, t_token *token, int pos)
 	tk_addto(head, token, pos);
 }
 
-int	link_tokens(t_token **head, t_token *token, t_token *ret)
+t_token	*link_tokens(t_token **head, t_token *token, t_token *ret)
 {
 	if (!token->next && token->prev)
 	{
@@ -86,7 +86,7 @@ int	link_tokens(t_token **head, t_token *token, t_token *ret)
 		token->next->prev = token->prev;
 		ret = token->prev;
 	}
-	return (1);
+	return (ret);
 }
 
 t_token	*tk_delone_and_link(t_token **head, t_token *token)
@@ -96,7 +96,8 @@ t_token	*tk_delone_and_link(t_token **head, t_token *token)
 	ret = 0;
 	if (!token || !head || !*head)
 		return (0);
-	if (!link_tokens(head, token, ret))
+	ret = link_tokens(head, token, ret);
+	if (!ret)
 		return (0);
 	tk_delone(token);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:24:49 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 19:43:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 int	update_token_content(t_token *token, char *variable)
 {
-	if (!check_token_end(token))
+	if (!check_token_end(token->content))
 	{
-		if (!update_content_full(token, variable))
+		token->content = update_content_full(token->content, variable);
+		if (!token->content)
 			return (0);
 	}
-	else if (check_token_end(token))
+	else
 	{
-		if (!update_content_partial(token, variable))
+		token->content = update_content_partial(token->content, variable);
+		if (!token->content)
 			return (0);
 	}
 	return (1);
 }
 
-int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
+t_token	*expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 {
 	char	*cursor;
 	char	**env;
@@ -47,13 +49,13 @@ int	expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	if (!*env || !**env)
 		token = tk_delone_and_link(&ltable->tklist_head, token);
 	if (!*env || !**env)
-		return (1);
+		return (token);
 	variable = extract_variable_value(env);
 	if (!variable)
-		return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
+		return (0);
 	if (!update_token_content(token, variable))
-		return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
-	return (1);
+		return (0);
+	return (token);
 }
 
 char	*clean_up_quotes(char *oldcontent,
@@ -85,6 +87,8 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 		if (browse->content && (ft_isinbase('\'', browse->content)
 				|| ft_isinbase('\"', browse->content)))
 		{
+			if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
+				browse->delim_quote = 1;
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)
@@ -104,19 +108,11 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (ft_isinbase('$', browse->content)
-			&& !ft_isinbase(browse->content[0], "\'"))
-		{
-			if (!ft_strncmp(browse->content, "$?", 2)
-				&& ft_strlen(browse->content) == 2)
-			{
-				free(browse->content);
-				browse->content = ft_itoa(g_minishell.exit_status);
-			}
-			else if (!expand_token(browse, ltable, data_env)
-				|| !ltable->tklist_head)
-				return (0);
-		}
+		if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
+			browse = browse;
+		browse = expand_process(ltable, data_env, browse);
+		if (!browse)
+			return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
 		browse = browse->next;
 	}
 	if (!format_tokens(ltable, data_env))
