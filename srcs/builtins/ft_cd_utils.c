@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:49:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 20:00:07 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 23:28:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*ft_get_pwd(char **argv, char **envp)
 
 	if (getcwd(current_path, sizeof(current_path)) == NULL)
 	{
-		g_minishell.exit_status = 1;
+		g_minishell.exit_status = 0;
 		perror("cd: getcwd");
 		pwd_env = ft_strjoin("PWD=", ft_retrieve_pwd_env(envp));
 		if (pwd_env == NULL)
@@ -112,10 +112,6 @@ char	*ft_get_pwd(char **argv, char **envp)
 		free(pwd_slash);
 	}
 	else
-	{
 		pwd = ft_strjoin("PWD=", current_path);
-		if (pwd == NULL)
-			ft_error(1);
-	}
 	return (pwd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:28:04 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/30 16:55:49 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/04 23:19:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,25 @@ void	ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd)
 	ft_close_all_fds();
 	unlink(".hdoc.txt");
 	ft_free_cmd(cmd);
+}
+
+void	ft_check_dir(t_cmd *cmd)
+{
+	DIR	*cwd;
+
+	if (access(cmd->argv[1], F_OK) == -1)
+	{
+		perror("cd");
+		g_minishell.exit_status = 1;
+	}
+	cwd = opendir(cmd->argv[1]);
+	if (cwd != NULL)
+	{
+		if (readdir(cwd) == NULL)
+		{
+			perror("getcwd");
+			g_minishell.exit_status = 0;
+		}
+		closedir(cwd);
+	}
 }

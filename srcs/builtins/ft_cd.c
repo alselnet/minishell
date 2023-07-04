@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 19:04:02 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 22:38:27 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 	if (argc > 2)
 	{
 		ft_cd_too_many_args();
+		return ;
+	}
+	if (access(argv[1], F_OK) == -1)
+	{
+		perror("cd");
+		g_minishell.exit_status = 1;
 		return ;
 	}
 	if (ft_update_oldpwd(s_data_env) == -1)

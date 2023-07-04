@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 19:25:28 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 23:15:45 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <dirent.h>
+
 
 /////////////////////////// ENVIRONMENT //////////////////////////////////
 typedef struct s_data_env
@@ -167,6 +169,8 @@ void			ft_std_backup(t_data_env *data_env);
 void			ft_set_stdin_to_null(int builtin_done);
 int				ft_init_pipe_before(t_cmd *cmd);
 void			ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd);
+void			ft_check_dir(t_cmd *cmd);
+
 
 // ft_execute.ter
 void			ft_exec_cd_utils(t_cmd *cmd, t_data_env *data_env);
