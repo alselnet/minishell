@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/02 21:30:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 12:05:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_init_data_env(t_data_env *s_data_env, char **envp)
 {
 	s_data_env->size = ft_compute_env_len(envp);
-	s_data_env->envp = ft_strdup_env(envp);
+	s_data_env->envp = ft_strdup_env(envp, 0);
 	if (s_data_env->envp == NULL)
 	{
 		perror("");

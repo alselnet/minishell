@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/02 23:36:11 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 12:05:58 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_export_without_arg(t_data_env *s_data_env)
 	char	**dup_env;
 	int		min;
 
-	dup_env = ft_strdup_env(s_data_env->envp);
+	dup_env = ft_strdup_env(s_data_env->envp, 1);
 	if (dup_env == NULL)
 		ft_error(200);
 	i = 0;
