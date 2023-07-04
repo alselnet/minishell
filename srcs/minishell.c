@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 10:45:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 14:12:36 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 	while (1)
 	{
 		g_minishell.status_done = 0;
-		ltable->input = readline("> ");
+		ltable->input = readline("minishell$ ");
 		if (!ltable->input)
 			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
 			// return (free_array(data_env->envp), printf("exit\n"));
