@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 12:37:44 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 12:39:41 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ void			ft_env(char **envp);
 // ft_environment_utils_2.c 
 int				ft_strcmp_env(const char *s1, const char *s2);
 int				ft_compute_env_len(char **envp);
-int				ft_check_has_oldpwd(char **envp)
+int				ft_check_has_oldpwd(char **envp);
 char			**ft_strdup_env(char **envp, int take_oldpwd);
 
 // ft_environment_utils.c
