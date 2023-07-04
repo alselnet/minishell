@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/03 16:36:06 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/04 11:03:50 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ BUILTINS_FILES = ft_builtins_utils_2.c \
 				ft_exit_utils.c \
 				ft_exit.c
 
-//SIGNALS_FILES = ft_signals.c
+SIGNALS_FILES = ft_signals.c
 
 EXEC = $(addprefix $(EXECDIR)/, $(EXEC_FILES))
 PARSING = $(addprefix $(PARSINGDIR)/, $(PARSING_FILES))
