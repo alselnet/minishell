@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 19:43:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 01:07:03 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 	no_quote_content = 0;
 	while (browse)
 	{
-		if (browse->content && (ft_isinbase('\'', browse->content)
-				|| ft_isinbase('\"', browse->content)))
+		if (browse->content && (browse->content[0] == '\''
+				|| browse->content[0] == '\"'))
 		{
 			if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
 				browse->delim_quote = 1;
@@ -108,11 +108,12 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
-			browse = browse;
-		browse = expand_process(ltable, data_env, browse);
-		if (!browse)
+		if (!browse->prev || (browse->prev && ft_strncmp(browse->prev->content, "<<", 2)))
+			browse->content = expand_process(ltable, data_env, browse->content);
+		if (!browse->content)
 			return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
+		else if(browse->content[0] = ' ')
+			browse = tk_delone_and_link(&ltable->tklist_head, browse);
 		browse = browse->next;
 	}
 	if (!format_tokens(ltable, data_env))

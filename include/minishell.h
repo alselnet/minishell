@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 18:22:51 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 01:06:10 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char			*update_content_partial(char *content, char *variable);
 int				check_token_end(char *content);
 
 //expand3.c
-t_token			*expand_process(t_lexing *ltable, t_data_env *data_env, t_token *browse);
+char			*expand_process(t_lexing *ltable, t_data_env *data_env, char *browse->content);
 
 // lexing.c
 int				create_redir_token(
