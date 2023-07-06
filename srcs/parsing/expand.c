@@ -6,57 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 01:54:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:13:47 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	update_token_content(t_token *token, char *variable)
-{
-	if (!check_token_end(token->content))
-	{
-		token->content = update_content_full(token->content, variable);
-		if (!token->content)
-			return (0);
-	}
-	else
-	{
-		token->content = update_content_partial(token->content, variable);
-		if (!token->content)
-			return (0);
-	}
-	return (1);
-}
-
-char	*expand_token(char *content, t_lexing *ltable, t_data_env *data_env)
-{
-	char	*cursor;
-	char	**env;
-	char	*variable;
-	int		i;
-
-	i = 0;
-	cursor = content;
-	env = data_env->envp;
-	while (cursor && *cursor != '$')
-		cursor++;
-	cursor++;
-	while (*(cursor + i) && (ft_isalnum(*(cursor + i))))
-		i++;
-	while (env && *env && ft_strenvcmp(cursor, *env, i) != 0)
-		env++;
-	if (!*env || !**env)
-		token = tk_delone_and_link(&ltable->tklist_head, token);
-	if (!*env || !**env)
-		return (content);
-	variable = extract_variable_value(env);
-	if (!variable)
-		return (0);
-	if (!update_token_content(token, variable))
-		return (0);
-	return (token);
-}
 
 char	*clean_up_quotes(char *oldcontent,
 			t_lexing *ltable, t_data_env *data_env)
@@ -109,10 +63,10 @@ int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 	while (browse)
 	{
 		if (!browse->prev || (browse->prev && ft_strncmp(browse->prev->content, "<<", 2)))
-			browse->content = expand_process(ltable, data_env, browse->content);
+			browse->content = expand_process(browse->content, data_env);
 		if (!browse->content)
 			return (free_structs(ltable, data_env, "cannot allocate memory\n", 3));
-		else if(browse->content[0] = ' ')
+		else if(!browse->content[0])
 			browse = tk_delone_and_link(&ltable->tklist_head, browse);
 		browse = browse->next;
 	}

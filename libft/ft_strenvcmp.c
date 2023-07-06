@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 19:21:39 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 02:32:39 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:42:06 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_strenvcmp(const char *s1, char *env, size_t n)
 	cursor = env;
 	if (!n)
 		return (0);
-	while (*cursor != '=')
+	while (*cursor && *cursor != '=')
 	{
 		cursor++;
 		i++;
