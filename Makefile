@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/04 15:28:53 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/06 17:58:04 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ BUILTINSDIR = builtins
 SIGNALSDIR = signals
 
 EXEC_FILES = heredoc.c \
-			heredoc2.c \
 			ft_close.c \
 			ft_error_exec.c \
 			ft_execute_bis.c \

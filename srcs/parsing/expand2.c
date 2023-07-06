@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:49:13 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:58:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ char	*expand_variable(char *content, t_data_env *data_env)
 		env = data_env->envp;
 		while (cursor && *cursor && *cursor != '$')
 			cursor++;
-		while (*(cursor + name_len + 1) && (ft_isalnum(*(cursor + name_len + 1))))
+		while (*(cursor + name_len + 1)
+			&& (ft_isalnum(*(cursor + name_len + 1))))
 			name_len++;
-		while (name_len && env && *env && ft_strenvcmp(cursor + 1, *env, name_len) != 0)
+		while (name_len && env && *env
+			&& ft_strenvcmp(cursor + 1, *env, name_len) != 0)
 			env++;
 		content = get_new_content(content, &cursor, name_len, env);
 		if (!content)
@@ -110,5 +112,5 @@ char	*expand_process(char *content, t_data_env *data_env)
 		if (!content)
 			return (0);
 	}
-	return(content);
+	return (content);
 }

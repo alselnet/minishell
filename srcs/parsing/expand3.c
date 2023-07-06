@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 14:43:05 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:49:22 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:59:30 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*extract_variable_value(char **env)
 	return (value);
 }
 
-int		fetch_value_len(char **env)
+int	fetch_value_len(char **env)
 {
 	int		len;
 	int		i;
@@ -49,12 +49,13 @@ int		fetch_value_len(char **env)
 	while (value[i] && value[i] != '=')
 		i++;
 	i ++;
-	while(value[len + i] && value[len + i] != '\n')
+	while (value[len + i] && value[len + i] != '\n')
 		len++;
 	return (len);
 }
 
-void	update_content(char *new_content, char *content, char *variable, char **cursor)
+void	update_content(char *new_content, char *content,
+	char *variable, char **cursor)
 {
 	int	i;
 	int	j;
@@ -80,9 +81,10 @@ void	update_content(char *new_content, char *content, char *variable, char **cur
 		i++;
 		j++;
 	}
-}	
+}
 
-void	update_with_error(char *new_content, char *content, char *error_code, char **cursor)
+void	update_with_error(char *new_content, char *content,
+	char *error_code, char **cursor)
 {
 	int	i;
 	int	j;
@@ -110,7 +112,8 @@ void	update_with_error(char *new_content, char *content, char *error_code, char 
 	}
 }	
 
-char	*replace_with_value(char *content, char **cursor, int name_len, char **env)
+char	*replace_with_value(char *content, char **cursor,
+	int name_len, char **env)
 {
 	char	*variable;
 	int		content_len;
