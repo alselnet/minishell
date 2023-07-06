@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:58:33 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 19:56:00 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ char	*delete_name(char *content, char **cursor, int name_len)
 	int		i;
 	int		j;
 
-	i = -1;
-	j = -1;
+	i = 0;
+	j = 0;
 	new_content = ft_calloc(sizeof(char), ft_strlen(content) - name_len);
 	if (!new_content)
 		return (0);
-	while (*(content + ++i) && content + i != *cursor)
-		new_content[++j] = content[i];
+	while (*(content + i) && content + i != *cursor)
+	{
+		new_content[j] = content[i];
+		i++;
+		j++;
+	}
 	i++;
 	while (*(content + i) && ft_isalnum(*(content + i)))
 		i++;
@@ -60,7 +64,7 @@ char	*delete_name(char *content, char **cursor, int name_len)
 
 char	*get_new_content(char *content, char **cursor, int name_len, char **env)
 {
-	if (**(cursor + 1) == '?')
+	if ((*cursor + 1)[0] == '?')
 		content = replace_with_error_code(content, cursor);
 	else if (!ft_isalnum((*cursor + 1)[0]))
 	{

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 02:10:16 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 02:21:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 18:03:38 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ft_realloc(void *ptr, size_t size)
 {
 	void	*new_ptr;
-	size_t		len;
+	size_t	len;
 
 	new_ptr = ft_calloc(sizeof(char), size);
 	if (!new_ptr)

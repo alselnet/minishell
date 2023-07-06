@@ -6,12 +6,12 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/06 17:58:04 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/06 18:33:33 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=32
+CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=512
 IFLAGS = -I$(INCDIR) -I$(LIBDIR)
 LFLAGS = -lreadline -L$(LIBDIR) -lft
 

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 14:43:05 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:59:30 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:08:41 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,14 @@ void	update_content(char *new_content, char *content,
 	int	k;
 
 	i = -1;
-	j = -1;
+	j = 0;
 	k = -1;
 	while (*(content + ++i) && content + i != *cursor)
-		new_content[++j] = content[i];
-	i++;
-	while (*(content + i) && ft_isalnum(*(content + i)))
-		i++;
+	{
+		new_content[j] = content[i];
+		j++;
+	}
+	while (*(content + ++i) && ft_isalnum(*(content + i)));
 	while (variable[++k])
 	{
 		new_content[j] = variable[k];
@@ -91,23 +92,23 @@ void	update_with_error(char *new_content, char *content,
 	int	k;
 
 	i = -1;
-	j = -1;
+	j = 0;
 	k = -1;
 	while (*(content + ++i) && content + i != *cursor)
-		new_content[++j] = content[i];
-	i += 2;
-	while (*(content + i) && ft_isalnum(*(content + i)))
-		i++;
+	{
+		new_content[j] = content[i];
+		j++;
+	}
+	while (*(content + ++i) && ft_isalnum(*(content + i)));
 	while (error_code[++k])
 	{
 		new_content[j] = error_code[k];
 		j++;
 	}
 	*cursor = new_content + j;
-	while (*(content + i))
+	while (*(content + ++i))
 	{
 		new_content[j] = content[i];
-		i++;
 		j++;
 	}
 }	

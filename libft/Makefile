@@ -6,13 +6,13 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/02 15:46:29 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/06 15:27:17 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/06 18:34:00 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -D BUFFER_SIZE=32
+CFLAGS = -Wall -Wextra -Werror -g3 -D BUFFER_SIZE=512
 SRCS = ft_isinbase.c\
 ft_itoa.c\
 ft_putstr_fd.c\
