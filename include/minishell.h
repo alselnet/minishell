@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 15:26:19 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:51:42 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,25 @@ int				check_path(char **envp);
 char			*find_cmd_path(char	*cmd_name, char **envp);
 
 // expand.c
-int				update_token_content(t_token *token, char *variable);
-t_token			*expand_token(
-					t_token *token, t_lexing *ltable, t_data_env *data_env);
 char			*clean_up_quotes(
 					char *oldcontent, t_lexing *ltable, t_data_env *data_env);
 int				format_tokens(t_lexing *ltable, t_data_env *data_env);
 int				expand_token_list(t_lexing *ltable, t_data_env *data_env);
 
 //expand2.c
-char			*extract_variable_value(char **env);
-char			*fetch_oldcontent_end(char *oldcontent);
-char			*update_content_full(char *content, char *variable);
-char			*update_content_partial(char *content, char *variable);
-int				check_token_end(char *content);
+char			*replace_with_error_code(char *content, char **cursor);
+char			*delete_name(char *content, char **cursor, int name_len);
+char			*get_new_content(char *content, char **cursor, int name_len, char **env);
+char			*expand_variable(char *content, t_data_env *data_env);
+char			*expand_process(char *content, t_data_env *data_env);
+
 
 //expand3.c
-char			*expand_process(char *content, t_data_env *data_env);
+char			*extract_variable_value(char **env);
+int				fetch_value_len(char **env);
+void			update_content(char *new_content, char *content, char *variable, char **cursor);
+void			update_with_error(char *new_content, char *content, char *error_code, char **cursor);
+char			*replace_with_value(char *content, char **cursor, int name_len, char **env);
 
 // lexing.c
 int				create_redir_token(

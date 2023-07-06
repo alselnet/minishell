@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 14:43:05 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:10:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:49:22 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,11 @@ void	update_content(char *new_content, char *content, char *variable, char **cur
 	int	j;
 	int	k;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	k = -1;
-	while (*(content + i) && content + i != *cursor)
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
+	while (*(content + ++i) && content + i != *cursor)
+		new_content[++j] = content[i];
 	i++;
 	while (*(content + i) && ft_isalnum(*(content + i)))
 		i++;
@@ -92,15 +88,11 @@ void	update_with_error(char *new_content, char *content, char *error_code, char 
 	int	j;
 	int	k;
 
-	i = 0;
-	j = 0;
+	i = -1;
+	j = -1;
 	k = -1;
-	while (*(content + i) && content + i != *cursor)
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
+	while (*(content + ++i) && content + i != *cursor)
+		new_content[++j] = content[i];
 	i += 2;
 	while (*(content + i) && ft_isalnum(*(content + i)))
 		i++;
@@ -135,96 +127,4 @@ char	*replace_with_value(char *content, char **cursor, int name_len, char **env)
 	free(variable);
 	free(content);
 	return (new_content);
-}
-
-char	*replace_with_error_code(char *content, char **cursor)
-{
-	char	*error_code;
-	int		content_len;
-	char	*new_content;
-
-	error_code = ft_itoa(g_minishell.exit_status);
-	if (!error_code)
-		return (0);
-	content_len = ft_strlen(content) + ft_strlen(error_code) - 1;
-	new_content = ft_calloc(sizeof(char), content_len);
-	if (!new_content)
-		return (0);
-	update_with_error(new_content, content, error_code, cursor);
-	free(error_code);
-	free(content);
-	return (new_content);
-}
-
-char	*delete_name(char *content, char **cursor, int name_len)
-{
-	char	*new_content;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_content = ft_calloc(sizeof(char), ft_strlen(content) - name_len);
-	if (!new_content)
-		return (0);
-	while (*(content + i) && content + i != *cursor)
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
-	i++;
-	while (*(content + i) && ft_isalnum(*(content + i)))
-		i++;
-	*cursor = new_content + j;
-	while (*(content + i))
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
-	free(content);
-	return (new_content);
-}
-
-char	*expand_variable(char *content, t_data_env *data_env)
-{
-	char	*cursor;
-	char	**env;
-	int		name_len;
-
-	cursor = content;
-	while (cursor && *cursor)
-	{
-		name_len = 0;
-		env = data_env->envp;
-		while (cursor && *cursor && *cursor != '$')
-			cursor++;
-		while (*(cursor + name_len + 1) && (ft_isalnum(*(cursor + name_len + 1))))
-			name_len++;
-		while (name_len && env && *env && ft_strenvcmp(cursor + 1, *env, name_len) != 0)
-			env++;
-		if (*(cursor + 1) == '?')
-			content = replace_with_error_code(content, &cursor);
-		else if (!*env || !**env)
-			content = delete_name(content, &cursor, name_len);
-		else if (name_len)
-			content = replace_with_value(content, &cursor, name_len, env);
-		else
-			cursor++;
-		if (!content)
-			return (0);
-	}
-	return (content);
-}
-
-char	*expand_process(char *content, t_data_env *data_env)
-{
-	if (ft_isinbase('$', content) && content[0] != '\'')
-	{
-		content = expand_variable(content, data_env);
-		if (!content)
-			return (0);
-	}
-	return(content);
 }
