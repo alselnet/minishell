@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strenvcmp.c                                     :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/25 19:21:39 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 02:32:39 by aselnet          ###   ########.fr       */
+/*   Created: 2023/07/06 02:10:16 by aselnet           #+#    #+#             */
+/*   Updated: 2023/07/06 02:21:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strenvcmp(const char *s1, char *env, size_t n)
+void	*ft_realloc(void *ptr, size_t size)
 {
-	char	*cursor;
-	size_t	i;
+	void	*new_ptr;
+	size_t		len;
 
-	i = 0;
-	cursor = env;
-	if (!n)
+	new_ptr = ft_calloc(sizeof(char), size);
+	if (!new_ptr)
 		return (0);
-	while (*cursor != '=')
-	{
-		cursor++;
-		i++;
-	}
-	if (i < n)
-		i = n;
-	return (ft_strncmp(s1, env, i));
+	len = ft_strlen((char *)ptr) + 1;
+	if (len > size)
+		len = size;
+	ft_strlcpy(new_ptr, ptr, len);
+	free(ptr);
+	return (new_ptr);
 }

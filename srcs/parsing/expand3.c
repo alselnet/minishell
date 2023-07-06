@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 14:43:05 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 01:38:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 03:10:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ char	*extract_variable_value(char **env)
 	return (value);
 }
 
-int	to_expand(t_token *browse)
+int	to_expand(char *content)
 {
 	int	i;
 
 	i = -1;
-	while(browse->content[++i])
+	while(content[++i])
 	{
 		while(browse->content[i] && browse->content[i] != '$')
 		{
@@ -54,115 +54,62 @@ int	to_expand(t_token *browse)
 	return (0);
 }
 
-int	count_variables(char *content)
+int		fetch_value_len(char **env)
 {
-	int	i;
-	int	count;
+	int	len;
 
-	i = -1;
-	count= 0;
-	while(content[++i])
-	{
-		if (content[i] == '$')
-			count++;
-	}
-	return (count);
+	len = 0;
+	while(**(env + len) && **(env + len) != '\n')
+		len++;
+	return (len);
 }
 
-int	fetch_tab_len(char **split_tab)
+void	replace_with_value (char *content, char **cursor, int name_len, char **env)
 {
-	int	i;
-
-	i = 0;
-	while(split_tab[i])
-		i++;
-	return (i);
-}
-
-char	*space_content(char *content)
-{
-	int		i;
-	int		j;
+	char	*variable;
 	char	*new_content;
+	int		value_len;
 
-	i = 0;
-	j = 0;
-	new_content = ft_calloc(sizeof(char), ft_strlen(content) + count_variables(content) + 1);
-	if (!new_content)
-		return (0);
-	while(content[i])
+	variable = extract_variable_value(env);
+	value_len = fetch_value_len(env);
+	new_con
+
+}
+
+char	*expand_variable(char *content, t_data_env *data_env)
+{
+	char	*cursor;
+	char	**env;
+	int		name_len;
+
+	cursor = content;
+	while (cursor)
 	{
-		if (content[i] == '$')
-		{
-			new_content[j] = ' ';
-			new_content[++j] = '$';
-		}
+		name_len = 0;
+		env = data_env->envp;
+		while (cursor && *cursor != '$')
+			cursor++;
+		while (*(cursor + name_len + 1) && (ft_isalnum(*(cursor + name_len + 1))))
+			name_len++;
+		while (name_len && env && *env && ft_strenvcmp(cursor + 1, *env, name_len) != 0)
+			env++;
+		if (name_len && *env && **env)
+			replace_with_value(content, &cursor, name_len, env);
+		else if (*(cursor + 1) == '?')
+			fetch_error_code(content, &cursor);
 		else
-			new_content[j] = content[i];
-		i++;
-		j++;
+			cursor++;
 	}
-	free(content);
-	return (new_content);
-}
-
-void	free_double_arr(char **tab, int split_len)
-{
-	int	i;
-	
-	i = -1;
-	while(++i < split_len)
-		free(tab[i]);
-	free(tab);
-}
-
-char	*expand_variable(char *content)
-{
-
-}
-
-char	*expand_multiple_variables(char *content)
-{
-	int		i;
-	int		split_len;
-	char	**split_tab;
-	char	*new_content;
-
-	i = -1;
-	new_content = space_content(content);
-	if (new_content)
-		return (0);
-	split_tab = ft_split(new_content, ' ');
-	if (!split_tab)
-		return (0);
-	split_len = fetch_tab_len(split_tab);
-	while (split_tab[++i])
-	{
-		split_tab[i] = expand_variable(split_tab[i]);
-		if (!split_tab[i])
-		{
-			split_len = fetch_tab_len(split_tab);
-			free_double_arr(split_tab, split_len);
-			return (0);
-		}
-	}
-	new_content = join_tab(split_tab, split_len);
-	return (new_content);
+	return (content);
 }
 
 char	*expand_process(t_lexing *ltable, t_data_env *data_env, char *content)
 {
-	char	*newcontent;
-
 	if (ft_isinbase('$', content) && content[0] != '\'')
 	{
-		if (count_variables(content) < 2)
-			newcontent = expand_variable(content);
-		else
-			newcontent = expand_multiple_variables(content);
-		if (!newcontent)
+		content = expand_variable(content, data_env);
+		if (!content)
 			return (0);
-		return (newcontent);
 	}
 	return(content);
 }

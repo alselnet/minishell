@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 01:07:03 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 01:54:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	update_token_content(t_token *token, char *variable)
 	return (1);
 }
 
-t_token	*expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
+char	*expand_token(char *content, t_lexing *ltable, t_data_env *data_env)
 {
 	char	*cursor;
 	char	**env;
@@ -37,7 +37,7 @@ t_token	*expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	int		i;
 
 	i = 0;
-	cursor = token->content;
+	cursor = content;
 	env = data_env->envp;
 	while (cursor && *cursor != '$')
 		cursor++;
@@ -49,7 +49,7 @@ t_token	*expand_token(t_token *token, t_lexing *ltable, t_data_env *data_env)
 	if (!*env || !**env)
 		token = tk_delone_and_link(&ltable->tklist_head, token);
 	if (!*env || !**env)
-		return (token);
+		return (content);
 	variable = extract_variable_value(env);
 	if (!variable)
 		return (0);
