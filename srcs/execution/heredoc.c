@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 20:29:21 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 21:35:32 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*process_line(char *line, t_token *delim, t_data_env *data_env)
 	if (delim->delim_quote || !ft_isinbase('$', line)
 		|| ft_isinbase(line[0], "\'"))
 		return (line);
+	else if (!ft_strncmp(line, delim->content, ft_strlen(delim->content)))
+		return (line);
 	new_line = expand_process(line, data_env);
 	if (!new_line)
 		return (0);
@@ -74,7 +76,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 		if (!new_line)
 			return ;
 		if (ft_strncmp(delim->content,
-				new_line, ft_strlen(delim->content) - 1) == 0)
+				new_line, ft_strlen(delim->content)) == 0)
 		{
 			free(new_line);
 			return ;

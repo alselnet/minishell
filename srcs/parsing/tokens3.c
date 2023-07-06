@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 07:19:56 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/03 15:26:38 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:46:57 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_token	*tk_merge_quote(t_token **head, t_token *token1, t_token *token2)
 	if (!new_content)
 		return (0);
 	new = tk_new(new_content);
+	if (token1->delim_quote || token2->delim_quote)
+		new->delim_quote = 1;
 	if (!new)
 		return (0);
 	new->prev = token1->prev;

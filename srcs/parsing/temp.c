@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:13:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/05/30 16:27:20 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/06 21:21:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	print_token_list(t_token **head)
 	{
 		printf("token %d contains %s\n", i, browse->content);
 		printf("\ttoken type is %c\n\n", browse->type);
+		printf("\tdelim_quote is %c\n\n", browse->delim_quote);
 		browse = browse->next;
 		i++;
 	}

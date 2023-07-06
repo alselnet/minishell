@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 18:00:27 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 21:24:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 		if (browse->content && (browse->content[0] == '\''
 				|| browse->content[0] == '\"'))
 		{
-			if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
-				browse->delim_quote = 1;
+			browse->delim_quote = 1;
 			no_quote_content
 				= clean_up_quotes(browse->content, ltable, data_env);
 			if (!no_quote_content)

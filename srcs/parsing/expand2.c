@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 19:56:00 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 20:36:45 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ char	*delete_name(char *content, char **cursor, int name_len)
 
 char	*get_new_content(char *content, char **cursor, int name_len, char **env)
 {
-	if ((*cursor + 1)[0] == '?')
+	if (*cursor && **cursor && (*cursor + 1)[0] == '?')
 		content = replace_with_error_code(content, cursor);
-	else if (!ft_isalnum((*cursor + 1)[0]))
+	else if (*cursor && **cursor && !ft_isalnum((*cursor + 1)[0]))
 	{
 		*cursor = *(cursor) + 1;
 		while (**cursor && **cursor != '$')
@@ -95,7 +95,7 @@ char	*expand_variable(char *content, t_data_env *data_env)
 		env = data_env->envp;
 		while (cursor && *cursor && *cursor != '$')
 			cursor++;
-		while (*(cursor + name_len + 1)
+		while (*cursor && *(cursor + name_len + 1)
 			&& (ft_isalnum(*(cursor + name_len + 1))))
 			name_len++;
 		while (name_len && env && *env
