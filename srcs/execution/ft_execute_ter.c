@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:30:25 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 10:42:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 23:16:07 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exec_cd_utils(t_cmd *cmd, t_data_env *data_env)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (cmd->argc == 1)
@@ -32,13 +32,7 @@ void	ft_exec_cd_utils(t_cmd *cmd, t_data_env *data_env)
 		}
 	}
 	else
-	{
-		if (access(cmd->argv[1], F_OK) == -1)
-		{
-			perror("cd");
-			g_minishell.exit_status = 1;
-		}
-	}
+		ft_check_dir(cmd);
 }
 
 int	ft_exec_cd(int pipe_before, t_cmd *cmd, t_data_env *data_env)
@@ -50,7 +44,8 @@ int	ft_exec_cd(int pipe_before, t_cmd *cmd, t_data_env *data_env)
 		g_minishell.exit_status = 0;
 		if (cmd->argc > 2)
 			ft_cd_too_many_args();
-		ft_exec_cd_utils(&g_minishell.cmd, data_env);
+		else
+			ft_exec_cd_utils(&g_minishell.cmd, data_env);
 	}
 	return (1);
 }

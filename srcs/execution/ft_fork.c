@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/05 17:45:49 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/06 17:54:29 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env)
 	else if (ft_strcmp("env", cmd->argv[0]) == 0)
 		ft_env(data_env->envp);
 	else if (ft_strcmp("pwd", cmd->argv[0]) == 0)
-		ft_pwd();
+		ft_pwd(data_env->envp);
 	else if (ft_strcmp("export", cmd->argv[0]) == 0 && cmd->argc == 1)
 		ft_export(cmd->argc, cmd->argv, data_env);
 }

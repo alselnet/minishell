@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:49:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 10:43:53 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/04 23:28:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,26 @@ int	ft_update_oldpwd(t_data_env *s_data_env)
 {
 	char	current_path[1000];
 	char	*oldpwd;
+	char	*pwd;
 
-	if (getcwd(current_path, sizeof(current_path)) == NULL)
+	pwd = ft_retrieve_pwd_env(s_data_env->envp);
+	if (pwd == NULL)
 	{
-		g_minishell.exit_status = 1;
-		return (perror("cd: getcwd"), -1);
+		if (getcwd(current_path, sizeof(current_path)) == NULL)
+		{
+			g_minishell.exit_status = 1;
+			return (perror("cd: getcwd"), -1);
+		}
+		oldpwd = ft_strjoin("OLDPWD=", current_path);
+		if (oldpwd == NULL)
+			ft_error(1);
 	}
-	oldpwd = ft_strjoin("OLDPWD=", current_path);
-	if (oldpwd == NULL)
-		ft_error(1);
+	else
+	{
+		oldpwd = ft_strjoin("OLDPWD=", pwd);
+		if (oldpwd == NULL)
+			ft_error(1);
+	}
 	return (ft_update_oldpwd_utils(s_data_env, oldpwd));
 }
 
@@ -79,18 +90,28 @@ void	ft_update_pwd(char *pwd, t_data_env *s_data_env)
 	}
 }
 
-char	*ft_get_pwd(void)
+char	*ft_get_pwd(char **argv, char **envp)
 {
 	char	*pwd;
 	char	current_path[1000];
+	char	*pwd_env;
+	char	*pwd_slash;
 
 	if (getcwd(current_path, sizeof(current_path)) == NULL)
 	{
-		g_minishell.exit_status = 1;
-		return (perror("cd: getcwd"), NULL);
+		g_minishell.exit_status = 0;
+		perror("cd: getcwd");
+		pwd_env = ft_strjoin("PWD=", ft_retrieve_pwd_env(envp));
+		if (pwd_env == NULL)
+			ft_error(1);
+		pwd_slash = ft_strjoin(pwd_env, "/");
+		if (pwd_slash == NULL)
+			return (free(pwd_env), NULL);
+		free(pwd_env);
+		pwd = ft_strjoin(pwd_slash, argv[1]);
+		free(pwd_slash);
 	}
-	pwd = ft_strjoin("PWD=", current_path);
-	if (pwd == NULL)
-		ft_error(1);
+	else
+		pwd = ft_strjoin("PWD=", current_path);
 	return (pwd);
 }
