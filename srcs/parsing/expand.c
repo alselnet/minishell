@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 21:24:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/07 19:41:57 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,62 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 	return (1);
 }
 
+int	to_expand(t_token *token)
+{
+	t_token *browse;
+
+	browse = token;
+	if (no_alnum(browse->content) && ft_strncmp(browse->content, "$?", 2))
+		return (0);
+	if (browse->prev && !ft_strncmp(browse->prev->content, "<<", 2))
+		return (0);
+	while (browse->prev && browse->join_prev)
+	{
+		if (browse->prev->prev && !ft_strncmp(browse->prev->prev->content, "<<", 2))
+			return (0);
+		browse = browse->prev;
+	}
+	return (1);
+}
+
+void	link_joins(t_token *head)
+{
+	t_token	*browse;
+
+	browse = head;
+	if (!browse)
+		return ;
+	while (browse->next)
+	{
+		if (browse->next && browse->join_next)
+			browse->next->join_prev = 1;
+		browse = browse->next;
+	}
+	while (browse->prev)
+	{
+		if (browse->prev && browse->join_prev)
+			browse->prev->join_next = 1;
+		browse = browse->prev;
+	}
+}
+
 int	expand_token_list(t_lexing *ltable, t_data_env *data_env)
 {
 	t_token	*browse;
 
 	browse = ltable->tklist_head;
+	link_joins(ltable->tklist_head);
 	while (browse)
 	{
-		if (!browse->prev || (browse->prev
-				&& ft_strncmp(browse->prev->content, "<<", 2)))
+		if (to_expand(browse))
 			browse->content = expand_process(browse->content, data_env);
 		if (!browse->content)
 			return (free_structs(ltable, data_env,
 					"cannot allocate memory\n", 3));
 		else if (!browse->content[0])
 			browse = tk_delone_and_link(&ltable->tklist_head, browse);
-		browse = browse->next;
+		if (browse)
+			browse = browse->next;
 	}
 	if (!format_tokens(ltable, data_env))
 		return (0);

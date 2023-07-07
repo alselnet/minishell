@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 20:36:45 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/07 18:32:36 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_new_content(char *content, char **cursor, int name_len, char **env)
 {
 	if (*cursor && **cursor && (*cursor + 1)[0] == '?')
 		content = replace_with_error_code(content, cursor);
-	else if (*cursor && **cursor && !ft_isalnum((*cursor + 1)[0]))
+	else if (*cursor && **cursor && !ft_isalnum((*cursor + 1)[0]) && !ft_isinbase((*cursor + 1)[0], "\'\""))
 	{
 		*cursor = *(cursor) + 1;
 		while (**cursor && **cursor != '$')

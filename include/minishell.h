@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 17:53:44 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/07 19:26:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int				create_regular_token(
 					t_lexing *ltable, t_data_env *data_env, int *reader);
 int				create_token_list(t_lexing *ltable, t_data_env *data_env);
 
-//lexing2.c
+// lexing2.c
 void			define_joins(
 					t_lexing *ltable, t_token *quoted,
 					int reader, int quote_len);
@@ -112,6 +112,10 @@ char			last_char(char *str);
 int				parse_token_list(t_lexing *ltable, t_data_env *data_env);
 int				parse_redirections(t_lexing *ltable, t_data_env *data_env);
 int				join_quotes(t_lexing *ltable, t_data_env *data_env);
+
+// parsing2.c
+char			*replace_dollars(char *content);
+int				no_alnum(char *content);
 
 // quit.c
 int				free_array(char **arr);
