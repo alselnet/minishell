@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:03:41 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 18:37:59 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 00:43:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ void	ft_exit(int argc, char **argv)
 			if (g_minishell.cmd.inside_pipe != 1)
 				write(2, "exit\n", 5);
 			write(2, "exit: too many arguments\n", 25);
-			ft_exit_utils(1, 1);
+			if (g_minishell.cmd.inside_pipe == 1)
+				ft_exit_utils(1, 1);
+			if (g_minishell.status_done == 0 && g_minishell.cmd.final_cmd == 1)
+			{
+				g_minishell.exit_status = 1;
+				g_minishell.status_done = 1;
+			}	
 		}
 	}
 	else if (argc == 1)

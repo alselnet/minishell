@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 20:41:36 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 00:35:29 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,9 @@ void			ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env);
 void			ft_after_fork_parent(t_cmd *cmd);
 void			ft_exit_exec(int status);
 
+// ft_free_all_exec.c
+void			ft_free_all_exec(void);
+
 // ft_free_cmd.c
 void			ft_free_cmd(t_cmd *cmd);
 
@@ -234,10 +237,11 @@ char			*ft_get_pwd(char **argv, char **envp);
 
 // ft_echo.c
 int				ft_check_option(char *str);
+int				ft_compute_start_arg(int has_option);
 void			ft_echo(int argc, char **argv);
 
 // ft_env.c
-void			ft_env(char **envp);
+void			ft_env(char **envp, int argc);
 
 // ft_environment_utils_2.c 
 int				ft_strcmp_env(const char *s1, const char *s2);

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:52:26 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 19:05:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 00:34:29 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,11 @@ void	ft_exit_utils(int status, int no_exit_written)
 		g_minishell.exit_status = status;
 		g_minishell.status_done = 1;
 	}
-	if (g_minishell.cmd.inside_pipe == 1)
+	if ((g_minishell.cmd.inside_pipe == 1
+			&& ft_strcmp("exit", g_minishell.cmd.argv[0]) != 0)
+		|| ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0)
 	{
-		ft_close_all_fds();
-		ft_free_cmd(&g_minishell.cmd);
-		ft_free_env(g_minishell.data_env.envp, g_minishell.data_env.size);
-		tk_clear(&g_minishell.ltable.tklist_head);
-		free(g_minishell.ltable.input);
-		rl_clear_history();
+		ft_free_all_exec();
 		exit(status);
 	}	
 }

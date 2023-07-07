@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 20:22:09 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/07 23:28:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_exec_builtin(t_cmd *cmd, t_data_env *data_env)
 		else if (ft_strcmp("unset", cmd->argv[0]) == 0)
 			return (ft_unset(cmd->argc, cmd->argv, data_env), 1);
 		else if (ft_strcmp("env", cmd->argv[0]) == 0)
-			return (ft_env(data_env-> envp), 1);
+			return (ft_env(data_env-> envp, cmd->argc), 1);
 		else if (ft_strcmp("exit", cmd->argv[0]) == 0)
 			return (ft_exit(cmd->argc, cmd->argv), 1);
 	}

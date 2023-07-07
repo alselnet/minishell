@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/07 19:09:56 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/08 00:35:02 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ EXEC_FILES = ft_close.c \
 			ft_fill_cmd_type_r.c \
 			ft_fill_cmd.c \
 			ft_fork.c \
+			ft_free_all_exec.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
 			ft_init_cmd.c \
