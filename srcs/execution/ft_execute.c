@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 23:28:26 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/07 20:22:09 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	{
 		ft_init_cmd(&g_minishell.cmd);
 		fetch_heredoc(&g_minishell.cmd, tklist_head);
-		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd);
-		builtin_done = ft_exe_builtin1(&g_minishell.cmd, data_env, pipe_before);
-		ft_set_stdin_to_null(builtin_done);
+		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
+		if (g_minishell.cmd.inside_pipe == 0)
+			builtin_done = ft_exec_builtin(&g_minishell.cmd, data_env);
 		if (builtin_done == 0)
 			ft_fork(&g_minishell.cmd, data_env);
 		else if (builtin_done == 1 && g_minishell.cmd.final_cmd == 1)
@@ -67,18 +67,24 @@ void	ft_waitpid(t_cmd *cmd)
 	}
 }
 
-int	ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env, int pipe_before)
+int	ft_exec_builtin(t_cmd *cmd, t_data_env *data_env)
 {
 	if (cmd->argv != NULL)
 	{
-		if (ft_strcmp("cd", cmd->argv[0]) == 0)
-			return (ft_exec_cd(pipe_before, cmd, data_env));
+		if (ft_strcmp("echo", cmd->argv[0]) == 0)
+			return (ft_echo(cmd->argc, cmd->argv), 1);
+		else if (ft_strcmp("cd", cmd->argv[0]) == 0)
+			return (ft_cd(cmd->argc, cmd->argv, data_env), 1);
+		else if (ft_strcmp("pwd", cmd->argv[0]) == 0)
+			return (ft_pwd(data_env->envp), 1);
+		else if (ft_strcmp("export", cmd->argv[0]) == 0)
+			return (ft_export(cmd->argc, cmd->argv, data_env), 1);
 		else if (ft_strcmp("unset", cmd->argv[0]) == 0)
-			return (ft_exec_unset(pipe_before, cmd, data_env));
-		else if (ft_strcmp("export", cmd->argv[0]) == 0 && cmd->argc > 1)
-			return (ft_exec_export(pipe_before, cmd, data_env));
+			return (ft_unset(cmd->argc, cmd->argv, data_env), 1);
+		else if (ft_strcmp("env", cmd->argv[0]) == 0)
+			return (ft_env(data_env-> envp), 1);
 		else if (ft_strcmp("exit", cmd->argv[0]) == 0)
-			return (ft_exec_exit(pipe_before, cmd));
+			return (ft_exit(cmd->argc, cmd->argv), 1);
 	}
 	return (0);
 }

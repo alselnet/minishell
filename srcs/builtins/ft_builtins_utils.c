@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/22 13:50:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/07 18:56:48 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_error_identifier(char *builtin, char *identifier)
 	write(2, ": '", 3);
 	write(2, identifier, ft_strlen(identifier));
 	write(2, "': not a valid identifier\n", 26);
-	g_minishell.exit_status = 1;
 }
 
 size_t	ft_strlen(const char *s)

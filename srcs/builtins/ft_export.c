@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 12:05:58 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/07 18:54:56 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,9 @@ void	ft_export_with_arguments(char **argv, t_data_env *s_data_env, int j)
 void	ft_export(int argc, char **argv, t_data_env *s_data_env)
 {
 	int	j;
+	int	status;
 
-	g_minishell.exit_status = 0;
+	status = 0;
 	if (argc == 1)
 	{
 		ft_export_without_arg(s_data_env);
@@ -115,9 +116,13 @@ void	ft_export(int argc, char **argv, t_data_env *s_data_env)
 	while (j < argc)
 	{
 		if (ft_check_var_format_export(argv, &j) == -1)
+		{
+			status = 1;
 			continue ;
+		}
 		if (ft_srch('=', argv[j]) >= 1)
 			ft_export_with_arguments(argv, s_data_env, j);
 		j++;
 	}
+	ft_exit_utils(status, 1);
 }
