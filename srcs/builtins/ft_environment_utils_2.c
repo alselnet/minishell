@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:56:46 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 12:57:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:19:59 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ char	**ft_strdup_env(char **envp, int take_oldpwd)
 	env = (char **)malloc(sizeof(char *) * (size + 1));
 	if (env == NULL)
 		return (NULL);
+	g_minishell.data_env.size--;
 	return (ft_strdup_env_2(envp, env, size, take_oldpwd));
 }
