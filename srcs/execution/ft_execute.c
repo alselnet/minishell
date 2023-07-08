@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 23:15:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 23:22:53 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		ft_init_cmd(&g_minishell.cmd);
 		fetch_heredoc(&g_minishell.cmd, tklist_head);
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
-		if (g_minishell.cmd.has_cmd == 0 && g_minishell.cmd.first_arg == NULL)
-		{
-			if (g_minishell.cmd.final_cmd == 1 && g_minishell.status_done == 0)
-			g_minishell.status_done = 1;
-			g_minishell.exit_status = 0;
-		}
-		else
-			ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
+		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
 		ft_prepare_before_next_cmd(&pipe_before, &builtin_done);
