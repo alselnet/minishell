@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 01:16:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:32:21 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,35 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 		ft_init_cmd(&g_minishell.cmd);
 		fetch_heredoc(&g_minishell.cmd, tklist_head);
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
-		if (g_minishell.cmd.inside_pipe == 0)
-			builtin_done = ft_exec_builtin(&g_minishell.cmd, data_env);
-		if (builtin_done == 0)
-			ft_fork(&g_minishell.cmd, data_env);
-		else if (builtin_done == 1 && g_minishell.cmd.final_cmd == 1)
+		if (g_minishell.cmd.has_cmd == 0 && g_minishell.cmd.first_arg == NULL)
+		{
+			if (g_minishell.cmd.final_cmd == 1 && g_minishell.status_done == 0)
 			g_minishell.status_done = 1;
+			g_minishell.exit_status = 0;
+			break ;
+		}
+		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
-		pipe_before = ft_init_pipe_before(&g_minishell.cmd);
-		ft_free_cmd(&g_minishell.cmd);
-		builtin_done = 0;
+		ft_prepare_before_next_cmd(&pipe_before, &builtin_done);
 	}
 	ft_waitpid(&g_minishell.cmd);
 	ft_restore_before_next_prompt(data_env, &g_minishell.cmd);
+}
+
+void	ft_execute_cmd(t_cmd *cmd, t_data_env *data_env, int builtin_done)
+{
+	if (cmd->inside_pipe == 0)
+			builtin_done = ft_exe_builtin1(cmd, data_env);
+	if (builtin_done == 0)
+		ft_fork(cmd, data_env);
+}
+
+void	ft_prepare_before_next_cmd(int *pipe_before, int *builtin_done)
+{
+	*pipe_before = ft_init_pipe_before(&g_minishell.cmd);
+	ft_free_cmd(&g_minishell.cmd);
+	*builtin_done = 0;
 }
 
 void	ft_waitpid(t_cmd *cmd)
@@ -67,22 +82,16 @@ void	ft_waitpid(t_cmd *cmd)
 	}
 }
 
-int	ft_exec_builtin(t_cmd *cmd, t_data_env *data_env)
+int	ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env)
 {
 	if (cmd->argv != NULL)
 	{
-		if (ft_strcmp("echo", cmd->argv[0]) == 0)
-			return (ft_echo(cmd->argc, cmd->argv), 1);
-		else if (ft_strcmp("cd", cmd->argv[0]) == 0)
+		if (ft_strcmp("cd", cmd->argv[0]) == 0)
 			return (ft_cd(cmd->argc, cmd->argv, data_env), 1);
-		else if (ft_strcmp("pwd", cmd->argv[0]) == 0)
-			return (ft_pwd(data_env->envp), 1);
-		else if (ft_strcmp("export", cmd->argv[0]) == 0)
+		else if (ft_strcmp("export", cmd->argv[0]) == 0 && cmd->argc > 1)
 			return (ft_export(cmd->argc, cmd->argv, data_env), 1);
 		else if (ft_strcmp("unset", cmd->argv[0]) == 0)
 			return (ft_unset(cmd->argc, cmd->argv, data_env), 1);
-		else if (ft_strcmp("env", cmd->argv[0]) == 0)
-			return (ft_env(data_env-> envp, cmd->argc), 1);
 		else if (ft_strcmp("exit", cmd->argv[0]) == 0)
 			return (ft_exit(cmd->argc, cmd->argv), 1);
 	}

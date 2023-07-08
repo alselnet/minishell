@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:26:09 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 19:05:49 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,9 @@ void			ft_error_no_such_file(char *file);
 void			ft_error_cmd_not_found(char *cmd);
 void			ft_error(int status);
 
+// ft_error_redirections.c
+void			ft_error_redirections(t_cmd *cmd);
+
 // ft_execute_bis.c
 void			ft_std_backup(t_data_env *data_env);
 int				ft_init_pipe_before(t_cmd *cmd);
@@ -171,10 +174,13 @@ void			ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd);
 
 // ft_execute.c
 void			ft_execute(t_token *tklist_head, t_data_env *data_env);
+void			ft_execute_cmd(t_cmd *cmd, t_data_env *data_env, int builtin_done);
+void			ft_prepare_before_next_cmd(int *pipe_before, int *builtin_done);
 void			ft_waitpid(t_cmd *cmd);
-int				ft_exec_cmd(t_cmd *cmd, t_data_env *data_env);
-int				ft_exec_builtin(
-					t_cmd *cmd, t_data_env *data_env);
+int				ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env);
+// ft_exit_exec.c
+void			ft_exit_exec(int status);
+
 
 // ft_fill_cmd_type_r.c
 void			ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst);
@@ -191,7 +197,7 @@ void			ft_fork(t_cmd *cmd, t_data_env *data_env);
 void			ft_redirections(t_cmd *cmd);
 void			ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env);
 void			ft_after_fork_parent(t_cmd *cmd);
-void			ft_exit_exec(int status);
+void			ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env);
 
 // ft_free_all_exec.c
 void			ft_free_all_exec(void);
@@ -228,6 +234,7 @@ int				ft_cd_without_arg(t_data_env *s_data_env);
 void			ft_cd_too_many_args(void);
 int				ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env);
 void			ft_change_g_pwd(char *pwd);
+void			ft_change_all_pwd(char *pwd, t_data_env *s_data_env);
 void			ft_cd(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_cd_utils.c
@@ -235,6 +242,8 @@ void			ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
 int				ft_update_oldpwd(t_data_env *s_data_env);
 void			ft_update_pwd(char *pwd, t_data_env *s_data_env);
 char			*ft_get_pwd(char **argv, char **envp);
+void			ft_change_g_pwd(char *pwd);
+
 
 // ft_echo.c
 int				ft_check_option(char *str);

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 00:36:32 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:37:14 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 	else if (cmd->pid == 0)
 	{
 		ft_redirections(cmd);
-		if (cmd->has_cmd == 0)
+		if (cmd->has_cmd == 0 && cmd->first_arg != NULL)
 			ft_error_cmd_not_found(cmd->first_arg);
-		ft_exec_builtin(&g_minishell.cmd, data_env);
+		if (cmd->has_cmd == 0 && cmd->first_arg == NULL)
+			ft_exit_exec(0);
+		ft_exe_builtin2(&g_minishell.cmd, data_env);
 		ft_exec_not_builtin(cmd, data_env);
 	}
 	else
@@ -58,10 +60,7 @@ void	ft_redirections(t_cmd *cmd)
 	}
 	if (cmd->fd_out != -2 && cmd->fd_out != -1)
 		ft_close(&cmd->fd_out);
-	if (cmd->fd_in == -1)
-		ft_exit_exec(1);
-	if (cmd->fd_out == -1)
-		ft_exit_exec(1);
+	ft_error_redirections(cmd);
 }
 
 void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
@@ -106,8 +105,23 @@ void	ft_after_fork_parent(t_cmd *cmd)
 		ft_close(&cmd->fd_out);
 }
 
-void	ft_exit_exec(int status)
+void	ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env)
 {
-	ft_free_all_exec();
-	exit(status);
+	if (cmd->argv != NULL)
+	{
+		if (ft_strcmp("echo", cmd->argv[0]) == 0)
+			ft_echo(cmd->argc, cmd->argv);
+		else if (ft_strcmp("cd", cmd->argv[0]) == 0)
+			ft_cd(cmd->argc, cmd->argv, data_env);
+		else if (ft_strcmp("pwd", cmd->argv[0]) == 0)
+			ft_pwd(data_env->envp);
+		else if (ft_strcmp("export", cmd->argv[0]) == 0)
+			ft_export(cmd->argc, cmd->argv, data_env);
+		else if (ft_strcmp("unset", cmd->argv[0]) == 0)
+			ft_unset(cmd->argc, cmd->argv, data_env);
+		else if (ft_strcmp("env", cmd->argv[0]) == 0)
+			ft_env(data_env-> envp, cmd->argc);
+		else if (ft_strcmp("exit", cmd->argv[0]) == 0)
+			ft_exit(cmd->argc, cmd->argv);
+	}
 }

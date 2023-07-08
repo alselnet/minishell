@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/08 00:35:02 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/08 17:42:29 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,10 @@ SIGNALSDIR = signals
 
 EXEC_FILES = ft_close.c \
 			ft_error_exec.c \
+			ft_error_redirections.c \
 			ft_execute_bis.c \
 			ft_execute.c \
+			ft_exit_exec.c \
 			ft_fill_cmd_type_r.c \
 			ft_fill_cmd.c \
 			ft_fork.c \

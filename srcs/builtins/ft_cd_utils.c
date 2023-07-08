@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:49:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 16:32:44 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 19:05:13 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,12 @@ char	*ft_get_pwd(char **argv, char **envp)
 	else
 		pwd = ft_strjoin("PWD=", current_path);
 	return (pwd);
+}
+
+void	ft_change_g_pwd(char *pwd)
+{
+	free(g_minishell.pwd);
+	g_minishell.pwd = ft_strdup(pwd + 4);
+	if (g_minishell.pwd == NULL)
+		ft_error(200);
 }

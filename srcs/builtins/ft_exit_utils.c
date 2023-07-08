@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:52:26 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 00:34:29 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:30:57 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ void	ft_exit_utils(int status, int no_exit_written)
 	}
 	if ((g_minishell.cmd.inside_pipe == 1
 			&& ft_strcmp("exit", g_minishell.cmd.argv[0]) != 0)
-		|| ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0)
+		|| ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0
+		|| ft_strcmp("echo", g_minishell.cmd.argv[0]) == 0
+		|| ft_strcmp("pwd", g_minishell.cmd.argv[0]) == 0
+		|| (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0
+			&& g_minishell.cmd.argc == 1)
+		|| ft_strcmp("env", g_minishell.cmd.argv[0]) == 0)
 	{
 		ft_free_all_exec();
 		exit(status);
