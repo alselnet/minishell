@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:23:43 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:25:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	free_array(char **arr)
 	return (0);
 }
 
-void	set_error(int	error_code)
+void	set_error(int error_code)
 {
 	g_minishell.exit_status = error_code;
 }

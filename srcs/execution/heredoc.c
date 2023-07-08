@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:20:11 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:27:43 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 		line = gnl();
 		if (!line)
 			return (free_heredoc(&g_minishell.ltable, data_env,
-				"cannot allocate memory\n"));
+					"cannot allocate memory\n"));
 		if (*line == 0)
 		{
 			write(1, "\n", 1);
@@ -76,7 +76,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 		new_line = process_line(line, delim, data_env);
 		if (!new_line)
 			return (free_heredoc(&g_minishell.ltable, data_env,
-				"cannot allocate memory\n"));
+					"cannot allocate memory\n"));
 		if (ft_strncmp(delim->content,
 				new_line, ft_strlen(delim->content)) == 0)
 			return (free(new_line));
@@ -92,10 +92,9 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 
 	browse = tklist_head;
 	if (cmd->fd_heredoc != -2)
-	{
 		cmd->fd_heredoc = -2;
+	if (cmd->fd_heredoc != -2)
 		unlink("/tmp/.hdoc.txt");
-	}
 	delim = fetch_delim(&browse);
 	if (!delim)
 		return (free_heredoc(&g_minishell.ltable, data_env, ""), set_error(0));
@@ -104,7 +103,7 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 		cmd->fd_heredoc = open("/tmp/.hdoc.txt", O_CREAT | O_WRONLY, 0664);
 		if (cmd->fd_heredoc < 0)
 			return (free_heredoc(&g_minishell.ltable, data_env,
-				"Permission denied\n"), set_error(13));
+					"Permission denied\n"), set_error(13));
 		heredoc_process(cmd, data_env, delim);
 		if (browse && browse->content[0] != '|')
 		{
