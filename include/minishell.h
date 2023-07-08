@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:02:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:09:50 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			update_with_error(char *new_content, char *content, char *error_code, cha
 char			*replace_with_value(char *content, char **cursor, int name_len, char **env);
 
 //expand4.c
-
+void			copy_content_end(char *new_content, char *content, int i, int j);
 
 // lexing.c
 int				create_redir_token(
