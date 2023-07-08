@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:50:30 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 22:46:53 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		if (!ltable->input)
 			return (rl_clear_history(), free_array(data_env->envp), free (g_minishell.pwd), printf("exit\n"));
 			// return (free_array(data_env->envp), free(g_minishell.pwd) printf("exit\n"));
+			// IL FAUT EXIT AVEC LE G_MINISHELL.EXIT_STATUS
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);

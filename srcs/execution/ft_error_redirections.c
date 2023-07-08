@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:03:31 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 17:26:22 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 22:02:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_error_redirections(t_cmd *cmd)
 {
 	if (cmd->fd_in == -1)
 	{
-		write(2, "No such file or directory\n", 26);
+		ft_error_no_such_file(cmd->error_infile);
 		ft_exit_exec(1);
 	}
 	if (cmd->fd_out == -1)

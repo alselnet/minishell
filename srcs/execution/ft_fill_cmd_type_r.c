@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 22:46:28 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 17:12:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 22:01:59 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,17 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 		if (cmd->fd_in != -2)
 			close(cmd->fd_in);
 		if (lst->content[1] == '<')
+		{
 			cmd->fd_in = open(".hdoc.txt", O_RDONLY, 0500);
+			if (cmd->fd_in == -1)
+				ft_error(1);
+		}
 		else
+		{
 			cmd->fd_in = open(lst->next->content, O_RDONLY, 0500);
+			if (cmd->fd_in == -1)
+				cmd->error_infile = lst->next->content;
+		}
 	}
 	ft_fill_cmd_for_type_r2(cmd, lst);
 }

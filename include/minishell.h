@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 19:05:49 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 21:59:59 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_cmd
 	int		pipefd[2];
 	int		final_cmd;
 	int		fd_in;
+	char	*error_infile;
 	int		fd_out;
 	int		pid;
 	char	*cmd_path;
