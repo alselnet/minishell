@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:27:43 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:57:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 		unlink("/tmp/.hdoc.txt");
 	delim = fetch_delim(&browse);
 	if (!delim)
-		return (free_heredoc(&g_minishell.ltable, data_env, ""), set_error(0));
+		return ;
 	while (delim)
 	{
 		cmd->fd_heredoc = open("/tmp/.hdoc.txt", O_CREAT | O_WRONLY, 0664);

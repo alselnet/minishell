@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:04:36 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 15:50:50 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:58:33 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	*replace_dollars(char *content)
 	int		i;
 
 	i = -1;
+	if (ft_isinbase(content[0], "!:#") && ft_strlen(content) < 2)
+		return (0);
 	len = gen_no_dollars_len(content);
 	new_content = ft_calloc(sizeof(char), len + 1);
 	if (!new_content)
