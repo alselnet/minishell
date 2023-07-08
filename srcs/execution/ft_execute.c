@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 18:32:21 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 23:15:48 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 			if (g_minishell.cmd.final_cmd == 1 && g_minishell.status_done == 0)
 			g_minishell.status_done = 1;
 			g_minishell.exit_status = 0;
-			break ;
 		}
-		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
+		else
+			ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
 		if (g_minishell.cmd.final_cmd == 1)
 			break ;
 		ft_prepare_before_next_cmd(&pipe_before, &builtin_done);
