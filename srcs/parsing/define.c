@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 18:16:07 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:52:54 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ int	define_redirs(t_lexing *ltable)
 	return (1);
 }
 
-void	define_delims(t_lexing *ltable)
+int	define_delims(t_lexing *ltable)
 {
 	t_token	*browse;
 
 	browse = ltable->tklist_head;
 	if (!browse)
-		return ;
+		return (0);
 	while (browse->next)
 	{
 		if (!ft_strncmp(browse->content, "<<", 2))
 			browse->next->type = 'D';
 		browse = browse->next;
 	}
+	return (1);
 }
 
 int	define_files(t_lexing *ltable)

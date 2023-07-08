@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 15:44:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:22:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 		return (0);
 	g_minishell.monitor = define_redirs(ltable);
 	if (g_minishell.monitor)
-		define_delims(ltable);
+		g_minishell.monitor = define_delims(ltable);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_files(ltable);
 	if (g_minishell.monitor)

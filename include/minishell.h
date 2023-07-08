@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:09:50 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:52:00 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_lexing
 
 // define.c
 int				define_redirs(t_lexing *ltable);
-void			define_delims(t_lexing *ltable);
+int				define_delims(t_lexing *ltable);
 int				define_files(t_lexing *ltable);
 
 // define2.c
@@ -122,8 +122,12 @@ int				no_alnum(char *content);
 
 // quit.c
 int				free_array(char **arr);
+void			set_error(int	error_code);
 int				free_structs(t_lexing *ltable,
 					t_data_env *data_env, char *error_msg, char mode);
+void			free_heredoc(t_lexing *ltable,
+					t_data_env *data_env, char *error_msg);
+
 
 // temp.c
 void			print_token_list(t_token **head);

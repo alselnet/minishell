@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 15:46:04 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 17:22:51 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ int	create_regular_token(t_lexing *ltable,
 	while (ltable->input[*reader + count]
 		&& !ft_isinbase(ltable->input[*reader + count], "<|>\'\" \t"))
 		count++ ;
-	if (!count)
-		return (free_structs(ltable, data_env, "token length count error\n", 1));
 	new = tk_new(ft_substr(ltable->input, *reader, count));
 	if (!new->content)
 		return (free_structs(ltable, data_env,
