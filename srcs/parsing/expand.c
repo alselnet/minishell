@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 18:30:57 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 19:41:57 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 15:51:27 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	format_tokens(t_lexing *ltable, t_data_env *data_env)
 
 int	to_expand(t_token *token)
 {
-	t_token *browse;
+	t_token	*browse;
 
 	browse = token;
 	if (no_alnum(browse->content) && ft_strncmp(browse->content, "$?", 2))
@@ -65,7 +65,8 @@ int	to_expand(t_token *token)
 		return (0);
 	while (browse->prev && browse->join_prev)
 	{
-		if (browse->prev->prev && !ft_strncmp(browse->prev->prev->content, "<<", 2))
+		if (browse->prev->prev
+			&& !ft_strncmp(browse->prev->prev->content, "<<", 2))
 			return (0);
 		browse = browse->prev;
 	}

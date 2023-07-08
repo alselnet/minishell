@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 18:32:36 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:07:38 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,21 @@ char	*delete_name(char *content, char **cursor, int name_len)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	new_content = ft_calloc(sizeof(char), ft_strlen(content) - name_len);
 	if (!new_content)
 		return (0);
-	while (*(content + i) && content + i != *cursor)
+	while (*(content + ++i) && content + i != *cursor)
 	{
 		new_content[j] = content[i];
-		i++;
 		j++;
 	}
 	i++;
 	while (*(content + i) && ft_isalnum(*(content + i)))
 		i++;
 	*cursor = new_content + j;
-	while (*(content + i))
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
+	copy_content_end(new_content, content, i, j);
 	free(content);
 	return (new_content);
 }
@@ -66,7 +60,8 @@ char	*get_new_content(char *content, char **cursor, int name_len, char **env)
 {
 	if (*cursor && **cursor && (*cursor + 1)[0] == '?')
 		content = replace_with_error_code(content, cursor);
-	else if (*cursor && **cursor && !ft_isalnum((*cursor + 1)[0]) && !ft_isinbase((*cursor + 1)[0], "\'\""))
+	else if (*cursor && **cursor && !ft_isalnum((*cursor + 1)[0])
+		&& !ft_isinbase((*cursor + 1)[0], "\'\""))
 	{
 		*cursor = *(cursor) + 1;
 		while (**cursor && **cursor != '$')

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 14:43:05 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/06 20:08:41 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:07:00 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,16 @@ void	update_content(char *new_content, char *content,
 		new_content[j] = content[i];
 		j++;
 	}
-	while (*(content + ++i) && ft_isalnum(*(content + i)));
+	i++;
+	while (*(content + i) && ft_isalnum(*(content + i)))
+		i++;
 	while (variable[++k])
 	{
 		new_content[j] = variable[k];
 		j++;
 	}
 	*cursor = new_content + j;
-	while (*(content + i))
-	{
-		new_content[j] = content[i];
-		i++;
-		j++;
-	}
+	copy_content_end(new_content, content, i, j);
 }
 
 void	update_with_error(char *new_content, char *content,
@@ -99,19 +96,18 @@ void	update_with_error(char *new_content, char *content,
 		new_content[j] = content[i];
 		j++;
 	}
-	while (*(content + ++i) && ft_isalnum(*(content + i)));
+	i++;
+	while (*(content + i) && ft_isalnum(*(content + i)))
+		i++;
 	while (error_code[++k])
 	{
 		new_content[j] = error_code[k];
 		j++;
 	}
 	*cursor = new_content + j;
-	while (*(content + ++i))
-	{
-		new_content[j] = content[i];
-		j++;
-	}
-}	
+	i++;
+	copy_content_end(new_content, content, i, j);
+}
 
 char	*replace_with_value(char *content, char **cursor,
 	int name_len, char **env)

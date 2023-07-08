@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/07 15:37:46 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/08 16:01:59 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ PARSING_FILES = define.c \
 				expand.c \
 				expand2.c \
 				expand3.c \
+				expand4.c \
 				lexing.c \
 				lexing2.c \
 				parsing.c \

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:22:11 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 17:50:36 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 15:46:04 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	create_redir_token(t_lexing *ltable, t_data_env *data_env, int *reader)
 		if (ltable->input[*reader + 2]
 			&& ft_isinbase(ltable->input[*reader + 2], "<|>"))
 			return (free_structs(ltable, data_env,
-				"syntax error near redirection\n", 1));
+					"syntax error near redirection\n", 1));
 	}
 	if (ltable->input[*reader + 1] == redir)
 	{

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 18:12:56 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 15:44:24 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,25 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env)
 	return (1);
 }
 
+void	process_input(t_lexing *ltable, t_data_env *data_env)
+{
+	ltable->input = replace_dollars(ltable->input);
+	if (ltable->input)
+		g_minishell.monitor = create_token_list(ltable, data_env);
+	if (g_minishell.monitor)
+		g_minishell.monitor = parse_token_list(ltable, data_env);
+	if (g_minishell.monitor)
+		g_minishell.monitor = expand_token_list(ltable, data_env);
+	if (g_minishell.monitor)
+		g_minishell.monitor = define_token_types(ltable, data_env);
+	//if (g_minishell.monitor)
+	//	print_token_list(&ltable->tklist_head);
+	if (g_minishell.monitor)
+		ft_execute(ltable->tklist_head, data_env);
+	if (g_minishell.monitor)
+		tk_clear(&ltable->tklist_head);
+}
+
 int	minishell(t_lexing *ltable, t_data_env *data_env)
 {
 	while (1)
@@ -41,26 +60,13 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.status_done = 0;
 		ltable->input = readline("minishell$ ");
 		if (!ltable->input)
-			return (rl_clear_history(), free_array(data_env->envp), printf("exit\n"));
+			return (rl_clear_history(),
+				free_array(data_env->envp), printf("exit\n"));
 			// return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;
 		add_history(ltable->input);
-		ltable->input = replace_dollars(ltable->input);
-		if (ltable->input)
-			g_minishell.monitor = create_token_list(ltable, data_env);
-		if (g_minishell.monitor)
-			g_minishell.monitor = parse_token_list(ltable, data_env);
-		if (g_minishell.monitor)
-			g_minishell.monitor = expand_token_list(ltable, data_env);
-		if (g_minishell.monitor)
-			g_minishell.monitor = define_token_types(ltable, data_env);
-		//if (g_minishell.monitor)
-		//	print_token_list(&ltable->tklist_head);
-		if (g_minishell.monitor)
-			ft_execute(ltable->tklist_head, data_env);
-		if (g_minishell.monitor)
-			tk_clear(&ltable->tklist_head);
+		process_input(ltable, data_env);
 		free(ltable->input);
 	}
 	return (g_minishell.monitor);

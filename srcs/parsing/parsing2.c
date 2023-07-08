@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:04:36 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/07 19:26:11 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/08 15:50:50 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	no_previous_quote(char *content, int i)
 	return (1);
 }
 
-int		gen_no_dollars_len(char *content)
+int	gen_no_dollars_len(char *content)
 {
 	int	len;
 	int	i;
@@ -45,7 +45,7 @@ int		gen_no_dollars_len(char *content)
 	i = -1;
 	len = 0;
 	while (content[++i])
-	{ 
+	{
 		if (content[i] && content[i] == '$'
 			&& content[i + 1] && ft_isinbase(content[i + 1], "\'\"")
 			&& no_previous_quote(content, i))
@@ -67,7 +67,7 @@ char	*gen_no_dollars(char *content, char *new_content)
 	i = -1;
 	j = 0;
 	while (content[++i])
-	{ 
+	{
 		if (content[i] && content[i] == '$'
 			&& content[i + 1] && ft_isinbase(content[i + 1], "\'\"")
 			&& no_previous_quote(content, i))
@@ -80,7 +80,6 @@ char	*gen_no_dollars(char *content, char *new_content)
 			new_content[j] = content[i];
 			j++;
 		}
-
 	}
 	return (new_content);
 }
@@ -99,7 +98,7 @@ char	*replace_dollars(char *content)
 	while (content[++i])
 	{
 		if (content[i] == '$' && (content[i + 1]
-			&& ft_isinbase(content[i + 1], "\'\"")))
+				&& ft_isinbase(content[i + 1], "\'\"")))
 		{
 			new_content = gen_no_dollars(content, new_content);
 			if (!new_content)
@@ -111,4 +110,3 @@ char	*replace_dollars(char *content)
 	free (new_content);
 	return (content);
 }
-
