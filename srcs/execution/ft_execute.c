@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 23:28:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 01:16:34 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_waitpid(t_cmd *cmd)
 		if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == 200)
-				ft_error(1);
+				ft_error(200);
 		}
 		if (res == -1 && (errno != EINTR && errno != ECHILD))
 			ft_error(1);

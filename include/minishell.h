@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 00:35:29 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:26:09 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,10 +227,11 @@ char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_cd_without_arg(t_data_env *s_data_env);
 void			ft_cd_too_many_args(void);
 int				ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env);
+void			ft_change_g_pwd(char *pwd);
 void			ft_cd(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_cd_utils.c
-int				ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
+void			ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
 int				ft_update_oldpwd(t_data_env *s_data_env);
 void			ft_update_pwd(char *pwd, t_data_env *s_data_env);
 char			*ft_get_pwd(char **argv, char **envp);
@@ -273,6 +274,7 @@ void			ft_export(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_pwd.c
 char			*ft_retrieve_pwd_env(char **envp);
+void			ft_print_pwd(char *pwd);
 void			ft_pwd(char **envp);
 
 // ft_unset.c
@@ -307,6 +309,8 @@ typedef struct s_minishell
 	int			exit_status;
 	int			monitor;
 	int			status_done;
+	char		*pwd;
+	int			oldpwd_done;
 }				t_minishell;
 
 extern t_minishell	g_minishell;
@@ -317,6 +321,7 @@ extern t_minishell	g_minishell;
 // ft_init.c
 void			init_table(t_lexing *ltable);
 void			ft_init_data_env(t_data_env *s_data_env, char **envp);
+char			*ft_init_pwd(char **envp);
 void			ft_init_g_minishell(t_minishell *g_minishell, char **envp);
 
 // minishell.c

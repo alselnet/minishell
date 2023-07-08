@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:05:57 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 19:06:16 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 13:51:21 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	ft_unset(int argc, char **argv, t_data_env *s_data_env)
 	int	status;
 
 	status = 0;
-	if (argc == 1)
-		return ;
 	j = 1;
 	while (j < argc)
 	{
@@ -72,7 +70,7 @@ void	ft_unset(int argc, char **argv, t_data_env *s_data_env)
 			continue ;
 		}	
 		if (ft_unset_with_arg(argv, s_data_env, j) == -1)
-			ft_error(1);
+			ft_error(200);
 		j++;
 	}
 	ft_exit_utils(status, 1);

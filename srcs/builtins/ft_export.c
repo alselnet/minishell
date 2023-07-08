@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 22:30:03 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 01:14:44 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	ft_export_with_arguments(char **argv, t_data_env *s_data_env, int j)
 	{
 		s_data_env->envp = ft_add_var_env(s_data_env, argv[j]);
 		if (s_data_env->envp == NULL)
-			ft_error(1);
+			ft_error(200);
 	}	
 	else
 	{
@@ -97,7 +97,7 @@ void	ft_export_with_arguments(char **argv, t_data_env *s_data_env, int j)
 		s_data_env->envp[i] = NULL;
 		s_data_env->envp[i] = ft_strdup(argv[j]);
 		if (s_data_env->envp[i] == NULL)
-			ft_error(1);
+			ft_error(200);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 00:49:19 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:16:36 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ int	ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env)
 	return (0);
 }
 
+void	ft_change_g_pwd(char *pwd)
+{
+	free(g_minishell.pwd);
+	g_minishell.pwd = ft_strdup(pwd + 4);
+	if (g_minishell.pwd == NULL)
+		ft_error(200);
+}
+
 void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 {
 	char	*pwd;
@@ -80,14 +88,15 @@ void	ft_cd(int argc, char **argv, t_data_env *s_data_env)
 		perror("cd");
 		ft_exit_utils(1, 1);
 		return ;
-	}
+	}	
 	if (ft_update_oldpwd(s_data_env) == -1)
 		return (ft_exit_utils(1, 1));
 	if (ft_go_to_dir(argc, argv, s_data_env) == -1)
 		return ;
 	pwd = ft_get_pwd(argv, s_data_env->envp);
 	if (pwd == NULL)
-		ft_error(1);
+		ft_error(200);
+	ft_change_g_pwd(pwd);
 	ft_update_pwd(pwd, s_data_env);
 	ft_exit_utils(EXIT_SUCCESS, 1);
 }
