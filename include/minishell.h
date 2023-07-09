@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 19:03:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,7 @@ void			ft_error_numeric(char *builtin, char *identifier);
 int				ft_check_numeric_arg(char **argv);
 
 // ft_exit.c
+int				ft_char_to_int(char *str);
 unsigned char	ft_atoi_exit(char *str);
 void			ft_exit(int argc, char **argv);
 

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:56:46 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 19:46:55 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 19:12:38 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,31 @@ int	ft_check_has_oldpwd(char **envp)
 		return (0);
 }
 
+// char	**ft_update_shlvl(char **env, int pos)
+// {
+// 	char 	*str_nb;
+// 	int		nb;
+
+// 	str_nb = env[pos] + 6;
+// 	nb = ft_char_to_int(str_nb);
+// 	nb++;
+// 	str_nb = ft_itoa(nb);
+// 	if (str_nb == NULL)
+// 	{
+// 		ft_free_env(env, pos + 1);
+// 		return (NULL);
+// 	}
+// 	free(env[pos]);
+// 	env[pos] = ft_strjoin("SHLVL=", str_nb);
+// 	if (env[pos] == NULL)
+// 	{
+// 		ft_free_env(env, pos);
+// 		return (NULL);
+// 	}
+// 	return (env);
+// }
+
+
 char	**ft_strdup_env_2(char **envp, char **env, int size, int take_oldpwd)
 {
 	int	i;
@@ -77,6 +102,10 @@ char	**ft_strdup_env_2(char **envp, char **env, int size, int take_oldpwd)
 			ft_free_env(env, j - 1);
 			return (NULL);
 		}
+		// if ((ft_strcmp_env("SHLVL=", env[j - 1]) == 0) && take_oldpwd == 0)
+		// 	env = ft_update_shlvl(env, j - 1);
+		// if (env == NULL)
+		// 	return (NULL);
 		i++;
 	}
 	env[size] = NULL;
