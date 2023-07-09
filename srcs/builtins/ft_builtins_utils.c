@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:09:34 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 18:56:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 21:16:15 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,14 @@ char	*ft_strdup(const char *s)
 	}
 	dest[j] = 0;
 	return (dest);
+}
+
+int	ft_check_shlvl(char *var, int *j)
+{
+	if (ft_strncmp(var, "SHLVL", 5) == 0)
+	{
+		(*j)++;
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 21:13:46 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,11 @@ void			ft_init_cmd(t_cmd *cmd);
 //ft_heredoc.c
 void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head);
 
+// ft_update_shlvl.c
+void			ft_update_shlvl(t_data_env *data_env, int pos);
+int				ft_check_minishell_cmd(char *str);
+int				ft_search_shlvl_env(t_data_env *data_env);
+
 /////////////////////////////// BUILTINS /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
@@ -228,6 +233,7 @@ void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head);
 void			ft_error_identifier(char *builtin, char *identifier);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s);
+int				ft_check_shlvl(char *var, int *j);
 
 // ft_builtins_utils_2.c
 int				ft_isalpha(int c);
@@ -304,6 +310,7 @@ void			ft_error_numeric(char *builtin, char *identifier);
 int				ft_check_numeric_arg(char **argv);
 
 // ft_exit.c
+int				ft_char_to_int(char *str);
 unsigned char	ft_atoi_exit(char *str);
 void			ft_exit(int argc, char **argv);
 

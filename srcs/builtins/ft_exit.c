@@ -6,19 +6,17 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:03:41 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 00:43:03 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 20:54:35 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned char	ft_atoi_exit(char *str)
+int	ft_char_to_int(char *str)
 {
-	int	nb;
 	int	i;
+	int	nb;
 
-	if (*str == '+' || *str == '-')
-		str++;
 	i = 1;
 	nb = str[0] % '0';
 	while (str[i] >= '0' && str[i] <= '9')
@@ -27,6 +25,13 @@ unsigned char	ft_atoi_exit(char *str)
 		i++;
 	}
 	return (nb);
+}
+
+unsigned char	ft_atoi_exit(char *str)
+{
+	if (*str == '+' || *str == '-')
+		str++;
+	return (ft_char_to_int(str));
 }
 
 void	ft_exit(int argc, char **argv)

@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/09 17:09:01 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/09 20:53:22 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,10 @@ EXEC_FILES = ft_all_redir.c \
 			ft_free_all_exec.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
-			ft_init_cmd.c \
 			ft_heredoc.c \
+			ft_init_cmd.c \
+			ft_update_shlvl.c
+			
 
 PARSING_FILES = define.c \
 				define2.c \

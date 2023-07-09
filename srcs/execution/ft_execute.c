@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/09 16:48:51 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 20:56:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,20 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 
 void	ft_execute_cmd(t_cmd *cmd, t_data_env *data_env, int builtin_done)
 {
+	int	pos_shlvl;
+
+	pos_shlvl = 0;
 	if (pipe(cmd->pipefd) == -1)
 		ft_error(1);
+	if (cmd->has_cmd == 1)
+	{
+		if (ft_check_minishell_cmd(cmd->argv[0]) == 1)
+		{
+			pos_shlvl = ft_search_shlvl_env(data_env);
+			if (pos_shlvl != -1)
+				ft_update_shlvl(data_env, pos_shlvl);
+		}
+	}
 	if (cmd->inside_pipe == 0)
 			builtin_done = ft_exe_builtin1(cmd, data_env);
 	if (builtin_done == 0)
