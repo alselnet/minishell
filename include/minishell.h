@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 21:59:59 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
 
 /////////////////////////// ENVIRONMENT //////////////////////////////////
 typedef struct s_data_env
@@ -142,6 +142,7 @@ typedef struct s_cmd
 	char	**argv;
 	int		pipe;
 	int		pipefd[2];
+	int		old_pipefd[2];
 	int		final_cmd;
 	int		fd_in;
 	char	*error_infile;
@@ -155,6 +156,11 @@ typedef struct s_cmd
 	int		fd_heredoc;
 	int		inside_pipe;
 }				t_cmd;
+
+// ft_all_redir.c
+void			ft_all_redir(t_cmd *cmd);
+void			ft_redir_files(t_cmd *cmd);
+void			ft_error_redirections(t_cmd *cmd);
 
 // ft_close.c
 void			ft_close(int *fd);
@@ -175,13 +181,14 @@ void			ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd);
 
 // ft_execute.c
 void			ft_execute(t_token *tklist_head, t_data_env *data_env);
-void			ft_execute_cmd(t_cmd *cmd, t_data_env *data_env, int builtin_done);
+void			ft_execute_cmd(
+					t_cmd *cmd, t_data_env *data_env, int builtin_done);
 void			ft_prepare_before_next_cmd(int *pipe_before, int *builtin_done);
 void			ft_waitpid(t_cmd *cmd);
 int				ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env);
+
 // ft_exit_exec.c
 void			ft_exit_exec(int status);
-
 
 // ft_fill_cmd_type_r.c
 void			ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst);
@@ -195,7 +202,6 @@ void			ft_malloc_argv(t_cmd *cmd, t_token *lst);
 
 // ft_fork.c
 void			ft_fork(t_cmd *cmd, t_data_env *data_env);
-void			ft_redirections(t_cmd *cmd);
 void			ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env);
 void			ft_after_fork_parent(t_cmd *cmd);
 void			ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env);
@@ -244,7 +250,6 @@ int				ft_update_oldpwd(t_data_env *s_data_env);
 void			ft_update_pwd(char *pwd, t_data_env *s_data_env);
 char			*ft_get_pwd(char **argv, char **envp);
 void			ft_change_g_pwd(char *pwd);
-
 
 // ft_echo.c
 int				ft_check_option(char *str);

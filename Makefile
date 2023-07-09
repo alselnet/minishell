@@ -6,7 +6,7 @@
 #    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/08 17:42:29 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/09 17:09:01 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ PARSINGDIR = parsing
 BUILTINSDIR = builtins
 SIGNALSDIR = signals
 
-EXEC_FILES = ft_close.c \
+EXEC_FILES = ft_all_redir.c \
+			ft_close.c \
 			ft_error_exec.c \
-			ft_error_redirections.c \
 			ft_execute_bis.c \
 			ft_execute.c \
 			ft_exit_exec.c \

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 16:33:55 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 17:16:26 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_init_pwd(char **envp)
 	char	current_path[1000];
 	char	*cwd;
 	char	*pwd;
-	
+
 	pwd = ft_retrieve_pwd_env(envp);
 	if (pwd == NULL)
 	{

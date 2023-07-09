@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 18:37:14 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/09 17:11:35 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 {
-	if (cmd->pipe == 1 && cmd->fd_out == -2 && cmd->fd_out != -1)
-	{
-		if (pipe(cmd->pipefd) == -1)
-			ft_error(1);
-	}
 	cmd->pid = fork();
 	if (cmd->final_cmd)
 		cmd->final_pid = cmd->pid;
@@ -26,41 +21,17 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 		ft_error(1);
 	else if (cmd->pid == 0)
 	{
-		ft_redirections(cmd);
+		ft_all_redir(cmd);
 		if (cmd->has_cmd == 0 && cmd->first_arg != NULL)
 			ft_error_cmd_not_found(cmd->first_arg);
 		if (cmd->has_cmd == 0 && cmd->first_arg == NULL)
 			ft_exit_exec(0);
+		ft_close_all_fds();
 		ft_exe_builtin2(&g_minishell.cmd, data_env);
 		ft_exec_not_builtin(cmd, data_env);
 	}
 	else
 		ft_after_fork_parent(cmd);
-}
-
-void	ft_redirections(t_cmd *cmd)
-{
-	if (cmd->fd_in != -2 && cmd->fd_in != -1)
-	{
-		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			ft_error(200);
-		ft_close(&cmd->fd_in);
-	}
-	if (cmd->fd_out != -2 && cmd->fd_out != -1)
-	{
-		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-			ft_error(200);
-	}
-	if (cmd->pipe == 1 && cmd->fd_out == -2 && cmd->fd_out != -1)
-	{
-		ft_close(&cmd->pipefd[0]);
-		if (dup2(cmd->pipefd[1], STDOUT_FILENO) == -1)
-			ft_error(200);
-		ft_close(&cmd->pipefd[1]);
-	}
-	if (cmd->fd_out != -2 && cmd->fd_out != -1)
-		ft_close(&cmd->fd_out);
-	ft_error_redirections(cmd);
 }
 
 void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
@@ -92,13 +63,13 @@ void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
 
 void	ft_after_fork_parent(t_cmd *cmd)
 {
-	if (cmd->pipe == 1 && cmd->fd_out == -2)
+	if (cmd->old_pipefd[0] != -2 && cmd->old_pipefd[1] != -2)
 	{
-		ft_close(&cmd->pipefd[1]);
-		if (dup2(cmd->pipefd[0], STDIN_FILENO) == -1)
-			ft_error(1);
-		ft_close(&cmd->pipefd[0]);
+		ft_close(&cmd->old_pipefd[0]);
+		ft_close(&cmd->old_pipefd[1]);
 	}
+	cmd->old_pipefd[0] = cmd->pipefd[0];
+	cmd->old_pipefd[1] = cmd->pipefd[1];
 	if (cmd->fd_in != -2 && cmd->fd_in != -1)
 		ft_close(&cmd->fd_in);
 	if (cmd->fd_out != -2 && cmd->fd_out != -1)
