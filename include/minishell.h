@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 18:43:07 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ char			last_char(char *str);
 int				parse_token_list(t_lexing *ltable, t_data_env *data_env);
 int				parse_redirections(t_lexing *ltable, t_data_env *data_env);
 int				join_quotes(t_lexing *ltable, t_data_env *data_env);
+int				no_alnum(char *content);
 
 // parsing2.c
 char			*replace_dollars(char *content);
-int				no_alnum(char *content);
 
 // quit.c
 int				free_array(char **arr);

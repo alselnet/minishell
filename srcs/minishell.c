@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 22:46:53 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 17:29:55 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	if (envp == NULL)
 		return (1);
-	if (envp[0] == NULL)
-		return (1);
+	//if (envp[0] == NULL)
+	//	return (1);
 	(void) argv;
 	if (argc != 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/09 16:48:51 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 17:27:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	while (1)
 	{
 		ft_init_cmd(&g_minishell.cmd);
-		fetch_heredoc(&g_minishell.cmd, tklist_head);
+		fetch_heredoc(&g_minishell.cmd, tklist_head, data_env);
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
 		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
 		if (g_minishell.cmd.final_cmd == 1)
