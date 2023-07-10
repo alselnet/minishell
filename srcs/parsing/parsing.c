@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:25:59 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/10 20:04:21 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ char	last_char(char *str)
 		i++;
 	i--;
 	return (str[i]);
+}
+
+int	no_alnum(char *content)
+{	
+	int	i;
+
+	i = -1;
+	while (content[++i])
+	{
+		if (ft_isalnum(content[i]) || ft_isinbase(content[i], " \t\n\""))
+			return (0);
+	}
+	return (1);
 }
 
 int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
@@ -40,7 +53,8 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		else if (ft_strmatch(browse->content, "<|>"))
 		{
 			if (!browse->next || (ft_strlen(browse->content) > 1
-					&& browse->content[0] != browse->content[1]))
+					&& browse->content[0] != browse->content[1])
+				|| (!browse->prev && browse->content[0] == '|'))
 				return (free_structs(ltable, data_env,
 						"syntax error near redirection\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')

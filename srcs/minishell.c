@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 22:46:53 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:55:36 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	process_input(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.monitor = expand_token_list(ltable, data_env);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_token_types(ltable, data_env);
-	// if (g_minishell.monitor)
-	// 	print_token_list(&ltable->tklist_head);
+	//if (g_minishell.monitor)
+	 //	print_token_list(&ltable->tklist_head);
 	if (g_minishell.monitor)
 		ft_execute(ltable->tklist_head, data_env);
 	if (g_minishell.monitor)
@@ -84,8 +84,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	if (envp == NULL)
 		return (1);
-	if (envp[0] == NULL)
-		return (1);
+	//if (envp[0] == NULL)
+	//	return (1);
 	(void) argv;
 	if (argc != 1)
 	{

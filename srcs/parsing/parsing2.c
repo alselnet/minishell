@@ -6,24 +6,11 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:04:36 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:58:33 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/10 20:07:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	no_alnum(char *content)
-{	
-	int	i;
-
-	i = -1;
-	while (content[++i])
-	{
-		if (ft_isalnum(content[i]))
-			return (0);
-	}
-	return (1);
-}
 
 int	no_previous_quote(char *content, int i)
 {
@@ -84,6 +71,18 @@ char	*gen_no_dollars(char *content, char *new_content)
 	return (new_content);
 }
 
+int	special_char_error(char *content)
+{
+	if (ft_isinbase(content[0], "#:") && ft_strlen(content) < 2)
+		return (0);
+	else if (ft_isinbase(content[0], "!") && ft_strlen(content) < 2)
+	{
+		set_error(1);
+		return (0);
+	}
+	return (1);
+}
+
 char	*replace_dollars(char *content)
 {
 	char	*new_content;
@@ -91,7 +90,7 @@ char	*replace_dollars(char *content)
 	int		i;
 
 	i = -1;
-	if (ft_isinbase(content[0], "!:#") && ft_strlen(content) < 2)
+	if (!special_char_error(content))
 		return (0);
 	len = gen_no_dollars_len(content);
 	new_content = ft_calloc(sizeof(char), len + 1);
