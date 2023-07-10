@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:52:00 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
-# include <dirent.h>
-
+# include <sys/stat.h>
 
 /////////////////////////// ENVIRONMENT //////////////////////////////////
 typedef struct s_data_env
@@ -160,8 +159,10 @@ typedef struct s_cmd
 	char	**argv;
 	int		pipe;
 	int		pipefd[2];
+	int		old_pipefd[2];
 	int		final_cmd;
 	int		fd_in;
+	char	*error_infile;
 	int		fd_out;
 	int		pid;
 	char	*cmd_path;
@@ -170,7 +171,13 @@ typedef struct s_cmd
 	char	*first_arg;
 	int		first_arg_done;
 	int		fd_heredoc;
+	int		inside_pipe;
 }				t_cmd;
+
+// ft_all_redir.c
+void			ft_all_redir(t_cmd *cmd);
+void			ft_redir_files(t_cmd *cmd);
+void			ft_error_redirections(t_cmd *cmd);
 
 // ft_close.c
 void			ft_close(int *fd);
@@ -181,29 +188,24 @@ void			ft_error_no_such_file(char *file);
 void			ft_error_cmd_not_found(char *cmd);
 void			ft_error(int status);
 
+// ft_error_redirections.c
+void			ft_error_redirections(t_cmd *cmd);
+
 // ft_execute_bis.c
 void			ft_std_backup(t_data_env *data_env);
-void			ft_set_stdin_to_null(int builtin_done);
 int				ft_init_pipe_before(t_cmd *cmd);
 void			ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd);
-void			ft_check_dir(t_cmd *cmd);
-
-
-// ft_execute.ter
-void			ft_exec_cd_utils(t_cmd *cmd, t_data_env *data_env);
-int				ft_exec_cd(int pipe_before, t_cmd *cmd, t_data_env *data_env);
-int				ft_exec_unset(
-					int pipe_before, t_cmd *cmd, t_data_env *data_env);
-int				ft_exec_export(
-					int pipe_before, t_cmd *cmd, t_data_env *data_env);
-int				ft_exec_exit(int pipe_before, t_cmd *cmd);
 
 // ft_execute.c
 void			ft_execute(t_token *tklist_head, t_data_env *data_env);
+void			ft_execute_cmd(
+					t_cmd *cmd, t_data_env *data_env, int builtin_done);
+void			ft_prepare_before_next_cmd(int *pipe_before, int *builtin_done);
 void			ft_waitpid(t_cmd *cmd);
-int				ft_exec_cmd(t_cmd *cmd, t_data_env *data_env);
-int				ft_exe_builtin1(
-					t_cmd *cmd, t_data_env *data_env, int pipe_before);
+int				ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env);
+
+// ft_exit_exec.c
+void			ft_exit_exec(int status);
 
 // ft_fill_cmd_type_r.c
 void			ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst);
@@ -217,16 +219,18 @@ void			ft_malloc_argv(t_cmd *cmd, t_token *lst);
 
 // ft_fork.c
 void			ft_fork(t_cmd *cmd, t_data_env *data_env);
-void			ft_redirections(t_cmd *cmd);
-void			ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env);
 void			ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env);
 void			ft_after_fork_parent(t_cmd *cmd);
+void			ft_exe_builtin2(t_cmd *cmd, t_data_env *data_env);
+
+// ft_free_all_exec.c
+void			ft_free_all_exec(void);
 
 // ft_free_cmd.c
 void			ft_free_cmd(t_cmd *cmd);
 
 // ft_get_cmd.c
-t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd);
+t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd, int pipe_before);
 
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);
@@ -253,20 +257,24 @@ char			*ft_strjoin(char const *s1, char const *s2);
 int				ft_cd_without_arg(t_data_env *s_data_env);
 void			ft_cd_too_many_args(void);
 int				ft_go_to_dir(int argc, char **argv, t_data_env *s_data_env);
+void			ft_change_g_pwd(char *pwd);
+void			ft_change_all_pwd(char *pwd, t_data_env *s_data_env);
 void			ft_cd(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_cd_utils.c
-int				ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
+void			ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd);
 int				ft_update_oldpwd(t_data_env *s_data_env);
 void			ft_update_pwd(char *pwd, t_data_env *s_data_env);
 char			*ft_get_pwd(char **argv, char **envp);
+void			ft_change_g_pwd(char *pwd);
 
 // ft_echo.c
 int				ft_check_option(char *str);
+int				ft_compute_start_arg(int has_option);
 void			ft_echo(int argc, char **argv);
 
 // ft_env.c
-void			ft_env(char **envp);
+void			ft_env(char **envp, int argc);
 
 // ft_environment_utils_2.c 
 int				ft_strcmp_env(const char *s1, const char *s2);
@@ -298,6 +306,7 @@ void			ft_export(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_pwd.c
 char			*ft_retrieve_pwd_env(char **envp);
+void			ft_print_pwd(char *pwd);
 void			ft_pwd(char **envp);
 
 // ft_unset.c
@@ -306,13 +315,13 @@ int				ft_unset_with_arg(char **argv, t_data_env *s_data_env, int j);
 void			ft_unset(int argc, char **argv, t_data_env *s_data_env);
 
 // ft_exit_utils.c
+void			ft_exit_utils(int status, int no_exit_written);
 int				ft_check_all_digits(char *str);
 void			ft_error_numeric(char *builtin, char *identifier);
-int				ft_check_numeric_arg(char **argv, int inside_pipe);
+int				ft_check_numeric_arg(char **argv);
 
 // ft_exit.c
 unsigned char	ft_atoi_exit(char *str);
-void			ft_exit_utils(int status, int no_exit_written);
 void			ft_exit(int argc, char **argv);
 
 /////////////////////////////// SIGNALS //////////////////////////////////
@@ -332,6 +341,8 @@ typedef struct s_minishell
 	int			exit_status;
 	int			monitor;
 	int			status_done;
+	char		*pwd;
+	int			oldpwd_done;
 }				t_minishell;
 
 extern t_minishell	g_minishell;
@@ -342,6 +353,7 @@ extern t_minishell	g_minishell;
 // ft_init.c
 void			init_table(t_lexing *ltable);
 void			ft_init_data_env(t_data_env *s_data_env, char **envp);
+char			*ft_init_pwd(char **envp);
 void			ft_init_g_minishell(t_minishell *g_minishell, char **envp);
 
 // minishell.c

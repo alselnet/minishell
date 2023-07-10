@@ -41,7 +41,10 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	}
 	ft_putstr_fd(error_msg, 2);
 	if (mode == 3 || mode == 4 || mode == 5)
+	{
+		free(g_minishell.pwd);
 		exit(12);
+	}
 	return (0);
 }
 
@@ -50,6 +53,7 @@ void	free_heredoc(t_lexing *ltable, t_data_env *data_env,
 {
 	tk_clear(&ltable->tklist_head);
 	free_array(data_env->envp);
+	free(g_minishell.pwd);
 	ft_putstr_fd(error_msg, 2);
 	exit(g_minishell.exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/06/29 09:33:13 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/07 23:17:24 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ int	ft_check_option(char *str)
 	return (1);
 }
 
+int	ft_compute_start_arg(int has_option)
+{
+	if (has_option == 1)
+		return (2);
+	else
+		return (1);
+}
+
 void	ft_echo(int argc, char **argv)
 {
 	int	i;
@@ -37,15 +45,14 @@ void	ft_echo(int argc, char **argv)
 	if (argc == 1)
 	{
 		write(1, "\n", 1);
-		ft_exit_utils(EXIT_SUCCESS, 1);
+		return (ft_exit_utils(EXIT_SUCCESS, 1));
 	}
 	has_option = ft_check_option(argv[1]);
 	if ((argc == 2) && (has_option == 1))
-		ft_exit_utils(EXIT_SUCCESS, 1);
-	if (has_option == 1)
-		i = 2;
-	else
-		i = 1;
+		return (ft_exit_utils(EXIT_SUCCESS, 1));
+	i = ft_compute_start_arg(has_option);
+	while (ft_check_option(argv[i]))
+		i++;
 	while (i < argc)
 	{
 		write(1, argv[i], ft_strlen(argv[i]));

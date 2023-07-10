@@ -6,13 +6,13 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:49:58 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 23:28:03 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/08 19:05:13 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd)
+void	ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd)
 {
 	int	i;
 
@@ -30,12 +30,15 @@ int	ft_update_oldpwd_utils(t_data_env *s_data_env, char *oldpwd)
 	}
 	else
 	{
-		s_data_env->envp = ft_add_var_env(s_data_env, oldpwd);
-		free(oldpwd);
-		if (s_data_env->envp == NULL)
-			ft_error(1);
+		if (g_minishell.oldpwd_done != 1)
+		{
+			s_data_env->envp = ft_add_var_env(s_data_env, oldpwd);
+			free(oldpwd);
+			if (s_data_env->envp == NULL)
+				ft_error(200);
+		}
+		g_minishell.oldpwd_done = 1;
 	}
-	return (0);
 }
 
 int	ft_update_oldpwd(t_data_env *s_data_env)
@@ -44,25 +47,26 @@ int	ft_update_oldpwd(t_data_env *s_data_env)
 	char	*oldpwd;
 	char	*pwd;
 
-	pwd = ft_retrieve_pwd_env(s_data_env->envp);
+	if (g_minishell.pwd != NULL)
+		pwd = g_minishell.pwd;
+	else
+		pwd = ft_retrieve_pwd_env(s_data_env->envp);
 	if (pwd == NULL)
 	{
 		if (getcwd(current_path, sizeof(current_path)) == NULL)
-		{
-			g_minishell.exit_status = 1;
 			return (perror("cd: getcwd"), -1);
-		}
 		oldpwd = ft_strjoin("OLDPWD=", current_path);
 		if (oldpwd == NULL)
-			ft_error(1);
+			ft_error(200);
 	}
 	else
 	{
 		oldpwd = ft_strjoin("OLDPWD=", pwd);
 		if (oldpwd == NULL)
-			ft_error(1);
+			ft_error(200);
 	}
-	return (ft_update_oldpwd_utils(s_data_env, oldpwd));
+	ft_update_oldpwd_utils(s_data_env, oldpwd);
+	return (0);
 }
 
 void	ft_update_pwd(char *pwd, t_data_env *s_data_env)
@@ -82,12 +86,7 @@ void	ft_update_pwd(char *pwd, t_data_env *s_data_env)
 		s_data_env->envp[i] = pwd;
 	}
 	else
-	{
-		s_data_env->envp = ft_add_var_env(s_data_env, pwd);
 		free(pwd);
-		if (s_data_env->envp == NULL)
-			ft_error(1);
-	}
 }
 
 char	*ft_get_pwd(char **argv, char **envp)
@@ -99,11 +98,13 @@ char	*ft_get_pwd(char **argv, char **envp)
 
 	if (getcwd(current_path, sizeof(current_path)) == NULL)
 	{
-		g_minishell.exit_status = 0;
 		perror("cd: getcwd");
-		pwd_env = ft_strjoin("PWD=", ft_retrieve_pwd_env(envp));
+		if (g_minishell.pwd != NULL)
+			pwd_env = ft_strjoin("PWD=", g_minishell.pwd);
+		else
+			pwd_env = ft_strjoin("PWD=", ft_retrieve_pwd_env(envp));
 		if (pwd_env == NULL)
-			ft_error(1);
+			ft_error(200);
 		pwd_slash = ft_strjoin(pwd_env, "/");
 		if (pwd_slash == NULL)
 			return (free(pwd_env), NULL);
@@ -114,4 +115,12 @@ char	*ft_get_pwd(char **argv, char **envp)
 	else
 		pwd = ft_strjoin("PWD=", current_path);
 	return (pwd);
+}
+
+void	ft_change_g_pwd(char *pwd)
+{
+	free(g_minishell.pwd);
+	g_minishell.pwd = ft_strdup(pwd + 4);
+	if (g_minishell.pwd == NULL)
+		ft_error(200);
 }

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_exit_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 23:06:31 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 23:29:33 by orazafy          ###   ########.fr       */
+/*   Created: 2023/07/08 17:41:54 by orazafy           #+#    #+#             */
+/*   Updated: 2023/07/08 17:44:02 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(char **envp, int argc)
+void	ft_exit_exec(int status)
 {
-	int	i;
-
-	if (argc > 1)
-		ft_exit_utils(EXIT_SUCCESS, 1);
-	else
-	{
-		i = 0;
-		while (envp[i])
-			printf("%s\n", envp[i++]);
-		ft_exit_utils(EXIT_SUCCESS, 1);
-	}
+	ft_free_all_exec();
+	exit(status);
 }
