@@ -22,7 +22,7 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 			close(cmd->fd_in);
 		if (lst->content[1] == '<')
 		{
-			cmd->fd_in = open(".hdoc.txt", O_RDONLY, 0500);
+			cmd->fd_in = open("/tmp/.hdoc.txt", O_RDONLY, 0500);
 			if (cmd->fd_in == -1)
 				ft_error(1);
 		}

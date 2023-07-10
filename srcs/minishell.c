@@ -45,12 +45,21 @@ void	process_input(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.monitor = expand_token_list(ltable, data_env);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_token_types(ltable, data_env);
-	//if (g_minishell.monitor)
-	//	print_token_list(&ltable->tklist_head);
+	// if (g_minishell.monitor)
+	// 	print_token_list(&ltable->tklist_head);
 	if (g_minishell.monitor)
 		ft_execute(ltable->tklist_head, data_env);
 	if (g_minishell.monitor)
 		tk_clear(&ltable->tklist_head);
+}
+
+void	ft_exit_eof(t_data_env *data_env)
+{
+	rl_clear_history();
+	ft_free_env(data_env->envp, data_env->size);
+	free(g_minishell.pwd);
+	printf("exit\n");
+	exit(g_minishell.exit_status);
 }
 
 int	minishell(t_lexing *ltable, t_data_env *data_env)
@@ -60,8 +69,7 @@ int	minishell(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.status_done = 0;
 		ltable->input = readline("minishell$ ");
 		if (!ltable->input)
-			return (rl_clear_history(),
-				free_array(data_env->envp), free (g_minishell.pwd), printf("exit\n"));
+			ft_exit_eof(data_env);
 			// return (free_array(data_env->envp), printf("exit\n"));
 		if (ltable->input[0] == 0)
 			continue ;

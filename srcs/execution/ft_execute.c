@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/10 17:27:01 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/10 19:04:54 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ void	ft_waitpid(t_cmd *cmd)
 	{
 		res = waitpid(-1, &status, 0);
 		if (res == cmd->final_pid)
-		{
-			if (WIFEXITED(status))
-				g_minishell.exit_status = WEXITSTATUS(status);
-			g_minishell.status_done = 1;
-		}
+			ft_get_status(status);
 		if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == 200)

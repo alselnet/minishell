@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/10 17:26:42 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/10 19:04:47 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ EXEC_FILES = ft_all_redir.c \
 			ft_free_all_exec.c \
 			ft_free_cmd.c \
 			ft_get_cmd.c \
+			ft_get_status.c \
 			ft_init_cmd.c \
 			heredoc.c \
 
