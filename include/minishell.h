@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/09 17:17:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 18:48:33 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,20 +79,27 @@ int				expand_token_list(t_lexing *ltable, t_data_env *data_env);
 //expand2.c
 char			*replace_with_error_code(char *content, char **cursor);
 char			*delete_name(char *content, char **cursor, int name_len);
-char			*get_new_content(char *content, char **cursor, int name_len, char **env);
+char			*get_new_content(
+					char *content, char **cursor, int name_len, char **env);
 char			*expand_variable(char *content, t_data_env *data_env);
 char			*expand_process(char *content, t_data_env *data_env);
-
 
 //expand3.c
 char			*extract_variable_value(char **env);
 int				fetch_value_len(char **env);
-void			update_content(char *new_content, char *content, char *variable, char **cursor);
-void			update_with_error(char *new_content, char *content, char *error_code, char **cursor);
-char			*replace_with_value(char *content, char **cursor, int name_len, char **env);
+void			update_content(
+					char *new_content, char *content,
+					char *variable, char **cursor);
+void			update_with_error(
+					char *new_content, char *content,
+					char *error_code, char **cursor);
+char			*replace_with_value(
+					char *content, char **cursor,
+					int name_len, char **env);
 
 //expand4.c
-void			copy_content_end(char *new_content, char *content, int i, int j);
+void			copy_content_end(
+					char *new_content, char *content, int i, int j);
 
 // lexing.c
 int				create_redir_token(
@@ -121,12 +128,11 @@ int				no_alnum(char *content);
 
 // quit.c
 int				free_array(char **arr);
-void			set_error(int	error_code);
+void			set_error(int error_code);
 int				free_structs(t_lexing *ltable,
 					t_data_env *data_env, char *error_msg, char mode);
 void			free_heredoc(t_lexing *ltable,
 					t_data_env *data_env, char *error_msg);
-
 
 // temp.c
 void			print_token_list(t_token **head);
@@ -232,11 +238,15 @@ void			ft_free_cmd(t_cmd *cmd);
 // ft_get_cmd.c
 t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd, int pipe_before);
 
+// ft_get_status.c
+void	ft_get_status(int status);
+
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);
 
-//heredoc.c
-void			fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env);
+// heredoc.c
+void			fetch_heredoc(
+					t_cmd *cmd, t_token *tklist_head, t_data_env *data_env);
 
 /////////////////////////////// BUILTINS /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -358,6 +368,8 @@ void			ft_init_g_minishell(t_minishell *g_minishell, char **envp);
 
 // minishell.c
 int				define_token_types(t_lexing *ltable, t_data_env *data_env);
+void			process_input(t_lexing *ltable, t_data_env *data_env);
+void			ft_exit_eof(t_data_env *data_env);
 int				minishell(t_lexing *ltable, t_data_env *data_env);
 
 #endif
