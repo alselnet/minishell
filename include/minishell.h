@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/10 18:48:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:06:31 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,11 @@ void			ft_free_cmd(t_cmd *cmd);
 t_token			*ft_get_cmd(t_token *tklist_head, t_cmd *cmd, int pipe_before);
 
 // ft_get_status.c
-void	ft_get_status(int status);
+void			ft_get_status(int status);
+void			ft_print_all_error_sig(int sig_status);
+void			ft_print_stder(char *str);
+void			ft_print_error_sig1(int sig_status);
+void			ft_print_error_sig2(int sig_status);
 
 // ft_init_cmd.c
 void			ft_init_cmd(t_cmd *cmd);

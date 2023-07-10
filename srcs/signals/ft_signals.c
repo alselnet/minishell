@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:04:03 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/03 00:16:19 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:05:52 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 }
 
 void	ft_sigquit(int signum, siginfo_t *siginfo)
-{
+{	
 	if (signum == SIGQUIT && siginfo->si_pid == 0)
 	{
 		if (g_minishell.status_done == 0)
