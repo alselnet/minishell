@@ -45,8 +45,8 @@ void	process_input(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.monitor = expand_token_list(ltable, data_env);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_token_types(ltable, data_env);
-	//if (g_minishell.monitor)
-	//	print_token_list(&ltable->tklist_head);
+	if (g_minishell.monitor)
+		print_token_list(&ltable->tklist_head);
 	if (g_minishell.monitor)
 		ft_execute(ltable->tklist_head, data_env);
 	if (g_minishell.monitor)

@@ -100,7 +100,7 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 			check_access(browse, data_env);
 		if (!browse->type && !check_builtins(browse))
 			browse->type = 'C';
-		while (browse && browse->type != 'R' && browse->type != 'D')
+		while (browse && browse->type != 'R' && browse->type != 'D' && browse->type != 'F')
 			browse = browse->next;
 		if (browse)
 			browse = browse->next;

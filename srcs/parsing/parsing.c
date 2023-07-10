@@ -39,8 +39,7 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 			return (free_structs(ltable, data_env, "syntax error near \"\n", 1));
 		else if (ft_strmatch(browse->content, "<|>"))
 		{
-			if (!browse->next || (!browse->prev && browse->content[0] != '<')
-				|| (ft_strlen(browse->content) > 1
+			if (!browse->next || (ft_strlen(browse->content) > 1
 					&& browse->content[0] != browse->content[1]))
 				return (free_structs(ltable, data_env,
 						"syntax error near redirection\n", 1));
@@ -80,30 +79,6 @@ int	join_quotes(t_lexing *ltable, t_data_env *data_env)
 	return (1);
 }
 
-int	init_outfiles(t_lexing *ltable)
-{
-	t_token	*browse;
-	int		fd;
-
-	fd = 0;
-	browse = ltable->tklist_head;
-	while (browse)
-	{
-		if (browse->type == 'R' && browse->content[0] == '>')
-		{
-			if (browse->next)
-			{
-				fd = open (browse->next->content, O_CREAT | O_WRONLY, 0664);
-				if (fd < 0)
-					return (1);
-				close (fd);
-			}
-		}
-		browse = browse->next;
-	}
-	return (1);
-}
-
 int	parse_redirections(t_lexing *ltable, t_data_env *data_env)
 {
 	t_token	*browse;
@@ -119,7 +94,5 @@ int	parse_redirections(t_lexing *ltable, t_data_env *data_env)
 		}
 		browse = browse->next;
 	}
-	if (!init_outfiles(ltable))
-		return (0);
 	return (1);
 }
