@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/10 19:04:47 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/12 00:46:28 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ LIBFT = $(LIBDIR)/libft.a
 all: $(NAME)
 
 $(LIBFT):
-	cd $(LIBDIR) && make re
+	cd $(LIBDIR) && make
 
 $(NAME): $(OBJS) $(LIBFT) | $(BINDIR)
 	$(CC) $(CFLAGS) $(OBJS) $(IFLAGS) $(LIBS) $(LFLAGS) -o $(NAME)

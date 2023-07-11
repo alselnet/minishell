@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:42:15 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/11 18:41:52 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/12 00:56:34 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	ft_print_error_sig2(int sig_status)
 		ft_print_stder("CPU time limit exceeded\n");
 	else if (sig_status == 31)
 		ft_print_stder("File size limit exceeded\n");
-	// else if (sig_status == SIGQUIT)
-	// 	ft_print_stder("Quit (core dumped)\n");
+	else if (sig_status == 3)
+		ft_print_stder("Quit (core dumped)\n");
 }
-
-

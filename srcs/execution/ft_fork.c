@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/11 18:44:12 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/12 00:57:19 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 {
 	cmd->pid = fork();
-	
 	if (cmd->final_cmd)
 		cmd->final_pid = cmd->pid;
 	if (cmd->pid < 0)
