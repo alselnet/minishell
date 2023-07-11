@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fork.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/06 17:54:29 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/11 18:44:12 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 {
 	cmd->pid = fork();
+	
 	if (cmd->final_cmd)
 		cmd->final_pid = cmd->pid;
 	if (cmd->pid < 0)
 		ft_error(1);
 	else if (cmd->pid == 0)
 	{
+		if (signal(SIGQUIT, ft_sigquit) == SIG_ERR)
+			ft_exit_exec(1);
 		ft_all_redir(cmd);
 		if (cmd->has_cmd == 0 && cmd->first_arg != NULL)
 			ft_error_cmd_not_found(cmd->first_arg);

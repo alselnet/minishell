@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:04:03 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/10 21:05:52 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/11 19:13:53 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@ void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 			g_minishell.exit_status = 130;
 		}
 	}
-	ft_sigquit(signum, siginfo);
 }
 
-void	ft_sigquit(int signum, siginfo_t *siginfo)
+void	ft_sigquit(int signum)
 {	
-	if (signum == SIGQUIT && siginfo->si_pid == 0)
+	if (signum == SIGQUIT)
 	{
 		if (g_minishell.status_done == 0)
 		{
@@ -56,6 +55,9 @@ void	ft_init_signals(void)
 	sa.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGINT, &sa, 0) == -1)
 		exit(1);
-	if (sigaction(SIGQUIT, &sa, 0) == -1)
-		exit(1);
+	// if (sigaction(SIGINT, &sa, 0) == -1)
+	// 	exit(1);
+	signal(SIGQUIT, SIG_IGN);
+	// if (sigaction(SIGQUIT, &sa, 0) == -1)
+	// 	exit(1);
 }

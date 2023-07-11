@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/10 21:15:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/11 18:21:52 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ void			ft_exit(int argc, char **argv);
 
 // ft_signals.c
 void			handler_function(int signum, siginfo_t *siginfo, void *ptr);
-void			ft_sigquit(int signum, siginfo_t *siginfo);
+void			ft_sigquit(int signum);
 void			ft_init_signals(void);
 
 /////////////////////////// GLOBAL VARIABLE //////////////////////////////
