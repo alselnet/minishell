@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/10 20:06:38 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/13 23:02:34 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,16 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 {
 	tk_clear(&ltable->tklist_head);
 	if (mode == 1)
-		set_error(2);
+	{
+		ft_putstr_fd(error_msg, 2);
+		//exit(2); // for testing
+	}
+	//	set_error(2);
 	if (mode == 2 || mode == 4 || mode == 5)
 	{
 		set_error(2);
 		free_array(data_env->envp);
+		//exit(2);//for testing
 	}
 	ft_putstr_fd(error_msg, 2);
 	if (mode == 3 || mode == 4 || mode == 5)

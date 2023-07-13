@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:55:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/04 18:44:26 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/13 22:28:24 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_isdigit(int c)
 
 int	ft_isalnum(int c)
 {
-	if (ft_isalpha(c) || ft_isdigit(c))
+	if (ft_isalpha(c) || ft_isdigit(c) || c == '_')
 		return (1);
 	return (0);
 }
