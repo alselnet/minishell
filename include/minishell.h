@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/11 18:21:52 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:42:50 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_token //liste doublement chainée contenant deux variables
 	char			delim_quote;
 	char			join_prev;
 	char			join_next;
+	char			quote;
 }	t_token;
 
 typedef struct s_lexing
@@ -115,6 +116,7 @@ int				create_token_list(t_lexing *ltable, t_data_env *data_env);
 void			define_joins(
 					t_lexing *ltable, t_token *quoted,
 					int reader, int quote_len);
+int				format_expands(t_lexing *ltable, t_data_env *data_env);
 
 // parsing.c
 char			last_char(char *str);

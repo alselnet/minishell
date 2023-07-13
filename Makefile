@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
+#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/12 00:46:28 by orazafy          ###   ########.fr        #
+#    Updated: 2023/07/13 19:47:01 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ PARSING_FILES = define.c \
 				expand4.c \
 				lexing.c \
 				lexing2.c \
+				lexing3.c \
 				parsing.c \
 				parsing2.c \
 				quit.c \

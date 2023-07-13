@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:19:06 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 15:43:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:11:01 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_token	*tk_new(char *content)
 	new->next = 0;
 	new->join_prev = 0;
 	new->join_next = 0;
+	new->quote = 0;
 	return (new);
 }
 

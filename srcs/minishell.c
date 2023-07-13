@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/12 00:58:05 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/13 19:18:46 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	process_input(t_lexing *ltable, t_data_env *data_env)
 		g_minishell.monitor = parse_token_list(ltable, data_env);
 	if (g_minishell.monitor)
 		g_minishell.monitor = expand_token_list(ltable, data_env);
+	if (g_minishell.monitor)
+		g_minishell.monitor = format_expands(ltable, data_env);
 	if (g_minishell.monitor)
 		g_minishell.monitor = define_token_types(ltable, data_env);
 	// if (g_minishell.monitor)

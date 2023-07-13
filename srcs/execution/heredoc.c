@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 17:57:13 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/13 18:46:27 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 	char	*line;
 	char	*new_line;
 
+	sleep(1);
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
