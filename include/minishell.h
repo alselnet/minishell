@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/14 18:46:00 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/14 23:33:27 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ void			ft_split_cmd_option(t_cmd *cmd, t_token *lst);
 void			ft_malloc_argv(t_cmd *cmd, t_token *lst);
 
 // ft_fork.c
+void			ft_get_cmd_path(t_cmd *cmd, t_data_env *data_env);
 void			ft_fork(t_cmd *cmd, t_data_env *data_env);
 void			ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env);
 void			ft_after_fork_parent(t_cmd *cmd);
@@ -360,6 +361,7 @@ typedef struct s_minishell
 	int			status_done;
 	char		*pwd;
 	int			oldpwd_done;
+	int			inside_heredoc;
 }				t_minishell;
 
 extern t_minishell	g_minishell;

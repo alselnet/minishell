@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/09 17:16:26 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/14 22:46:04 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)
 	g_minishell->monitor = 0;
 	g_minishell->status_done = 0;
 	g_minishell->oldpwd_done = 0;
+	g_minishell->inside_heredoc = 0;
 	g_minishell->pwd = NULL;
 	g_minishell->pwd = ft_strdup(ft_init_pwd(envp));
 	if (g_minishell->pwd == NULL)

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/12 00:57:19 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/14 23:32:25 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,26 @@ void	ft_fork(t_cmd *cmd, t_data_env *data_env)
 		ft_after_fork_parent(cmd);
 }
 
-void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
+void	ft_get_cmd_path(t_cmd *cmd, t_data_env *data_env)
 {
-	struct stat	f_stat;
-
 	if (!access(cmd->argv[0], X_OK))
 		cmd->cmd_path = ft_strdup(cmd->argv[0]);
+	else if (errno == EACCES)
+	{
+		perror("");
+		ft_exit_exec(126);
+	}
 	else
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
 	if (cmd->cmd_path == NULL)
 		ft_error(200);
+}
+
+void	ft_exec_not_builtin(t_cmd *cmd, t_data_env *data_env)
+{
+	struct stat	f_stat;
+
+	ft_get_cmd_path(cmd, data_env);
 	close(data_env->stdin);
 	close(data_env->stdout);
 	if (stat(cmd->cmd_path, &f_stat) == -1)

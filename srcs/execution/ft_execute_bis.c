@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_bis.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:28:04 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 19:08:56 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/14 22:44:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	ft_restore_before_next_prompt(t_data_env *data_env, t_cmd *cmd)
 	ft_close_all_fds();
 	unlink("/tmp/.hdoc.txt");
 	ft_free_cmd(cmd);
+	g_minishell.inside_heredoc = 0;
 }

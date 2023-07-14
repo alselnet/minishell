@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/13 18:46:27 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/14 22:45:36 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 	char	*new_line;
 
 	sleep(1);
-	while (1)
+	while (g_minishell.inside_heredoc)
 	{
 		write(1, "heredoc> ", 9);
 		line = gnl();
@@ -99,7 +99,8 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 	delim = fetch_delim(&browse);
 	if (!delim)
 		return ;
-	while (delim)
+	g_minishell.inside_heredoc = 1;
+	while (g_minishell.inside_heredoc == 1 && delim)
 	{
 		cmd->fd_heredoc = open("/tmp/.hdoc.txt", O_CREAT | O_WRONLY, 0664);
 		if (cmd->fd_heredoc < 0)

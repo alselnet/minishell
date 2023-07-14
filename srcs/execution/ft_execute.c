@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/13 18:46:00 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/14 22:43:28 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_execute(t_token *tklist_head, t_data_env *data_env)
 	{
 		ft_init_cmd(&g_minishell.cmd);
 		fetch_heredoc(&g_minishell.cmd, tklist_head, data_env);
+		if (g_minishell.inside_heredoc == -1)
+			break ;
 		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
 		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
 		if (g_minishell.cmd.final_cmd == 1)
