@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/10 18:57:38 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/14 21:29:40 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ int	define_cmds(t_lexing *ltable, t_data_env *data_env)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (!browse->type)
+		if (!browse->type && browse->content && browse->content[0])
 			check_access(browse, data_env);
-		if (!browse->type && !check_builtins(browse))
+		if (!browse->type && browse->content
+			&& browse->content[0] && !check_builtins(browse))
 			browse->type = 'C';
 		while (browse && browse->type != 'R'
 			&& browse->type != 'D' && browse->type != 'F')
