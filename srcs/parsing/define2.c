@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/14 21:29:40 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/14 22:00:20 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_access(t_token *token, t_data_env *data_env)
 {
 	char	*cmd_path;
 
-	if (!access(token->content, X_OK))
+	if (!access(token->content, X_OK) || errno == EACCES)
 		token->type = 'C';
 	else
 	{
