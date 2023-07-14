@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins_utils_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:55:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/13 22:28:24 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:45:07 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,15 @@ int	ft_srch(char const c, char const *str)
 		i++;
 	}
 	return (-1);
+}
+
+int	ft_check_empty_var(char **argv, int *j)
+{
+	if (argv[*j][0] == 0)
+	{
+		ft_error_identifier("export", argv[*j]);
+		(*j)++;
+		return (-1);
+	}
+	return (0);
 }

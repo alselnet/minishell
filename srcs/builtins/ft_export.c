@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 01:14:44 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:46:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void	ft_export(int argc, char **argv, t_data_env *s_data_env)
 	j = 1;
 	while (j < argc)
 	{
-		if (ft_check_var_format_export(argv, &j) == -1)
+		if ((ft_check_var_format_export(argv, &j) == -1)
+			|| (ft_check_empty_var(argv, &j) == -1))
 		{
 			status = 1;
 			continue ;
