@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:17:28 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:07:31 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_fill_cmd(t_minishell *mini, t_token *lst)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	if (lst->type == 'R')
@@ -36,7 +36,7 @@ void	ft_fill_cmd(t_minishell *mini, t_token *lst)
 
 void	ft_fill_argc_argv(t_minishell *mini, t_token *lst)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	ft_malloc_argv(mini, lst);
@@ -81,8 +81,8 @@ void	ft_split_cmd_option(t_minishell *mini, t_token *lst)
 
 void	ft_malloc_argv(t_minishell *mini, t_token *lst)
 {
-	int	argc;
-	t_cmd *cmd;
+	int		argc;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	argc = 1;

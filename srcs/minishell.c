@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 16:45:54 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:51:04 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 {
 	int	monitor;
 
-	(void)g_mini; // a changer
 	monitor = 0;
 	mini->ltable.input = replace_dollars(mini->ltable.input);
 	if (mini->ltable.input)
@@ -51,8 +50,8 @@ void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 		monitor = format_expands(&mini->ltable, &mini->data_env);
 	if (monitor)
 		monitor = define_token_types(&mini->ltable, &mini->data_env, monitor);
-	if (monitor)
-		print_token_list(&mini->ltable.tklist_head);
+	// if (monitor)
+	// 	print_token_list(&mini->ltable.tklist_head);
 	if (monitor)
 		ft_execute(g_mini, mini);
 	if (monitor)
@@ -68,7 +67,7 @@ void	ft_exit_eof(t_minishell_g *g_mini, t_minishell *mini)
 	exit(g_mini->exit_status);
 }
 
-void minishell(t_minishell_g *g_mini, t_minishell *mini)
+void	minishell(t_minishell_g *g_mini, t_minishell *mini)
 {
 	while (1)
 	{

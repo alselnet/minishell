@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:24:56 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:08:11 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_fork(t_minishell *mini)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	cmd->pid = fork();
@@ -25,12 +25,12 @@ void	ft_fork(t_minishell *mini)
 	else if (cmd->pid == 0)
 	{
 		if (signal(SIGQUIT, ft_sigquit) == SIG_ERR)
-			ft_exit_exec(1);
-		ft_all_redir(cmd);
+			ft_exit_exec(1, mini);
+		ft_all_redir(mini);
 		if (cmd->has_cmd == 0 && cmd->first_arg != NULL)
-			ft_error_cmd_not_found(cmd->first_arg);
+			ft_error_cmd_not_found(mini);
 		if (cmd->has_cmd == 0 && cmd->first_arg == NULL)
-			ft_exit_exec(0);
+			ft_exit_exec(0, mini);
 		ft_close_all_fds(mini);
 		ft_exe_builtin2(mini);
 		ft_exec_not_builtin(mini);
@@ -39,26 +39,33 @@ void	ft_fork(t_minishell *mini)
 		ft_after_fork_parent(cmd);
 }
 
-void	ft_get_cmd_path(t_cmd *cmd, t_data_env *data_env)
+void	ft_get_cmd_path(t_minishell *mini)
 {
+	t_cmd	*cmd;
+
+	cmd = &mini->cmd;
 	if (!access(cmd->argv[0], X_OK))
 		cmd->cmd_path = ft_strdup(cmd->argv[0]);
 	else if (errno == EACCES)
 	{
 		perror("");
-		ft_exit_exec(126);
+		ft_exit_exec(126, mini);
 	}
 	else
-		cmd->cmd_path = find_cmd_path(cmd->argv[0], data_env->envp);
+		cmd->cmd_path = find_cmd_path(cmd->argv[0], mini->data_env.envp);
 	if (cmd->cmd_path == NULL)
-		ft_error(200);
+		ft_error(200, mini);
 }
 
 void	ft_exec_not_builtin(t_minishell *mini)
 {
-	struct stat	f_stat;
+	struct stat		f_stat;
+	t_cmd			*cmd;
+	t_data_env		*data_env;
 
-	ft_get_cmd_path(cmd, data_env);
+	cmd = &mini->cmd;
+	data_env = &mini->data_env;
+	ft_get_cmd_path(mini);
 	close(data_env->stdin);
 	close(data_env->stdout);
 	if (stat(cmd->cmd_path, &f_stat) == -1)
@@ -93,7 +100,7 @@ void	ft_after_fork_parent(t_cmd *cmd)
 
 void	ft_exe_builtin2(t_minishell *mini)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	if (cmd->argv != NULL)

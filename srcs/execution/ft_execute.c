@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:19:42 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:06:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@ void	ft_execute(t_minishell_g *g_mini, t_minishell *mini)
 {
 	int		builtin_done;
 	int		pipe_before;
-	t_token *head;
+	t_token	*head;
 
 	head = mini->ltable.tklist_head;
 	builtin_done = 0;
 	pipe_before = 0;
-	ft_std_backup(&mini->data_env);
+	ft_std_backup(mini);
 	mini->cmd.old_pipefd[0] = -2;
 	mini->cmd.old_pipefd[1] = -2;
 	while (1)
 	{
 		ft_init_cmd(&mini->cmd);
-		fetch_heredoc(&mini->cmd, mini->ltable.tklist_head, &mini->data_env);
+		fetch_heredoc(&mini->cmd, mini->ltable.tklist_head,
+			&mini->data_env, mini);
 		if (g_mini->inside_heredoc == -1)
 			break ;
 		head = ft_get_cmd(head, mini, pipe_before);
@@ -50,7 +51,8 @@ void	ft_execute_cmd(t_minishell *mini, int builtin_done)
 		ft_fork(mini);
 }
 
-void	ft_prepare_before_next_cmd(t_minishell *mini, int *pipe_before, int *builtin_done)
+void	ft_prepare_before_next_cmd(
+			t_minishell *mini, int *pipe_before, int *builtin_done)
 {
 	*pipe_before = ft_init_pipe_before(&mini->cmd);
 	ft_free_cmd(&mini->cmd);
@@ -81,7 +83,7 @@ void	ft_waitpid(t_minishell *mini)
 
 int	ft_exe_builtin1(t_minishell *mini)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	if (cmd->argv != NULL)

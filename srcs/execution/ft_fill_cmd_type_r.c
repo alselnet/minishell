@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 22:46:28 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:12:00 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:06:34 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_fill_cmd_for_type_r(t_minishell *mini, t_token *lst)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
 	if (lst->content[0] == '<')

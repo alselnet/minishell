@@ -6,16 +6,16 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 16:28:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:15:50 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_init_data_env(t_data_env *s_data_env, char **envp)
+void	ft_init_data_env(t_data_env *s_data_env, char **envp, t_minishell *mini)
 {
 	s_data_env->size = ft_compute_env_len(envp);
-	s_data_env->envp = ft_strdup_env(envp, 0);
+	s_data_env->envp = ft_strdup_env(envp, 0, mini);
 	if (s_data_env->envp == NULL)
 	{
 		perror("");
@@ -32,7 +32,7 @@ char	*ft_init_pwd(char **envp)
 	char	*cwd;
 	char	*pwd;
 
-	pwd = ft_retrieve_pwd_env(envp);
+	pwd = ft_get_pwd_env(envp);
 	if (pwd == NULL)
 	{
 		cwd = getcwd(current_path, sizeof(current_path));
@@ -58,7 +58,7 @@ void	ft_init_mini(t_minishell_g *g_mini, t_minishell *mini, char **envp)
 	mini->data_env.pwd = ft_strdup(ft_init_pwd(envp));
 	if (mini->data_env.pwd == NULL)
 		exit (EXIT_FAILURE);
-	ft_init_data_env(&mini->data_env, envp);
+	ft_init_data_env(&mini->data_env, envp, mini);
 	init_table(&mini->ltable);
 }
 

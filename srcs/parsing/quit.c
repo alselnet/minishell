@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 16:31:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:09:22 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	if (mode == 2 || mode == 4 || mode == 5)
 	{
 		set_error(2);
-		free_array(data_env->envp);
+		ft_free_env(data_env->envp, data_env->size);
 		//exit(2);//for testing
 	}
 	ft_putstr_fd(error_msg, 2);
@@ -51,14 +51,4 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 		exit(12);
 	}
 	return (0);
-}
-
-void	free_heredoc(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg)
-{
-	tk_clear(&ltable->tklist_head);
-	free_array(data_env->envp);
-	free(data_env->pwd);
-	ft_putstr_fd(error_msg, 2);
-	exit(g_mini.exit_status);
 }
