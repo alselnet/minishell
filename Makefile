@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
+#    By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/13 19:47:01 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/15 16:36:04 by orazafy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=512
+# CFLAGS = -Wall -Werror -Wextra -g -D BUFFER_SIZE=512
+CFLAGS = -g -D BUFFER_SIZE=512
 IFLAGS = -I$(INCDIR) -I$(LIBDIR)
 LFLAGS = -lreadline -L$(LIBDIR) -lft
 

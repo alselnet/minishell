@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/13 23:02:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:31:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	free_array(char **arr)
 
 void	set_error(int error_code)
 {
-	g_minishell.exit_status = error_code;
+	g_mini.exit_status = error_code;
 }
 
 int	free_structs(t_lexing *ltable, t_data_env *data_env,
@@ -47,7 +47,7 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	ft_putstr_fd(error_msg, 2);
 	if (mode == 3 || mode == 4 || mode == 5)
 	{
-		free(g_minishell.pwd);
+		free(data_env->pwd);
 		exit(12);
 	}
 	return (0);
@@ -58,7 +58,7 @@ void	free_heredoc(t_lexing *ltable, t_data_env *data_env,
 {
 	tk_clear(&ltable->tklist_head);
 	free_array(data_env->envp);
-	free(g_minishell.pwd);
+	free(data_env->pwd);
 	ft_putstr_fd(error_msg, 2);
-	exit(g_minishell.exit_status);
+	exit(g_mini.exit_status);
 }

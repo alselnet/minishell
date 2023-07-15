@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:52:25 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/04 18:18:05 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:31:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_token	*link_tokens(t_token **head, t_token *token, t_token *ret)
 	else if (!token->prev && !token->next)
 	{
 		tk_delone(token);
-		g_minishell.exit_status = 0;
+		g_mini.exit_status = 0;
 		*head = ret;
 		return (0);
 	}

@@ -6,14 +6,17 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 22:46:28 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/09 19:28:23 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:12:00 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
+void	ft_fill_cmd_for_type_r(t_minishell *mini, t_token *lst)
 {
+	t_cmd *cmd;
+
+	cmd = &mini->cmd;
 	if (lst->content[0] == '<')
 	{
 		if (cmd->fd_in == -1)
@@ -24,7 +27,7 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 		{
 			cmd->fd_in = open("/tmp/.hdoc.txt", O_RDONLY, 0500);
 			if (cmd->fd_in == -1)
-				ft_error(1);
+				ft_error(1, mini);
 		}
 		else
 		{
@@ -33,7 +36,7 @@ void	ft_fill_cmd_for_type_r(t_cmd *cmd, t_token *lst)
 				cmd->error_infile = lst->next->content;
 		}
 	}
-	ft_fill_cmd_for_type_r2(cmd, lst);
+	ft_fill_cmd_for_type_r2(&mini->cmd, lst);
 }
 
 void	ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst)

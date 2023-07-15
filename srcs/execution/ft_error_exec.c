@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:25:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 00:57:08 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:00:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	ft_error_cmd_not_found(char *cmd)
 	ft_exit_exec(127);
 }
 
-void	ft_error(int status)
+void	ft_error(int status, t_minishell *mini)
 {
 	perror("");
-	ft_free_all_exec();
+	ft_free_all_exec(mini);
 	exit(status);
 }
