@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 12:41:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:26:41 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 00:31:39 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	free_array(char **arr)
 
 void	set_error(int error_code)
 {
-	g_minishell.exit_status = error_code;
+	g_mini.exit_status = error_code;
 }
 
 int	free_structs(t_lexing *ltable, t_data_env *data_env,
@@ -41,24 +41,14 @@ int	free_structs(t_lexing *ltable, t_data_env *data_env,
 	if (mode == 2 || mode == 4 || mode == 5)
 	{
 		set_error(2);
-		free_array(data_env->envp);
+		ft_free_env(data_env->envp, data_env->size);
 		//exit(2);//for testing
 	}
 	ft_putstr_fd(error_msg, 2);
 	if (mode == 3 || mode == 4 || mode == 5)
 	{
-		free(g_minishell.pwd);
+		free(data_env->pwd);
 		exit(12);
 	}
 	return (0);
-}
-
-void	free_heredoc(t_lexing *ltable, t_data_env *data_env,
-			char *error_msg)
-{
-	tk_clear(&ltable->tklist_head);
-	free_array(data_env->envp);
-	free(g_minishell.pwd);
-	ft_putstr_fd(error_msg, 2);
-	exit(g_minishell.exit_status);
 }

@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/15 18:37:22 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/16 00:31:14 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ PARSINGDIR = parsing
 BUILTINSDIR = builtins
 SIGNALSDIR = signals
 
-EXEC_FILES = ft_all_redir.c \
+EXEC_FILES = free_heredoc.c \
+			ft_all_redir.c \
 			ft_close.c \
 			ft_error_exec.c \
 			ft_execute_bis.c \

@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:04:03 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/14 22:46:52 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:26:54 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 	{
 		if (siginfo->si_pid == 0)
 		{
-			if (g_minishell.inside_heredoc == 1)
-				g_minishell.inside_heredoc = -1;
+			if (g_mini.inside_heredoc == 1)
+				g_mini.inside_heredoc = -1;
 			else
 				write(1, "\n", 1);
-			if (g_minishell.status_done == 0)
-				g_minishell.exit_status = 130;
+			if (g_mini.status_done == 0)
+				g_mini.exit_status = 130;
 		}
 		else
 		{
@@ -32,7 +32,7 @@ void	handler_function(int signum, siginfo_t *siginfo, void *ptr)
 			rl_on_new_line();
 			rl_replace_line("", 0);
 			rl_redisplay();
-			g_minishell.exit_status = 130;
+			g_mini.exit_status = 130;
 		}
 	}
 }
@@ -41,10 +41,10 @@ void	ft_sigquit(int signum)
 {	
 	if (signum == SIGQUIT)
 	{
-		if (g_minishell.status_done == 0)
+		if (g_mini.status_done == 0)
 		{
 			write(1, "Quit (core dumped)\n", 19);
-			g_minishell.exit_status = signum + 128;
+			g_mini.exit_status = signum + 128;
 		}
 	}
 }

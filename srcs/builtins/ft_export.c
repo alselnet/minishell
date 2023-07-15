@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/14 18:46:18 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:03:46 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ int	ft_last_check_format_export(char **argv, int *j)
 	return (0);
 }
 
-void	ft_export_without_arg(t_data_env *s_data_env)
+void	ft_export_without_arg(t_minishell *mini)
 {
 	int		i;
 	char	**dup_env;
 	int		min;
 
-	dup_env = ft_strdup_env(s_data_env->envp, 1);
+	dup_env = ft_strdup_env(mini->data_env.envp, 1, mini);
 	if (dup_env == NULL)
-		ft_error(200);
+		ft_error(200, mini);
 	i = 0;
-	while (i < s_data_env->size)
+	while (i < mini->data_env.size)
 	{
-		min = ft_print_env_min(dup_env, s_data_env->size);
+		min = ft_print_env_min(dup_env, mini->data_env.size);
 		free(dup_env[min]);
 		dup_env[min] = NULL;
 		i++;
@@ -74,56 +74,58 @@ void	ft_export_without_arg(t_data_env *s_data_env)
 	free(dup_env);
 }
 
-void	ft_export_with_arguments(char **argv, t_data_env *s_data_env, int j)
+void	ft_export_with_arguments(t_minishell *mini, int j)
 {
-	int	i;
+	int			i;
+	t_data_env	*data_env;
 
+	data_env = &mini->data_env;
 	i = 0;
-	while (s_data_env->envp[i])
+	while (data_env->envp[i])
 	{
-		if (ft_strcmp_env(argv[j], s_data_env->envp[i]) == 0)
+		if (ft_strcmp_env(mini->cmd.argv[j], data_env->envp[i]) == 0)
 			break ;
 		i++;
 	}
-	if (s_data_env->envp[i] == NULL)
+	if (data_env->envp[i] == NULL)
 	{
-		s_data_env->envp = ft_add_var_env(s_data_env, argv[j]);
-		if (s_data_env->envp == NULL)
-			ft_error(200);
+		data_env->envp = ft_add_var_env(data_env, mini->cmd.argv[j]);
+		if (data_env->envp == NULL)
+			ft_error(200, mini);
 	}	
 	else
 	{
-		free(s_data_env->envp[i]);
-		s_data_env->envp[i] = NULL;
-		s_data_env->envp[i] = ft_strdup(argv[j]);
-		if (s_data_env->envp[i] == NULL)
-			ft_error(200);
+		free(data_env->envp[i]);
+		data_env->envp[i] = NULL;
+		data_env->envp[i] = ft_strdup(mini->cmd.argv[j]);
+		if (data_env->envp[i] == NULL)
+			ft_error(200, mini);
 	}
 }
 
-void	ft_export(int argc, char **argv, t_data_env *s_data_env)
+void	ft_export(t_minishell *mini)
 {
 	int	j;
 	int	status;
 
 	status = 0;
-	if (argc == 1)
+	if (mini->cmd.argc == 1)
 	{
-		ft_export_without_arg(s_data_env);
-		return (ft_exit_utils(EXIT_SUCCESS, 1));
+		ft_export_without_arg(mini);
+		return (ft_exit_utils(EXIT_SUCCESS, 1, mini));
 	}
 	j = 1;
-	while (j < argc)
+	while (j < mini->cmd.argc)
 	{
-		if ((ft_check_var_format_export(argv, &j) == -1)
-			|| (ft_check_empty_var(argv, &j) == -1))
+		if ((ft_check_var_format_export(mini->cmd.argv, &j) == -1)
+			|| (ft_check_empty_var(mini->cmd.argv, &j) == -1))
 		{
 			status = 1;
 			continue ;
 		}
-		if (ft_srch('=', argv[j]) >= 1)
-			ft_export_with_arguments(argv, s_data_env, j);
+		if (ft_srch('=', mini->cmd.argv[j]) >= 1)
+			ft_export_with_arguments(mini, j);
 		j++;
 	}
-	ft_exit_utils(status, 1);
+	ft_exit_utils(status, 1, mini);
 }

@@ -6,13 +6,13 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:04:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 16:21:02 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:19:18 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_retrieve_pwd_env(char **envp)
+char	*ft_get_pwd_env(char **envp)
 {
 	int		i;
 
@@ -29,36 +29,36 @@ char	*ft_retrieve_pwd_env(char **envp)
 		return (NULL);
 }
 
-void	ft_print_pwd(char *pwd)
+void	ft_print_pwd(char *pwd, t_minishell *mini)
 {
 	printf("%s\n", pwd);
-	ft_exit_utils(EXIT_SUCCESS, 1);
+	ft_exit_utils(EXIT_SUCCESS, 1, mini);
 }
 
-void	ft_pwd(char **envp)
+void	ft_pwd(t_minishell *mini)
 {
 	char	current_path[1000];
 	char	*cwd;
 	char	*pwd;
 
-	if (g_minishell.pwd != NULL)
-		pwd = g_minishell.pwd;
+	if (mini->data_env.pwd != NULL)
+		pwd = mini->data_env.pwd;
 	else
-		pwd = ft_retrieve_pwd_env(envp);
+		pwd = ft_get_pwd_env(mini->data_env.envp);
 	if (pwd == NULL)
 	{
 		cwd = getcwd(current_path, sizeof(current_path));
 		if (cwd == NULL)
 		{
 			perror("pwd: getcwd");
-			ft_exit_utils(EXIT_FAILURE, 1);
+			ft_exit_utils(EXIT_FAILURE, 1, mini);
 		}
 		else
 		{
 			printf("%s\n", current_path);
-			ft_exit_utils(EXIT_SUCCESS, 1);
+			ft_exit_utils(EXIT_SUCCESS, 1, mini);
 		}
 	}
 	else
-		ft_print_pwd(pwd);
+		ft_print_pwd(pwd, mini);
 }

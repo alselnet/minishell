@@ -6,23 +6,23 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:06:31 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/07 23:29:33 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:05:37 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(char **envp, int argc)
+void	ft_env(t_minishell *mini)
 {
 	int	i;
 
-	if (argc > 1)
-		ft_exit_utils(EXIT_SUCCESS, 1);
+	if (mini->cmd.argc > 1)
+		ft_exit_utils(EXIT_SUCCESS, 1, mini);
 	else
 	{
 		i = 0;
-		while (envp[i])
-			printf("%s\n", envp[i++]);
-		ft_exit_utils(EXIT_SUCCESS, 1);
+		while (mini->data_env.envp[i])
+			printf("%s\n", mini->data_env.envp[i++]);
+		ft_exit_utils(EXIT_SUCCESS, 1, mini);
 	}
 }

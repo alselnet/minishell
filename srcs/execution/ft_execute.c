@@ -6,56 +6,60 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/14 22:43:28 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:06:03 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_execute(t_token *tklist_head, t_data_env *data_env)
+void	ft_execute(t_minishell_g *g_mini, t_minishell *mini)
 {
 	int		builtin_done;
 	int		pipe_before;
+	t_token	*head;
 
+	head = mini->ltable.tklist_head;
 	builtin_done = 0;
 	pipe_before = 0;
-	ft_std_backup(data_env);
-	g_minishell.cmd.old_pipefd[0] = -2;
-	g_minishell.cmd.old_pipefd[1] = -2;
+	ft_std_backup(mini);
+	mini->cmd.old_pipefd[0] = -2;
+	mini->cmd.old_pipefd[1] = -2;
 	while (1)
 	{
-		ft_init_cmd(&g_minishell.cmd);
-		fetch_heredoc(&g_minishell.cmd, tklist_head, data_env);
-		if (g_minishell.inside_heredoc == -1)
+		ft_init_cmd(&mini->cmd);
+		fetch_heredoc(&mini->cmd, mini->ltable.tklist_head,
+			&mini->data_env, mini);
+		if (g_mini->inside_heredoc == -1)
 			break ;
-		tklist_head = ft_get_cmd(tklist_head, &g_minishell.cmd, pipe_before);
-		ft_execute_cmd(&g_minishell.cmd, data_env, builtin_done);
-		if (g_minishell.cmd.final_cmd == 1)
+		head = ft_get_cmd(head, mini, pipe_before);
+		ft_execute_cmd(mini, builtin_done);
+		if (mini->cmd.final_cmd == 1)
 			break ;
-		ft_prepare_before_next_cmd(&pipe_before, &builtin_done);
+		ft_prepare_before_next_cmd(mini, &pipe_before, &builtin_done);
 	}
-	ft_waitpid(&g_minishell.cmd);
-	ft_restore_before_next_prompt(data_env, &g_minishell.cmd);
+	ft_waitpid(mini);
+	ft_restore_before_next_prompt(mini);
 }
 
-void	ft_execute_cmd(t_cmd *cmd, t_data_env *data_env, int builtin_done)
+void	ft_execute_cmd(t_minishell *mini, int builtin_done)
 {
-	if (pipe(cmd->pipefd) == -1)
-		ft_error(1);
-	if (cmd->inside_pipe == 0)
-			builtin_done = ft_exe_builtin1(cmd, data_env);
+	if (pipe(mini->cmd.pipefd) == -1)
+		ft_error(1, mini);
+	if (mini->cmd.inside_pipe == 0)
+			builtin_done = ft_exe_builtin1(mini);
 	if (builtin_done == 0)
-		ft_fork(cmd, data_env);
+		ft_fork(mini);
 }
 
-void	ft_prepare_before_next_cmd(int *pipe_before, int *builtin_done)
+void	ft_prepare_before_next_cmd(
+			t_minishell *mini, int *pipe_before, int *builtin_done)
 {
-	*pipe_before = ft_init_pipe_before(&g_minishell.cmd);
-	ft_free_cmd(&g_minishell.cmd);
+	*pipe_before = ft_init_pipe_before(&mini->cmd);
+	ft_free_cmd(&mini->cmd);
 	*builtin_done = 0;
 }
 
-void	ft_waitpid(t_cmd *cmd)
+void	ft_waitpid(t_minishell *mini)
 {
 	int	res;
 	int	status;
@@ -65,30 +69,33 @@ void	ft_waitpid(t_cmd *cmd)
 	while (res != -1 || errno != ECHILD)
 	{
 		res = waitpid(-1, &status, 0);
-		if (res == cmd->final_pid)
+		if (res == mini->cmd.final_pid)
 			ft_get_status(status);
 		if (WIFEXITED(status))
 		{
 			if (WEXITSTATUS(status) == 200)
-				ft_error(200);
+				ft_error(200, mini);
 		}
 		if (res == -1 && (errno != EINTR && errno != ECHILD))
-			ft_error(1);
+			ft_error(1, mini);
 	}
 }
 
-int	ft_exe_builtin1(t_cmd *cmd, t_data_env *data_env)
+int	ft_exe_builtin1(t_minishell *mini)
 {
+	t_cmd	*cmd;
+
+	cmd = &mini->cmd;
 	if (cmd->argv != NULL)
 	{
 		if (ft_strcmp("cd", cmd->argv[0]) == 0)
-			return (ft_cd(cmd->argc, cmd->argv, data_env), 1);
+			return (ft_cd(mini), 1);
 		else if (ft_strcmp("export", cmd->argv[0]) == 0 && cmd->argc > 1)
-			return (ft_export(cmd->argc, cmd->argv, data_env), 1);
+			return (ft_export(mini), 1);
 		else if (ft_strcmp("unset", cmd->argv[0]) == 0)
-			return (ft_unset(cmd->argc, cmd->argv, data_env), 1);
+			return (ft_unset(mini), 1);
 		else if (ft_strcmp("exit", cmd->argv[0]) == 0)
-			return (ft_exit(cmd->argc, cmd->argv), 1);
+			return (ft_exit(mini), 1);
 	}
 	return (0);
 }

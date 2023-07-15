@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:05:57 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 13:51:21 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:21:59 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,23 @@ int	ft_unset_with_arg(char **argv, t_data_env *s_data_env, int j)
 	return (ft_remove_var_in_env(i, s_data_env));
 }
 
-void	ft_unset(int argc, char **argv, t_data_env *s_data_env)
+void	ft_unset(t_minishell *mini)
 {
 	int	j;
 	int	status;
 
 	status = 0;
 	j = 1;
-	while (j < argc)
+	while (j < mini->cmd.argc)
 	{
-		if (ft_check_var_format_unset(argv, &j) == -1)
+		if (ft_check_var_format_unset(mini->cmd.argv, &j) == -1)
 		{
 			status = 1;
 			continue ;
 		}	
-		if (ft_unset_with_arg(argv, s_data_env, j) == -1)
-			ft_error(200);
+		if (ft_unset_with_arg(mini->cmd.argv, &mini->data_env, j) == -1)
+			ft_error(200, mini);
 		j++;
 	}
-	ft_exit_utils(status, 1);
+	ft_exit_utils(status, 1, mini);
 }

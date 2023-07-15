@@ -6,16 +6,16 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 19:18:39 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/14 22:46:04 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:15:50 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_init_data_env(t_data_env *s_data_env, char **envp)
+void	ft_init_data_env(t_data_env *s_data_env, char **envp, t_minishell *mini)
 {
 	s_data_env->size = ft_compute_env_len(envp);
-	s_data_env->envp = ft_strdup_env(envp, 0);
+	s_data_env->envp = ft_strdup_env(envp, 0, mini);
 	if (s_data_env->envp == NULL)
 	{
 		perror("");
@@ -32,7 +32,7 @@ char	*ft_init_pwd(char **envp)
 	char	*cwd;
 	char	*pwd;
 
-	pwd = ft_retrieve_pwd_env(envp);
+	pwd = ft_get_pwd_env(envp);
 	if (pwd == NULL)
 	{
 		cwd = getcwd(current_path, sizeof(current_path));
@@ -48,19 +48,18 @@ char	*ft_init_pwd(char **envp)
 		return (pwd);
 }
 
-void	ft_init_g_minishell(t_minishell *g_minishell, char **envp)
+void	ft_init_mini(t_minishell_g *g_mini, t_minishell *mini, char **envp)
 {
-	g_minishell->exit_status = 0;
-	g_minishell->monitor = 0;
-	g_minishell->status_done = 0;
-	g_minishell->oldpwd_done = 0;
-	g_minishell->inside_heredoc = 0;
-	g_minishell->pwd = NULL;
-	g_minishell->pwd = ft_strdup(ft_init_pwd(envp));
-	if (g_minishell->pwd == NULL)
+	g_mini->exit_status = 0;
+	g_mini->status_done = 0;
+	g_mini->inside_heredoc = 0;
+	mini->data_env.oldpwd_done = 0;
+	mini->data_env.pwd = NULL;
+	mini->data_env.pwd = ft_strdup(ft_init_pwd(envp));
+	if (mini->data_env.pwd == NULL)
 		exit (EXIT_FAILURE);
-	ft_init_data_env(&g_minishell->data_env, envp);
-	init_table(&g_minishell->ltable);
+	ft_init_data_env(&mini->data_env, envp, mini);
+	init_table(&mini->ltable);
 }
 
 void	init_table(t_lexing *ltable)

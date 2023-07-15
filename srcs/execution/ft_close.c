@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:19:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/09 16:04:05 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:02:48 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	ft_close(int *fd)
 	*fd = -2;
 }
 
-void	ft_close_all_fds(void)
+void	ft_close_all_fds(t_minishell *mini)
 {
 	t_cmd		cmd;
 	t_data_env	data_env;
 
-	cmd = g_minishell.cmd;
-	data_env = g_minishell.data_env;
+	cmd = mini->cmd;
+	data_env = mini->data_env;
 	if (data_env.stdin != -2 && data_env.stdin != -1)
 		ft_close(&data_env.stdin);
 	if (data_env.stdout != -2 && data_env.stdout != -1)

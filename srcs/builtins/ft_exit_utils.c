@@ -6,33 +6,33 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:52:26 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/08 18:30:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:09:12 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit_utils(int status, int no_exit_written)
+void	ft_exit_utils(int status, int no_exit_written, t_minishell *mini)
 {
 	if (no_exit_written == 0
-		&& ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0
-		&& g_minishell.cmd.inside_pipe != 1)
+		&& ft_strcmp("exit", mini->cmd.argv[0]) == 0
+		&& mini->cmd.inside_pipe != 1)
 		write(1, "exit\n", 5);
-	if (g_minishell.status_done == 0 && g_minishell.cmd.final_cmd == 1)
+	if (g_mini.status_done == 0 && mini->cmd.final_cmd == 1)
 	{
-		g_minishell.exit_status = status;
-		g_minishell.status_done = 1;
+		g_mini.exit_status = status;
+		g_mini.status_done = 1;
 	}
-	if ((g_minishell.cmd.inside_pipe == 1
-			&& ft_strcmp("exit", g_minishell.cmd.argv[0]) != 0)
-		|| ft_strcmp("exit", g_minishell.cmd.argv[0]) == 0
-		|| ft_strcmp("echo", g_minishell.cmd.argv[0]) == 0
-		|| ft_strcmp("pwd", g_minishell.cmd.argv[0]) == 0
-		|| (ft_strcmp("export", g_minishell.cmd.argv[0]) == 0
-			&& g_minishell.cmd.argc == 1)
-		|| ft_strcmp("env", g_minishell.cmd.argv[0]) == 0)
+	if ((mini->cmd.inside_pipe == 1
+			&& ft_strcmp("exit", mini->cmd.argv[0]) != 0)
+		|| ft_strcmp("exit", mini->cmd.argv[0]) == 0
+		|| ft_strcmp("echo", mini->cmd.argv[0]) == 0
+		|| ft_strcmp("pwd", mini->cmd.argv[0]) == 0
+		|| (ft_strcmp("export", mini->cmd.argv[0]) == 0
+			&& mini->cmd.argc == 1)
+		|| ft_strcmp("env", mini->cmd.argv[0]) == 0)
 	{
-		ft_free_all_exec();
+		ft_free_all_exec(mini);
 		exit(status);
 	}	
 }
@@ -58,14 +58,14 @@ void	ft_error_numeric(char *builtin, char *identifier)
 	write(2, ": numeric argument required\n", 28);
 }
 
-int	ft_check_numeric_arg(char **argv)
+int	ft_check_numeric_arg(t_minishell *mini)
 {
-	if (ft_check_all_digits(argv[1]) == -1)
+	if (ft_check_all_digits(mini->cmd.argv[1]) == -1)
 	{
-		if (g_minishell.cmd.inside_pipe != 1)
+		if (mini->cmd.inside_pipe != 1)
 			write(2, "exit\n", 5);
-		ft_error_numeric("exit", argv[1]);
-		ft_exit_utils(2, 1);
+		ft_error_numeric("exit", mini->cmd.argv[1]);
+		ft_exit_utils(2, 1, mini);
 		return (-1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 19:46:23 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 00:33:44 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ char	*process_line(char *line, t_token *delim, t_data_env *data_env)
 	return (new_line);
 }
 
-void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
+void	heredoc_process(t_cmd *cmd, t_data_env *data_env,
+			t_token *delim, t_minishell *mini)
 {
 	char	*line;
 	char	*new_line;
 
-	while (g_minishell.inside_heredoc)
+	while (g_mini.inside_heredoc)
 	{
 		write(1, "heredoc> ", 9);
 		line = gnl();
 		if (!line)
-			return (free_heredoc(&g_minishell.ltable, data_env,
+			return (free_heredoc(&mini->ltable, data_env,
 					"cannot allocate memory\n"));
 		if (*line == 0)
 		{
@@ -54,7 +55,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 		}
 		new_line = process_line(line, delim, data_env);
 		if (!new_line)
-			return (free_heredoc(&g_minishell.ltable, data_env,
+			return (free_heredoc(&mini->ltable, data_env,
 					"cannot allocate memory\n"));
 		if (ft_strncmp(delim->content,
 				new_line, ft_strlen(delim->content)) == 0)
@@ -64,7 +65,8 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 	}
 }
 
-void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
+void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head,
+			t_data_env *data_env, t_minishell *mini)
 {
 	t_token	*delim;
 	t_token	*browse;
@@ -74,15 +76,15 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 	delim = fetch_delim(&browse);
 	if (!delim)
 		return ;
-	g_minishell.inside_heredoc = 1;
-	while (g_minishell.inside_heredoc == 1 && delim)
+	g_mini.inside_heredoc = 1;
+	while (g_mini.inside_heredoc == 1 && delim)
 	{
 		cmd->fd_heredoc = open("/tmp/.hdoc.txt", O_CREAT | O_WRONLY, 0664);
 		if (cmd->fd_heredoc < 0)
-			return (free_heredoc(&g_minishell.ltable, data_env,
+			return (free_heredoc(&mini->ltable, data_env,
 					"Permission denied\n"), set_error(13));
 		sleep(1);
-		heredoc_process(cmd, data_env, delim);
+		heredoc_process(cmd, data_env, delim, mini);
 		if (browse && browse->content[0] != '|')
 		{
 			browse = browse->next;

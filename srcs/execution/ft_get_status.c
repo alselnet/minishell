@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 18:42:15 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/12 00:56:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:26:32 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	ft_get_status(int status)
 
 	if (WIFEXITED(status))
 	{
-		g_minishell.exit_status = WEXITSTATUS(status);
-		g_minishell.status_done = 1;
+		g_mini.exit_status = WEXITSTATUS(status);
+		g_mini.status_done = 1;
 	}
 	if (WIFSIGNALED(status))
 	{
 		sig_status = WTERMSIG(status);
 		ft_print_all_error_sig(sig_status);
-		g_minishell.exit_status = 128 + sig_status;
-		g_minishell.status_done = 1;
+		g_mini.exit_status = 128 + sig_status;
+		g_mini.status_done = 1;
 	}
 }
 

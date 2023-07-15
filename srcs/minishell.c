@@ -6,84 +6,87 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:32:22 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 00:31:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_minishell	g_minishell;
+t_minishell_g	g_mini;
 
-int	define_token_types(t_lexing *ltable, t_data_env *data_env)
+int	define_token_types(t_lexing *ltable, t_data_env *data_env, int monitor)
 {
 	if (!join_quotes(ltable, data_env))
 		return (0);
-	g_minishell.monitor = define_redirs(ltable);
-	if (g_minishell.monitor)
-		g_minishell.monitor = define_delims(ltable);
-	if (g_minishell.monitor)
-		g_minishell.monitor = define_files(ltable);
-	if (g_minishell.monitor)
-		g_minishell.monitor = define_cmds(ltable, data_env);
-	if (g_minishell.monitor)
+	monitor = define_redirs(ltable);
+	if (monitor)
+		monitor = define_delims(ltable);
+	if (monitor)
+		monitor = define_files(ltable);
+	if (monitor)
+		monitor = define_cmds(ltable, data_env);
+	if (monitor)
 		define_args(ltable);
-	if (g_minishell.monitor)
-			g_minishell.monitor = parse_redirections(ltable, data_env);
-	if (!g_minishell.monitor)
+	if (monitor)
+			monitor = parse_redirections(ltable, data_env);
+	if (!monitor)
 		return (0);
 	return (1);
 }
 
-void	process_input(t_lexing *ltable, t_data_env *data_env)
+void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 {
-	ltable->input = replace_dollars(ltable->input);
-	if (ltable->input)
-		g_minishell.monitor = create_token_list(ltable, data_env);
-	if (g_minishell.monitor)
-		g_minishell.monitor = parse_token_list(ltable, data_env);
-	if (g_minishell.monitor)
-		g_minishell.monitor = expand_token_list(ltable, data_env);
-	if (g_minishell.monitor)
-		g_minishell.monitor = format_expands(ltable, data_env);
-	if (g_minishell.monitor)
-		g_minishell.monitor = define_token_types(ltable, data_env);
-	//if (g_minishell.monitor)
-	//	print_token_list(&ltable->tklist_head);
-	if (g_minishell.monitor)
-		ft_execute(ltable->tklist_head, data_env);
-	if (g_minishell.monitor)
-		tk_clear(&ltable->tklist_head);
+	int	monitor;
+
+	monitor = 0;
+	mini->ltable.input = replace_dollars(mini->ltable.input);
+	if (mini->ltable.input)
+		monitor = create_token_list(&mini->ltable, &mini->data_env);
+	if (monitor)
+		monitor = parse_token_list(&mini->ltable, &mini->data_env);
+	if (monitor)
+		monitor = expand_token_list(&mini->ltable, &mini->data_env);
+	if (monitor)
+		monitor = format_expands(&mini->ltable, &mini->data_env);
+	if (monitor)
+		monitor = define_token_types(&mini->ltable, &mini->data_env, monitor);
+	// if (monitor)
+	// 	print_token_list(&mini->ltable.tklist_head);
+	if (monitor)
+		ft_execute(g_mini, mini);
+	if (monitor)
+		tk_clear(&mini->ltable.tklist_head);
 }
 
-void	ft_exit_eof(t_data_env *data_env)
+void	ft_exit_eof(t_minishell_g *g_mini, t_minishell *mini)
 {
 	rl_clear_history();
-	ft_free_env(data_env->envp, data_env->size);
-	free(g_minishell.pwd);
+	ft_free_env(mini->data_env.envp, mini->data_env.size);
+	free(mini->data_env.pwd);
 	printf("exit\n");
-	exit(g_minishell.exit_status);
+	exit(g_mini->exit_status);
 }
 
-int	minishell(t_lexing *ltable, t_data_env *data_env)
+void	minishell(t_minishell_g *g_mini, t_minishell *mini)
 {
 	while (1)
 	{
-		g_minishell.status_done = 0;
-		ltable->input = readline("minishell$ ");
-		if (!ltable->input)
-			ft_exit_eof(data_env);
-			// return (free_array(data_env->envp), printf("exit\n"));
-		if (ltable->input[0] == 0)
+		g_mini->status_done = 0;
+		mini->ltable.input = readline("minishell$ ");
+		if (!mini->ltable.input)
+			ft_exit_eof(g_mini, mini);
+		if (mini->ltable.input[0] == 0)
 			continue ;
-		add_history(ltable->input);
-		process_input(ltable, data_env);
-		free(ltable->input);
+		add_history(mini->ltable.input);
+		process_input(g_mini, mini);
+		free(mini->ltable.input);
 	}
-	return (g_minishell.monitor);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_minishell	mini;
+
 	if (envp == NULL)
 		return (1);
 	(void) argv;
@@ -93,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		return (127);
 	}
 	ft_init_signals();
-	ft_init_g_minishell(&g_minishell, envp);
-	minishell(&g_minishell.ltable, &g_minishell.data_env);
+	ft_init_mini(&g_mini, &mini, envp);
+	minishell(&g_mini, &mini);
 	return (0);
 }

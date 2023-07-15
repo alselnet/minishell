@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 18:50:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/13 21:40:26 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:30:55 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*replace_with_error_code(char *content, char **cursor)
 	int		content_len;
 	char	*new_content;
 
-	error_code = ft_itoa(g_minishell.exit_status);
+	error_code = ft_itoa(g_mini.exit_status);
 	if (!error_code)
 		return (0);
 	content_len = ft_strlen(content) + ft_strlen(error_code) - 1;
