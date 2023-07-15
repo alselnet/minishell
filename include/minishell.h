@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/14 23:33:27 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:39:28 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,10 @@ void			ft_init_cmd(t_cmd *cmd);
 // heredoc.c
 void			fetch_heredoc(
 					t_cmd *cmd, t_token *tklist_head, t_data_env *data_env);
+
+// heredo2c.c
+char			*gnl(void);
+t_token			*fetch_delim(t_token **cursor);
 
 /////////////////////////////// BUILTINS /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

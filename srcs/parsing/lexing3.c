@@ -6,13 +6,14 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:13:16 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/13 19:51:48 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:35:37 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	include_expanded_list(t_lexing *ltable, t_lexing *expand, t_token *browse)
+void	include_expanded_list(t_lexing *ltable,
+	t_lexing *expand, t_token *browse)
 {
 	t_token		*last;
 
@@ -32,15 +33,15 @@ int	format_expands(t_lexing *ltable, t_data_env *data_env)
 
 	init_table(&expand);
 	browse = ltable->tklist_head;
-	while(browse)
+	while (browse)
 	{
 		if (!browse->quote && (ft_isinbase(' ', browse->content)
-			|| ft_isinbase('\t', browse->content)))
+				|| ft_isinbase('\t', browse->content)))
 		{
 			expand.input = browse->content;
 			if (!create_token_list(&expand, data_env))
 				return (free_structs(ltable, data_env,
-				"cannot allocate memory\n", 3));
+						"cannot allocate memory\n", 3));
 			include_expanded_list(ltable, &expand, browse);
 			tk_delone(browse);
 			browse = expand.tklist_head;

@@ -3,42 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/14 22:45:36 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:46:23 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*gnl(void)
+void	ft_unlink(t_cmd *cmd)
 {
-	char	*buffer;
-
-	buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
-	if (!buffer)
-		return (0);
-	read(g_minishell.data_env.stdin, buffer, BUFFER_SIZE);
-	return (buffer);
-}
-
-t_token	*fetch_delim(t_token **cursor)
-{
-	t_token	*browse;
-
-	browse = *cursor;
-	while (browse && browse->content[0] != '|')
-	{
-		if (browse->content[0] == '<' && browse->content[1] == '<')
-		{
-			*cursor = browse;
-			return (browse->next);
-		}
-		browse = browse->next;
-	}
-	*cursor = browse;
-	return (0);
+	if (cmd->fd_heredoc != -2)
+		cmd->fd_heredoc = -2;
+	if (cmd->fd_heredoc != -2)
+		unlink("/tmp/.hdoc.txt");
 }
 
 char	*process_line(char *line, t_token *delim, t_data_env *data_env)
@@ -61,7 +40,6 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env, t_token *delim)
 	char	*line;
 	char	*new_line;
 
-	sleep(1);
 	while (g_minishell.inside_heredoc)
 	{
 		write(1, "heredoc> ", 9);
@@ -92,10 +70,7 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 	t_token	*browse;
 
 	browse = tklist_head;
-	if (cmd->fd_heredoc != -2)
-		cmd->fd_heredoc = -2;
-	if (cmd->fd_heredoc != -2)
-		unlink("/tmp/.hdoc.txt");
+	ft_unlink(cmd);
 	delim = fetch_delim(&browse);
 	if (!delim)
 		return ;
@@ -106,6 +81,7 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head, t_data_env *data_env)
 		if (cmd->fd_heredoc < 0)
 			return (free_heredoc(&g_minishell.ltable, data_env,
 					"Permission denied\n"), set_error(13));
+		sleep(1);
 		heredoc_process(cmd, data_env, delim);
 		if (browse && browse->content[0] != '|')
 		{

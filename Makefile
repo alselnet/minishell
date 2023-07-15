@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/13 19:47:01 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/15 18:37:22 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ EXEC_FILES = ft_all_redir.c \
 			ft_get_status.c \
 			ft_init_cmd.c \
 			heredoc.c \
+			heredoc2.c \
 
 PARSING_FILES = define.c \
 				define2.c \
