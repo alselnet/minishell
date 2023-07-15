@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/08 16:52:54 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:32:15 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	define_files(t_lexing *ltable)
 		browse = browse->next;
 	while (browse->prev)
 	{
-		if (browse->prev->content[0] == '>')
+		if (browse->prev->content[0] == '>' && browse->type != 'R')
 			browse->type = 'F';
 		else if (browse->prev->content[0] == '<'
-			&& !browse->prev->content[1])
+			&& !browse->prev->content[1] && browse->type != 'R')
 		{
 			browse->type = 'F';
 		}

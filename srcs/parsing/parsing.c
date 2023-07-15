@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/10 20:04:21 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/15 18:22:03 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		{
 			if (!browse->next || (ft_strlen(browse->content) > 1
 					&& browse->content[0] != browse->content[1])
-				|| (!browse->prev && browse->content[0] == '|'))
+				|| (!browse->prev && ft_isinbase(browse->content[0], "|>")))
 				return (free_structs(ltable, data_env,
 						"syntax error near redirection\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
