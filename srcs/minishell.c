@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 17:35:54 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:47:15 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 		monitor = format_expands(&mini->ltable, &mini->data_env);
 	if (monitor)
 		monitor = define_token_types(&mini->ltable, &mini->data_env, monitor);
-	if (monitor)
-		print_token_list(&mini->ltable.tklist_head);
+	//if (monitor)
+	//	print_token_list(&mini->ltable.tklist_head);
 	if (monitor)
 		ft_execute(g_mini, mini);
 	if (monitor)

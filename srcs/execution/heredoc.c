@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 18:42:40 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:47:05 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head,
 		if (cmd->fd_heredoc < 0)
 			return (free_heredoc(&mini->ltable, data_env,
 					"Permission denied\n"), set_error(13));
-		sleep(1);
 		heredoc_process(cmd, data_env, delim, mini);
 		if (browse && browse->content[0] != '|')
 		{
