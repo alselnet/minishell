@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/16 18:42:22 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:45:14 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_execute(t_minishell_g *g_mini, t_minishell *mini)
 	while (1)
 	{
 		ft_init_cmd(&mini->cmd);
-		fetch_heredoc(&mini->cmd, head
+		fetch_heredoc(&mini->cmd, head,
 			&mini->data_env, mini);
 		if (g_mini->inside_heredoc == -1)
 			break ;
