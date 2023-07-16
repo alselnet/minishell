@@ -1,0 +1,221 @@
+// EXPORT/UNSET //////////////////////////////
+
+export
+
+export mama
+env | grep mama
+export mama=
+echo $?
+env | grep mama
+export =
+echo $?
+export r=
+
+export papa=papa erkf- mama=mama 12m m12=
+echo $?
+env | grep papa
+env | grep erkf
+env | grep mama
+env | grep 12m
+env | grep m12
+
+unset papa erkf- mama 12m m12
+echo $?
+env | grep papa
+env | grep mama
+env | grep m12
+
+ls | export papa=papa erkf- mama=mama 12m m12=
+echo $?
+env | grep papa
+env | grep mama
+env | grep m12
+
+export mama_=
+env | grep mama_
+
+
+ls | export papa=papa erkf- mama=mama 12m m12= | cat
+echo $?
+
+ls | export | cat
+
+export lala=lala
+env | grep lala
+export lala=LALA
+env | grep lala
+
+export FAFA=FAFA
+env | grep FAFA
+ls | unset FAFA
+env | grep FAFA
+ls | unset FAFA | cat
+env | grep FAFA
+
+env | grep FAFA
+ls | unset FAFA zehfj- 12m m12 | cat
+echo $?
+env | grep FAFA
+
+//////  CD //////////////////////
+
+ls | cd kqselfk | cat
+echo $?
+ls | cd kqselfk      
+echo $?
+ls | cd kqselfk jzfk
+echo $?             
+mkdir DIR
+ls | cd DIR jzfk
+cd zkelf
+echo $?
+cd DIR
+echo $?
+pwd
+
+
+// ECHO //////////////////////////////////
+
+
+echo papa
+echo $?     
+echo -n papa
+echo $?
+echo -n -n papa
+echo $?
+echo -nnnn -nnnn papa
+echo $?
+echo -nnnn -nnnn papa -nnnn
+echo $?
+echo -n papa -nnnn
+echo $?
+ls | echo papa
+ls | echo $?  
+ls | echo -n papa
+ls | echo $?
+ls | echo -nnnn -nnnn papa
+ls | echo $?                
+cd kedl | echo -n -n papa 
+echo $?
+cd kedl | echo -n -n papa -nnn papa
+echo $?
+cd kedl | echo -n -n papa -nnn papa | lala
+cd kedl | echo -n -n papa -nnn papa | wc -l
+echo $?
+ls | echo -n1 -n papa -n papa
+echo -nnnnn1 papa
+
+
+// EXIT SANS VRAIMENT EXIT //////////////////
+
+ls | exit
+echo $?
+cd efjk
+echo $?
+ls | exit
+echo $?
+cd jazefjzfe
+ls | exit
+echo $?
+
+exit 1 2 3
+echo $?
+
+ls | exit 1 kflz
+echo $?
+
+env | grep SHLV
+ls | exit kzl 1
+echo $?
+
+ls | exit 260
+echo $?
+
+ls | exit 12 m | wc -l
+env | grep SHLV
+ls | exit m 12 | wc -l
+echo $?
+ls | exit | wc -l
+ls | exit 12 | wc -l
+
+
+// PWD /OLDPWD ////////////////////////
+
+env | grep PWD
+mkdir DIR3
+cd DIR3
+env | grep PWD 
+unset OLDPWD
+unset PWD
+env | grep PWD
+cd ..
+env | grep PWD
+
+
+mkdir DIR4
+cd DIR4
+mkdir DIR5
+cd DIR5
+pwd
+env | grep PWD
+rm -rf ../../DIR4
+cd ..
+echo $?
+pwd
+env | grep PWD
+cd ..
+pwd
+
+//////////////////////////////////////////
+
+
+rm file
+< file 
+echo $?
+< file | ls
+echo $?
+< file | mama
+echo $?
+< file | mama | ls
+echo $?
+touch file
+< file
+echo $?
+< file | mama
+echo $?
+< file | mama | ls
+echo $?
+
+
+// BUILTIN ALONE REDIRECTION PIPE //////////////////////
+
+mkdir DIR2
+cd DIR2
+pwd > file
+cat file
+export > file 
+cat file
+env > file  
+cat file
+
+
+pwd
+pwd > file2 | ls
+cat file2
+echo papa > file2 | ls
+cat file2
+env > file2 | ls
+cat file2
+export > file2 | ls
+cat file2
+
+
+
+// ERROR PERMISSION OUTFILE //////
+
+ls
+touch ou2           
+chmod 000 ou2
+echo papa > ou1 > ou2 > ou3 < in1
+echo $?
+ls
