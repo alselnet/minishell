@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 00:33:44 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:42:40 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_unlink(t_cmd *cmd)
 {
 	if (cmd->fd_heredoc != -2)
 		cmd->fd_heredoc = -2;
-	if (cmd->fd_heredoc != -2)
+	if (!access("/tmp/.hdoc.txt", F_OK))
 		unlink("/tmp/.hdoc.txt");
 }
 

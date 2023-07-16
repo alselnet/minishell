@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:06:03 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:42:22 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_execute(t_minishell_g *g_mini, t_minishell *mini)
 	while (1)
 	{
 		ft_init_cmd(&mini->cmd);
-		fetch_heredoc(&mini->cmd, mini->ltable.tklist_head,
+		fetch_heredoc(&mini->cmd, head
 			&mini->data_env, mini);
 		if (g_mini->inside_heredoc == -1)
 			break ;
