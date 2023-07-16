@@ -27,7 +27,6 @@ void	ft_error_cmd_not_found(t_minishell *mini)
 		if (stat(mini->cmd.first_arg, &f_stat) == -1)
 		{
 			perror("");
-			printf("ICI");
 			ft_exit_exec(127, mini);
 		}
 		if (S_ISDIR(f_stat.st_mode))

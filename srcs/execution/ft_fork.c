@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/16 18:29:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 22:42:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,17 @@ void	ft_exec_not_builtin(t_minishell *mini)
 {
 	struct stat		f_stat;
 	t_cmd			*cmd;
-	t_data_env		*data_env;
 
 	cmd = &mini->cmd;
-	data_env = &mini->data_env;
 	ft_get_cmd_path(mini);
-	close(data_env->stdin);
-	close(data_env->stdout);
+	close(mini->data_env.stdin);
+	close(mini->data_env.stdout);
 	if (stat(cmd->cmd_path, &f_stat) == -1)
 	{
 		perror("");
 		ft_exit_exec(1, mini);
 	}
-	if (S_ISDIR(f_stat.st_mode))
+	if (ft_srch('/', cmd->cmd_path) != -1 && S_ISDIR(f_stat.st_mode))
 	{
 		write(2, cmd->cmd_path, ft_strlen(cmd->cmd_path));
 		write(2, ": Is a directory\n", 17);
@@ -76,8 +74,10 @@ void	ft_exec_not_builtin(t_minishell *mini)
 	}
 	if (ft_srch('/', cmd->cmd_path) == -1)
 		ft_error_cmd_not_found2(mini);
-	execve(cmd->cmd_path, cmd->argv, data_env->envp);
-	ft_error(200, mini);
+	execve(cmd->cmd_path, cmd->argv, mini->data_env.envp);
+	if (errno == ENOEXEC)
+		ft_exit_exec(0, mini);
+	ft_error(1, mini);
 }
 
 void	ft_after_fork_parent(t_cmd *cmd)
