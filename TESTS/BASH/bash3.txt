@@ -1,3 +1,65 @@
+
+mkdir DIR4
+cd DIR4
+mkdir DIR5
+cd DIR5
+pwd
+env | grep PWD
+rm -rf ../../DIR4
+cd .. ; echo $?
+pwd
+env | grep PWD
+cd ..
+pwd
+
+
+
+
+rm file
+< file ; echo $?
+< file | ls ; echo $?
+< file | mama ; echo $?
+< file | mama | ls ; echo $?
+touch file
+< file ; echo $?
+< file | mama ; echo $?
+< file | mama | ls ; echo $?
+
+
+
+mkdir DIR2
+cd DIR2
+pwd > file
+cat file
+export > file 
+cat file
+env > file  
+cat file
+
+
+
+pwd
+pwd > file2 | ls
+cat file2
+echo papa > file2 | ls
+cat file2
+env > file2 | ls
+cat file2
+export > file2 | ls
+cat file2
+
+
+
+ls
+touch ou2           
+chmod 000 ou2
+echo papa > ou1 > ou2 > ou3 < in1 ; echo $?
+ls
+
+
+
+
+
 mama ; echo $?
 touch mama
 mama ; echo $?

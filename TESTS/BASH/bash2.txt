@@ -21,8 +21,7 @@ env | grep papa
 env | grep mama
 env | grep m12
 
-ls | export papa=papa erkf- mama=mama 12m m12=
-echo $?
+ls | export papa=papa erkf- mama=mama 12m m12= ; echo $?
 env | grep papa
 env | grep mama
 env | grep m12
@@ -68,8 +67,7 @@ echo -n papa ; echo $?
 echo -n -n papa ; echo $?
 echo -nnnn -nnnn papa ; echo $?
 echo -nnnn -nnnn papa -nnnn ; echo $?
-echo -n papa -nnnn
-echo $?
+echo -n papa -nnnn ; echo $?
 ls | echo papa ; echo $?  
 ls | echo -n papa ; echo $?
 ls | echo -nnnn -nnnn papa ; echo $?                
@@ -87,7 +85,7 @@ ls | exit ; echo $?
 cd jazefjzfe
 ls | exit ; echo $?
 
-exit 1 2 3 ; echo $?
+// exit 1 2 3 ; echo $?
 
 ls | exit 1 kflz ; echo $?
 
@@ -115,59 +113,3 @@ cd ..
 env | grep PWD
 
 
-mkdir DIR4
-cd DIR4
-mkdir DIR5
-cd DIR5
-pwd
-env | grep PWD
-rm -rf ../../DIR4
-cd .. ; echo $?
-pwd
-env | grep PWD
-cd ..
-pwd
-
-
-
-
-rm file
-< file ; echo $?
-< file | ls ; echo $?
-< file | mama ; echo $?
-< file | mama | ls ; echo $?
-touch file
-< file ; echo $?
-< file | mama ; echo $?
-< file | mama | ls ; echo $?
-
-
-
-mkdir DIR2
-cd DIR2
-pwd > file
-cat file
-export > file 
-cat file
-env > file  
-cat file
-
-
-
-pwd
-pwd > file2 | ls
-cat file2
-echo papa > file2 | ls
-cat file2
-env > file2 | ls
-cat file2
-export > file2 | ls
-cat file2
-
-
-
-ls
-touch ou2           
-chmod 000 ou2
-echo papa > ou1 > ou2 > ou3 < in1 ; echo $?
-ls

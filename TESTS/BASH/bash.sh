@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Chemin vers le fichier cmds.txt
-cmds_file="test1.txt"
+cmds_file="bash1.txt"
 
 # Vérification si le fichier cmds.txt existe
 if [ ! -f "$cmds_file" ]; then
