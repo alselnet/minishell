@@ -74,6 +74,8 @@ void	ft_exec_not_builtin(t_minishell *mini)
 		write(2, ": Is a directory\n", 17);
 		ft_exit_exec(126, mini);
 	}
+	if (ft_srch('/', cmd->cmd_path) == -1)
+		ft_error_cmd_not_found2(mini);
 	execve(cmd->cmd_path, cmd->argv, data_env->envp);
 	ft_error(200, mini);
 }

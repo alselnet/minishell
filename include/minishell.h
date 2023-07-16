@@ -218,6 +218,7 @@ void			ft_close_all_fds(t_minishell *mini);
 // ft_error_exec.c
 void			ft_error_no_such_file(char *file);
 void			ft_error_cmd_not_found(t_minishell *mini);
+void			ft_error_cmd_not_found2(t_minishell *mini);
 void			ft_error(int status, t_minishell *mini);
 
 // ft_execute_bis.c

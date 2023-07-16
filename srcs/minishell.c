@@ -50,8 +50,8 @@ void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 		monitor = format_expands(&mini->ltable, &mini->data_env);
 	if (monitor)
 		monitor = define_token_types(&mini->ltable, &mini->data_env, monitor);
-	//if (monitor)
-	//	print_token_list(&mini->ltable.tklist_head);
+	// if (monitor)
+	// 	print_token_list(&mini->ltable.tklist_head);
 	if (monitor)
 		ft_execute(g_mini, mini);
 	if (monitor)

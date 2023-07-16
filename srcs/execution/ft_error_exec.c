@@ -27,6 +27,7 @@ void	ft_error_cmd_not_found(t_minishell *mini)
 		if (stat(mini->cmd.first_arg, &f_stat) == -1)
 		{
 			perror("");
+			printf("ICI");
 			ft_exit_exec(127, mini);
 		}
 		if (S_ISDIR(f_stat.st_mode))
@@ -39,6 +40,13 @@ void	ft_error_cmd_not_found(t_minishell *mini)
 		ft_exit_exec(126, mini);
 	}
 	write(2, mini->cmd.first_arg, ft_strlen(mini->cmd.first_arg));
+	write(2, ": command not found\n", 20);
+	ft_exit_exec(127, mini);
+}
+
+void	ft_error_cmd_not_found2(t_minishell *mini)
+{
+	write(2, mini->cmd.cmd_path, ft_strlen(mini->cmd.cmd_path));
 	write(2, ": command not found\n", 20);
 	ft_exit_exec(127, mini);
 }
