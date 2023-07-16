@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:37:32 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:38:29 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 11:18:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*gnl(void)
 	buffer = ft_calloc(sizeof(char), BUFFER_SIZE);
 	if (!buffer)
 		return (0);
-	read(g_minishell.data_env.stdin, buffer, BUFFER_SIZE);
+	read(1, buffer, BUFFER_SIZE);
 	return (buffer);
 }
 
