@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:25:18 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:35:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/16 18:29:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ void	ft_error_no_such_file(char *file)
 
 void	ft_error_cmd_not_found(t_minishell *mini)
 {
+	struct stat		f_stat;
+
+	if (ft_srch('/', mini->cmd.first_arg) != -1)
+	{
+		if (stat(mini->cmd.first_arg, &f_stat) == -1)
+		{
+			perror("");
+			ft_exit_exec(127, mini);
+		}
+		if (S_ISDIR(f_stat.st_mode))
+		{
+			write(2, mini->cmd.first_arg, ft_strlen(mini->cmd.first_arg));
+			write(2, ": Is a directory\n", 17);
+			ft_exit_exec(126, mini);
+		}
+		write(2, "Permission denied\n", 18);
+		ft_exit_exec(126, mini);
+	}
 	write(2, mini->cmd.first_arg, ft_strlen(mini->cmd.first_arg));
 	write(2, ": command not found\n", 20);
 	ft_exit_exec(127, mini);

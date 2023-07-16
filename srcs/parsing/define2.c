@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:48 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 00:34:16 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 17:35:23 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_access(t_token *token, t_data_env *data_env)
 {
 	char	*cmd_path;
 
-	if (!access(token->content, X_OK) || errno == EACCES)
+	if (!access(token->content, X_OK))// || errno == EACCES)
 		token->type = 'C';
 	else
 	{
