@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 18:20:30 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/14 22:45:54 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/16 17:34:18 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*find_cmd_path(char	*cmd_name, char **envp)
 	{
 		cmd = ft_strjoin("/", cmd_name);
 		cmd_path = ft_strjoin(possible_paths[i], cmd);
-		if (access(cmd_path, X_OK) == 0 || errno == EACCES)
+		if (access(cmd_path, X_OK) == 0 || (errno == EACCES
+			&& ft_isinbase('/', cmd_name)))
 		{
 			free_array(possible_paths);
 			free (cmd);
