@@ -1,0 +1,78 @@
+// INFILE
+// OUTFILE
+// COMMAND NOT FOUND
+// PWD CD etc
+
+yes | head
+
+// INFILE /////////////
+
+cat < in1 < in2 < in3
+echo $?
+echo 1 > in1
+echo 2 > in2
+echo 3 > in3
+cat in1
+cat < in1 < in2 < in3
+echo $?
+
+// OUTFILE /////////////////////
+
+ls
+echo papa > ou1 > ou2 > ou3
+ls
+cat ou1
+cat ou2
+cat ou3
+
+// COMMAND NOT FOUND ////////////////////
+
+mama < in1
+echo $?
+
+rm in1
+ls
+mama < in1
+echo $?
+
+/////////////////////
+
+echo papa > mama | ls -l
+cat mama
+
+echo papa > mama vava lala
+cat mama
+
+cat mama < in1
+
+rm ou1
+cat mama < ou1 > XAXA lala
+touch ou1
+cat mama < ou1 > XAXA lala
+echo $?
+cat XAXA
+
+
+// SANS LE UNSET PWD (CD PWD) Et echo simple ///////
+
+mkdir DIR1
+cd DIR1
+mkdir DIR2
+cd DIR2
+pwd
+rm -rf ../../DIR1
+env | grep PWD
+pwd
+ls | cd ..
+echo $?
+pwd
+ls | cd .. | cat
+echo $?
+pwd
+cd ..
+echo $?
+pwd
+env | grep PWD
+cd ..
+pwd
+env | grep PWD 
