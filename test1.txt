@@ -5,8 +5,6 @@
 
 yes | head
 
-// INFILE /////////////
-
 cat < in1 < in2 < in3
 echo $?
 echo 1 > in1
@@ -16,8 +14,6 @@ cat in1
 cat < in1 < in2 < in3
 echo $?
 
-// OUTFILE /////////////////////
-
 ls
 echo papa > ou1 > ou2 > ou3
 ls
@@ -25,7 +21,6 @@ cat ou1
 cat ou2
 cat ou3
 
-// COMMAND NOT FOUND ////////////////////
 
 mama < in1
 echo $?
@@ -35,7 +30,6 @@ ls
 mama < in1
 echo $?
 
-/////////////////////
 
 echo papa > mama | ls -l
 cat mama
@@ -52,8 +46,6 @@ cat mama < ou1 > XAXA lala
 echo $?
 cat XAXA
 
-
-// SANS LE UNSET PWD (CD PWD) Et echo simple ///////
 
 mkdir DIR1
 cd DIR1

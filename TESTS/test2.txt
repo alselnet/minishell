@@ -57,7 +57,6 @@ ls | unset FAFA zehfj- 12m m12 | cat
 echo $?
 env | grep FAFA
 
-//////  CD //////////////////////
 
 ls | cd kqselfk | cat
 echo $?
@@ -72,9 +71,6 @@ echo $?
 cd DIR
 echo $?
 pwd
-
-
-// ECHO //////////////////////////////////
 
 
 echo papa
@@ -105,8 +101,6 @@ echo $?
 ls | echo -n1 -n papa -n papa
 echo -nnnnn1 papa
 
-
-// EXIT SANS VRAIMENT EXIT //////////////////
 
 ls | exit
 echo $?
@@ -139,7 +133,6 @@ ls | exit | wc -l
 ls | exit 12 | wc -l
 
 
-// PWD /OLDPWD ////////////////////////
 
 env | grep PWD
 mkdir DIR3
@@ -166,7 +159,7 @@ env | grep PWD
 cd ..
 pwd
 
-//////////////////////////////////////////
+
 
 
 rm file
@@ -187,7 +180,6 @@ echo $?
 echo $?
 
 
-// BUILTIN ALONE REDIRECTION PIPE //////////////////////
 
 mkdir DIR2
 cd DIR2
@@ -197,6 +189,7 @@ export > file
 cat file
 env > file  
 cat file
+
 
 
 pwd
@@ -210,8 +203,6 @@ export > file2 | ls
 cat file2
 
 
-
-// ERROR PERMISSION OUTFILE //////
 
 ls
 touch ou2           
