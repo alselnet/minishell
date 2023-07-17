@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:54 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/16 22:42:30 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:11:19 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void	ft_get_cmd_path(t_minishell *mini)
 	if (!access(cmd->argv[0], X_OK))
 		cmd->cmd_path = ft_strdup(cmd->argv[0]);
 	else
+	{
+		if (ft_strcmp(".", cmd->argv[0]) == 0)
+			ft_filename_required(mini);
 		cmd->cmd_path = find_cmd_path(cmd->argv[0], mini->data_env.envp);
+	}
 	if (cmd->cmd_path == NULL)
 		ft_error(200, mini);
 }

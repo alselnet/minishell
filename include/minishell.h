@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 00:30:55 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:01:06 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void			ft_close_all_fds(t_minishell *mini);
 // ft_error_exec.c
 void			ft_error_no_such_file(char *file);
 void			ft_error_cmd_not_found(t_minishell *mini);
+void			ft_filename_required(t_minishell *mini);
 void			ft_error_cmd_not_found2(t_minishell *mini);
 void			ft_error(int status, t_minishell *mini);
 
