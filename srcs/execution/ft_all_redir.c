@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 17:08:02 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:08:04 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/17 20:00:47 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,15 @@ void	ft_error_redirections(t_minishell *mini)
 	t_cmd	*cmd;
 
 	cmd = &mini->cmd;
-	if (cmd->fd_out == -1)
+	if (cmd->fd_out == -1 || cmd->fd_in == -1)
 	{
-		write(2, "Permission denied\n", 18);
+		if (cmd->filename != NULL)
+		{
+			write(2, cmd->filename, ft_strlen(cmd->filename));
+			write(2, ": ", 2);
+		}
+		write(2, cmd->error_fd, ft_strlen(cmd->error_fd));
+		write(2, "\n", 1);
 		ft_exit_exec(1, mini);
 	}
-	if (cmd->fd_in == -1)
-	{
-		ft_error_no_such_file(cmd->error_infile);
-		ft_exit_exec(1, mini);
-	}	
 }
