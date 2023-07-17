@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:32:15 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:14:35 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	define_redirs(t_lexing *ltable)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (ft_isinbase(browse->content[0], "<|>"))
+		if (!browse->expanded && ft_isinbase(browse->content[0], "<|>"))
 			browse->type = 'R';
 		browse = browse->next;
 	}
@@ -35,7 +35,7 @@ int	define_delims(t_lexing *ltable)
 		return (0);
 	while (browse->next)
 	{
-		if (!ft_strncmp(browse->content, "<<", 2))
+		if (!browse->expanded && !ft_strncmp(browse->content, "<<", 2))
 			browse->next->type = 'D';
 		browse = browse->next;
 	}
@@ -53,9 +53,9 @@ int	define_files(t_lexing *ltable)
 		browse = browse->next;
 	while (browse->prev)
 	{
-		if (browse->prev->content[0] == '>' && browse->type != 'R')
+		if (!browse->type && browse->prev->content[0] == '>' && browse->type != 'R')
 			browse->type = 'F';
-		else if (browse->prev->content[0] == '<'
+		else if (!browse->type && browse->prev->content[0] == '<'
 			&& !browse->prev->content[1] && browse->type != 'R')
 		{
 			browse->type = 'F';

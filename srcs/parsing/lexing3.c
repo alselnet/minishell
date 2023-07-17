@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:13:16 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:35:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:14:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@ void	include_expanded_list(t_lexing *ltable,
 	t_lexing *expand, t_token *browse)
 {
 	t_token		*last;
+	t_token		*cur;
 
+	cur = expand->tklist_head;
+	while (cur)
+	{
+		cur->expanded = 1;
+		cur = cur->next;
+	}
 	last = tk_last(expand->tklist_head);
 	if (!browse->prev)
 		ltable->tklist_head = expand->tklist_head;
