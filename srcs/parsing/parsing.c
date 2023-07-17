@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:22:03 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/17 19:59:13 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ int	parse_token_list(t_lexing *ltable, t_data_env *data_env)
 		else if (browse->content[0] == '\"' && (ft_strlen(browse->content) == 1
 				|| last_char(browse->content) != '\"'))
 			return (free_structs(ltable, data_env, "syntax error near \"\n", 1));
-		else if (ft_strmatch(browse->content, "<|>"))
+		else if (ft_strmatch(browse->content, "<|>") && !ft_isinbase(browse->content[0], "\'\""))
 		{
-			if (!browse->next || (ft_strlen(browse->content) > 1
-					&& browse->content[0] != browse->content[1])
-				|| (!browse->prev && ft_isinbase(browse->content[0], "|>")))
+			if (!browse->next || (ft_strlen(browse->content) > 1 && browse->content[0] != browse->content[1])
+				|| (!browse->prev && ft_isinbase(browse->content[0], "|")))
 				return (free_structs(ltable, data_env,
 						"syntax error near redirection\n", 1));
 			else if (browse->content[0] == '|' && browse->content[1] == '|')
