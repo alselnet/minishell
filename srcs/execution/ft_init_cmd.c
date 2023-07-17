@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:31:47 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:04:24 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/17 20:15:30 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ void	ft_init_cmd(t_cmd *cmd)
 	cmd->first_arg_done = 0;
 	cmd->fd_heredoc = -2;
 	cmd->inside_pipe = 0;
+	cmd->error_fd = NULL;
+	cmd->filename = NULL;
 }

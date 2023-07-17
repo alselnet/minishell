@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/17 19:44:10 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/17 22:34:34 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,8 @@ typedef struct s_cmd
 	int		old_pipefd[2];
 	int		final_cmd;
 	int		fd_in;
-	char	*error_infile;
+	char	*error_fd;
+	char	*filename;
 	int		fd_out;
 	int		pid;
 	char	*cmd_path;
@@ -241,6 +242,8 @@ void			ft_exit_exec(int status, t_minishell *mini);
 // ft_fill_cmd_type_r.c
 void			ft_fill_cmd_for_type_r(t_minishell *mini, t_token *lst);
 void			ft_fill_cmd_for_type_r2(t_cmd *cmd, t_token *lst);
+int				ft_ambiguous_redir(t_cmd *cmd, t_token *lst);
+void			ft_fill_cmd_for_type_r3(t_cmd *cmd, t_token *lst);
 
 // ft_fill_cmd.c
 void			ft_fill_cmd(t_minishell *minishell, t_token *lst);
