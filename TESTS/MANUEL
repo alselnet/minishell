@@ -1,0 +1,187 @@
+-
+ATTENTION
+
+export $vide (c'est vraiment comme si c 'était export seul !!)
+
+Ctlr-C
+holaCtlr-C
+cat (faire Ctlr-C apres avoir fait plusieurs fois [ENTREE])
+cat | rev(faire Ctlr-C apres avoir fait plusieurs fois [ENTREE])
+Ctlr-D
+hola Ctlr-D
+Ctlr-\
+hola Ctlr-\
+cat (faire Ctlr-\ apres avoir fait plusieurs fois [ENTREE])
+Ctlr-Z
+sleep 3 | sleep 3 | sleep 3 (faire Ctlr-C une seconde apres)
+sleep 3 | sleep 3 | sleep 3 (faire Ctlr-D une seconde apres)
+sleep 3 | sleep 3 | sleep 3 (faire Ctlr-\ une seconde apres)
+
+orazafy@ubuntudesktop:~/test_bash/DIR2$ cat
+^C
+orazafy@ubuntudesktop:~/test_bash/DIR2$ echo $?
+130
+orazafy@ubuntudesktop:~/test_bash/DIR2$ cat | ls
+file  file2
+^C
+orazafy@ubuntudesktop:~/test_bash/DIR2$ echo $?
+0
+orazafy@ubuntudesktop:~/test_bash/DIR2$ wc -c 
+^C
+orazafy@ubuntudesktop:~/test_bash/DIR2$ echo $?
+130
+orazafy@ubuntudesktop:~/test_bash/DIR2$ wc -c | ls
+file  file2
+^C
+
+"exit 42"
+"exit 42 53 68"
+"exit 259"
+"exit 9223372036854775807"
+"exit -9223372036854775808"
+"exit 9223372036854775808"
+"exit -9223372036854775810"
+"exit -4"
+"exit wrong"
+"exit wrong_command"
+
+orazafy@ubuntudesktop:~/test_bash$ cat
+^\Quit (core dumped)
+orazafy@ubuntudesktop:~/test_bash$ echo $?
+131
+orazafy@ubuntudesktop:~/test_bash$ cat | ls
+DIR3  DIR4  DIR9  DIR_TEST  mama  ou1  TEST
+^\orazafy@ubuntudesktop:~/test_bash$ echo $?
+0
+
+
+HEREDOC à la main
+SIGNAUX à la main
+CTRL D , exit STATUS à la main
+
+
+
+
+
+
+EXIT A LA MAIN
+
+=======
+EXIT
+
+orazafy@ubuntudesktop:~/test_bash$ bash
+
+orazafy@ubuntudesktop:~/test_bash$ env | grep SHLV
+
+SHLVL=2
+
+orazafy@ubuntudesktop:~/test_bash$ cd jezafk
+
+bash: cd: jezafk: No such file or directory
+
+orazafy@ubuntudesktop:~/test_bash$ exit 
+
+exit
+
+orazafy@ubuntudesktop:~/test_bash$ echo $?
+
+1
+
+orazafy@ubuntudesktop:~/test_bash$ env | grep SHLV
+
+SHLVL=1
+
+
+====
+
+orazafy@ubuntudesktop:~/test_bash$ env | grep SHLV
+
+SHLVL=2
+
+orazafy@ubuntudesktop:~/test_bash$ exit lmdq 1
+
+exit
+
+bash: exit: lmdq: numeric argument required
+
+orazafy@ubuntudesktop:~/test_bash$ echo $?
+
+2
+
+orazafy@ubuntudesktop:~/test_bash$ env | grep SHLV
+
+SHLVL=1
+
+
+
+orazafy@ubuntudesktop:~/test_bash$ ls
+orazafy@ubuntudesktop:~/test_bash$ touch ou1
+orazafy@ubuntudesktop:~/test_bash$ chmod 000 ou1
+orazafy@ubuntudesktop:~/test_bash$ touch ou2
+orazafy@ubuntudesktop:~/test_bash$ chmod 000 ou2
+orazafy@ubuntudesktop:~/test_bash$ cat < ou1 > ou2
+bash: ou1: Permission denied
+orazafy@ubuntudesktop:~/test_bash$ cat > ou2 < ou1
+bash: ou2: Permission denied
+orazafy@ubuntudesktop:~/test_bash$ cat < vide > ou2
+bash: vide: No such file or directory
+orazafy@ubuntudesktop:~/test_bash$ cat > vide  < ou1
+bash: ou1: Permission denied
+orazafy@ubuntudesktop:~/test_bash$ ls
+ou1  ou2  vide
+
+env -i ./minishell
+
+exit
+exit exit
+exit hola
+exit hola que tal
+exit 42
+exit 000042
+exit 666
+exit 666 666
+exit -666 666
+exit hola 666
+exit 666 666 666 666
+exit 666 hola 666
+exit hola 666 666
+exit 259
+exit -4
+exit -42
+exit -0000042
+exit -259
+exit -666
+exit +666
+exit 0
+exit +0
+exit -0
+exit +42
+exit -69 -96
+exit --666
+exit ++++666
+exit ++++++0
+exit ------0
+exit "666"
+exit '666'
+exit '-666'
+exit '+666'
+exit '----666'
+exit '++++666'
+exit '6'66
+exit '2'66'32'
+exit "'666'"
+exit '"666"'
+exit '666'"666"666
+exit +'666'"666"666
+exit -'666'"666"666
+exit 9223372036854775807
+exit 9223372036854775808
+exit -9223372036854775808
+exit -9223372036854775809
+
+cat | cat | cat | ls
+
+sleep 3 | sleep 3
+time sleep 3 | sleep 3
+sleep 3 | exit
+exit | sleep 3

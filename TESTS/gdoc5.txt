@@ -1,0 +1,145 @@
+chmod 000 minishell
+./minishell
+chmod 777 ./minishell
+ls hola
+./Makefile
+touch hola
+./hola
+env|"wc" -l
+env|"wc "-l
+expr 1 + 1
+expr $? + $?
+ls | exit
+ls | exit 42
+exit | ls
+echo hola > bonjour
+exit | cat -e bonjour
+echo hola > bonjour
+cat -e bonjour | exit
+echo | echo
+echo hola | echo que tal
+pwd | echo hola
+env | echo hola
+echo oui | cat -e
+echo oui | echo non | echo hola | grep oui
+echo oui | echo non | echo hola | grep non
+echo oui | echo non | echo hola | grep hola
+echo hola | cat -e | cat -e | cat -e
+cd .. | echo "hola"
+cd / | echo "hola"
+cd .. | pwd
+ifconfig | grep ":"
+ifconfig | grep hola
+whoami | grep $USER
+whoami | grep $USER > /tmp/bonjour
+cat /tmp/bonjour
+whoami | cat -e | cat -e > /tmp/bonjour
+cat /tmp/bonjour
+whereis ls | cat -e | cat -e > /tmp/bonjour
+cat /tmp/bonjour
+ls | hola
+ls | ls hola
+ls | ls | hola
+ls | hola | ls
+ls | ls | hola | rev
+ls | ls | echo hola | rev
+ls -la | grep "."
+ls -la | grep "'.'"
+echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e
+ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
+|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls
+echo hola | cat | cat | cat | cat | cat | grep hola
+echo hola | cat
+echo hola| cat
+echo hola |cat
+echo hola|cat
+echo hola || cat
+echo hola ||| cat
+ech|o hola | cat
+cat Makefile | cat -e | cat -e
+cat Makefile | grep srcs | cat -e
+cat Makefile | grep srcs | grep srcs | cat -e
+cat Makefile | grep pr | head -n 5 | cd file_not_exist
+cat Makefile | grep pr | head -n 5 | hello
+unset HOLA
+export HOLA=bonjour | cat -e | cat -e
+env | grep HOLA
+unset HOLA | cat -e
+env | grep HOLA
+export HOLA | echo hola
+env | grep PROUT
+export | echo hola
+echo hola > a
+>>b echo que tal
+cat a | <b cat | cat > c | cat
+pwd && ls
+pwd || ls
+echo hola || echo bonjour
+echo hola && echo bonjour
+echo bonjour || echo hola
+echo bonjour && echo hola
+echo -n bonjour && echo -n hola
+pwd && ls && echo hola
+pwd || ls && echo hola
+pwd && ls || echo hola
+pwd || ls || echo hola
+ls || export ""
+export "" || ls
+ls && export ""
+export "" && ls
+ls || ;
+; || ls
+ls && ;
+; && ls
+ls || <
+ls && <
+cat | echo || ls
+cat | echo && ls
+ls || cat | echo
+ls && cat | echo
+export "" && unset ""
+
+(ls)
+( ( ls ) )
+( ( ) ls )
+ls && (ls)
+(ls && pwd)
+( ( ls&&pwd ) )
+( ( ls ) &&pwd )
+(ls && ( ( pwd ) ) )
+(ls && pwd) > hola
+cat hola
+> hola ls && pwd
+> hola (ls && pwd)
+(> pwd)
+ls
+(< pwd)
+ls
+(< pwd)
+( ( ( ( ( pwd) ) ) ) )
+() pwd
+> pwd (ls)
+(ls||pwd)&&(ls||pwd)
+(lss||pwd)&&(lss||pwd)
+(lss&&pwd)&&(lss&&pwd)
+(ls && pwd | wc) > hola
+cat hola
+(ls && pwd | wc) > hola
+(ls && pwd | wc) > hola
+cat hola
+(ls && pwd | wc) >> hola
+echo hey&&(ls && pwd | wc) > hola
+cat hola
+(pwd | wc) < hola
+(ls && pwd | wc) < hola
+(ls -z || pwd | wc) < hola
+echo hey > hola
+(pwd | wc) < hola
+echo hey > hola
+(ls && pwd | wc) < hola
+echo hey > hola
+(ls -z || pwd | wc) < hola
+(ls -z || pwd && ls)
+ls || (cat Makefile|grep srcs) && (pwd|wc)
+ls -z && (ls) && (pwd)
+(ls > Docs/hey && pwd) > hola

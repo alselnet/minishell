@@ -1,0 +1,15 @@
+// ERREURS FDs
+
+rm ou1
+rm ou2
+rm vide
+ls
+touch ou1
+chmod 000 ou1
+touch ou2
+chmod 000 ou2
+cat < ou1 > ou2
+cat > ou2 < ou1
+cat < vide > ou2
+cat > vide  < ou1
+ls

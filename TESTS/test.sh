@@ -7,7 +7,7 @@ set prompt "minishell$ "
 set minishell_path "./minishell"
 
 # NOM DU FICHIER
-set filename "test1.txt"
+set filename "custom.txt"
 
 # Lancement du minishell
 spawn $minishell_path

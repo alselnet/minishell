@@ -1,0 +1,169 @@
+pwd
+pwd hola
+pwd ./hola
+pwd hola que tal
+pwd -p
+pwd --p
+pwd ---p
+pwd -- p
+pwd pwd pwd
+pwd ls
+pwd ls env
+export now=$PWD
+cd
+cd $now
+cd .
+cd $now
+cd ./
+cd $now
+cd ./././.
+cd $now
+cd ././././
+cd $now
+cd ..
+cd $now
+cd ../
+cd $now
+cd ../..
+cd $now
+cd ../.
+cd $now
+cd .././././.
+cd $now
+cd srcs
+cd $now
+cd srcs objs
+cd $now
+cd 'srcs'
+cd $now
+cd "srcs"
+cd $now
+cd '/etc'
+cd $now
+cd /e'tc'
+cd $now
+cd /e"tc"
+cd $now
+cd sr
+cd $now
+cd ../../Makefile
+cd $now
+cd ../minishell
+cd $now
+cd ../../../../../../..
+cd $now
+cd .././../.././../bin/ls
+cd $now
+cd /
+cd $now
+cd '/'
+cd $now
+cd //
+cd $now
+pwd
+cd '//'
+cd $now
+pwd
+cd $now
+cd ///
+pwd
+cd $now
+cd ////////
+pwd
+cd $now
+cd '////////'
+pwd
+cd $now
+cd /minishell
+cd $now
+cd /
+cd $now
+cd ..
+cd $now
+cd _
+cd $now
+cd -
+cd $now
+cd --
+cd $now
+cd ---
+cd $now
+cd $HOME
+cd $now
+cd $HOME $HOME
+cd $now
+cd $HOME/42_works
+cd $now
+cd "$PWD/srcs"
+cd $now
+cd '$PWD/srcs'
+cd $now
+unset HOME
+cd $HOME
+unset HOME
+export HOME=
+cd
+cd $now
+unset HOME
+export HOME
+cd
+pwd
+cd $now
+cd minishell Docs crashtest.c
+cd $now
+cd / | echo $?
+cd $now
+pwd
+cd ~
+cd $now
+cd ~/
+cd $now
+cd ~/ | echo $?
+cd $now
+pwd
+cd *
+cd $now
+cd *
+cd $now
+cd *
+cd $now
+mkdir a
+mkdir a/b
+cd a/b
+pwd
+rm -r ../../a
+pwd
+cd ..
+mkdir a
+mkdir a/b
+cd a/b
+rm -r ../../a
+pwd
+mkdir a
+mkdir a/b
+cd a/b
+rm -r ../../a
+echo $PWD
+echo $OLDPWD
+mkdir a
+mkdir a/b
+cd a/b
+rm -r ../../a
+cd
+echo $PWD
+echo $OLDPWD
+cd $now
+mkdir a
+cd a
+rm -r ../a
+echo $PWD
+echo $OLDPWD
+export CDPATH=/
+cd $HOME/..
+export CDPATH=/
+cd home/vietdu91
+export CDPATH=./
+cd .
+export CDPATH=./
+cd ..
+cd $now
