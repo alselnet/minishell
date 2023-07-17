@@ -1,0 +1,101 @@
+// ce que tu veux
+echo bonjour ; |
+echo bonjour | |
+|
+echo bonjour |;
+echo bonjour ; ls
+echo bonjour > test\ 1
+cat test\
+cd $HOME/Documents
+pwd
+echo "\s" & echo "\s"
+echo >
+echo -n -n -nnnn -nnnnm
+cat /dev/random | head -n 1 | cat -e
+unset var1
+export ""
+unset ""
+echo test > file test1
+cat file
+$
+not_cmd bonjour > salut
+cat Makefile | grep pr | head -n 5 | cd test
+cat Makefile | grep pr | head -n 5 | cat test
+cat Makefile | grep pr | head -n 5 | hello
+echo bonjour >>> test
+echo bonjour > > out
+echo 2 >> out1 > out2
+cat out2
+echo 2 > out1 >> out2
+cat	out2
+cat < test
+export var
+export var=test
+env | grep var
+file_name_in_current_dir
+cd ../../../../../.. 
+pwd
+echo "bip | bip ; coyotte > < " "
+/////// cat | cat | cat | ls
+$bla
+export var ="cat Makefile | grep >"
+env | grep var
+export "test=ici"=coucou
+env | grep test
+c$var Makefile
+$LESS$VAR
+/bin/echo bonjour
+not_cmd
+/////////////////////// sleep 5 | exit
+echo bonjour > $test w/ t
+"exit retour a la ligne"
+cat diufosgid 
+;
+echo coucou | ;
+echo "$HOME"
+echo '$HOME'
+echo $HOME
+> log echo coucou
+echo hudifg d | | hugdfihd
+echo
+echo simple
+echo -n simple
+echo ''
+echo ""
+echo "\"
+echo "\n \n \n"
+echo "\n \n \\n"
+echo ;;
+echo hi";" hihi
+echo hi " ; " hihi
+cd
+cd .
+cd ~
+cd /
+cd no_file
+cd a b c d
+pwd a
+pwd a b c d
+export LOL=lala ROR=rara
+env | grep LOL
+env | grep ROR
+unset LOL ROR
+env | grep LOL
+env | grep ROR
+export "HI= hi"
+export "HI =hi"
+/bin/ls
+echo $?
+l^Ds
+echo |
+| echo
+//////////////// sort | ls
+cat < >
+cat < <
+cat > >
+> a ls > b < Makefile
+echo > a Hello World!
+> a echo Hello World!
+cat < Makefile | grep gcc > output
+exit 0 | exit 1
+exit 1 | exit 0
