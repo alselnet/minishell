@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/17 22:34:34 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:03:42 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ int				ft_isalpha(int c);
 int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_srch(char const c, char const *str);
-int				ft_check_empty_var(char **argv, int *j);
+int				ft_check_empty_var(char **argv, int *j, char *str);
 
 // ft_cd.c
 int				ft_cd_without_arg(t_minishell *mini);

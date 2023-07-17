@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:31:47 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/17 20:15:30 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 00:59:49 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_init_cmd(t_cmd *cmd)
 	cmd->final_cmd = 0;
 	cmd->fd_in = -2;
 	cmd->fd_out = -2;
-	cmd->pid = 0;
 	cmd->cmd_path = NULL;
 	cmd->final_pid = 0;
 	cmd->has_cmd = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/16 18:47:05 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:01:01 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ void	fetch_heredoc(t_cmd *cmd, t_token *tklist_head,
 {
 	t_token	*delim;
 	t_token	*browse;
+	int		status;
 
 	browse = tklist_head;
 	ft_unlink(cmd);
 	delim = fetch_delim(&browse);
 	if (!delim)
 		return ;
+	waitpid(cmd->pid, &status, 0);
 	g_mini.inside_heredoc = 1;
 	while (g_mini.inside_heredoc == 1 && delim)
 	{

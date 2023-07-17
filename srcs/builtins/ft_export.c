@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:08:01 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:03:46 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:03:52 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	ft_export(t_minishell *mini)
 	while (j < mini->cmd.argc)
 	{
 		if ((ft_check_var_format_export(mini->cmd.argv, &j) == -1)
-			|| (ft_check_empty_var(mini->cmd.argv, &j) == -1))
+			|| (ft_check_empty_var(mini->cmd.argv, &j, "export") == -1))
 		{
 			status = 1;
 			continue ;

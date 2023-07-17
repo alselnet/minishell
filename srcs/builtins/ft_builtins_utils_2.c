@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 17:55:53 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 16:33:51 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:03:37 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	ft_srch(char const c, char const *str)
 	return (-1);
 }
 
-int	ft_check_empty_var(char **argv, int *j)
+int	ft_check_empty_var(char **argv, int *j, char *str)
 {
 	if (argv[*j][0] == 0)
 	{
-		ft_error_identifier("export", argv[*j]);
+		ft_error_identifier(str, argv[*j]);
 		(*j)++;
 		return (-1);
 	}
