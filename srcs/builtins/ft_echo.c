@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:17:00 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 18:48:11 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:25:41 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_check_option(char *str)
 	if (*str != '-')
 		return (0);
 	str++;
+	if (*str == 0)
+		return (0);
 	while (*str)
 	{
 		if (*str != 'n')
