@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:10:45 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:07:31 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:48:39 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void	ft_fill_argc_argv(t_minishell *mini, t_token *lst)
 	if (lst->next == NULL)
 		return ;
 	lst = lst->next;
-	while (lst != NULL && lst->content[0] != '|')
+	while (lst != NULL)
 	{
+		if (lst->content[0] == '|' && lst->type == 'R')
+			break ;
 		if (lst->type == 'A')
 			cmd->argv[cmd->argc++] = ft_strdup(lst->content);
 		if (cmd->argv[cmd->argc - 1] == NULL)
@@ -88,8 +90,10 @@ void	ft_malloc_argv(t_minishell *mini, t_token *lst)
 	argc = 1;
 	if (ft_srch(' ', lst->content) != -1)
 		argc++;
-	while (lst != NULL && lst->content[0] != '|')
+	while (lst != NULL)
 	{
+		if (lst->content[0] == '|' && lst->type == 'R')
+			break ;
 		if (lst->type == 'A')
 			argc++;
 		lst = lst->next;
