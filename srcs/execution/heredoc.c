@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 08:15:24 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 15:41:43 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:23:24 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*process_line(char *line, t_token *delim, t_data_env *data_env)
 	if (delim->delim_quote || !ft_isinbase('$', line)
 		|| ft_isinbase(line[0], "\'"))
 		return (line);
-	else if (!ft_strncmp(line, delim->content, ft_strlen(delim->content)))
+	else if (!ft_strncmp(line, delim->content, delim_len(delim, line)))
 		return (line);
 	new_line = expand_process(line, data_env);
 	if (!new_line)
@@ -58,7 +58,7 @@ void	heredoc_process(t_cmd *cmd, t_data_env *data_env,
 			return (free_heredoc(&mini->ltable, data_env,
 					"cannot allocate memory\n"));
 		if (ft_strncmp(delim->content,
-				new_line, ft_strlen(delim->content)) == 0)
+				new_line, delim_len(delim, new_line)) == 0)
 			return (free(new_line));
 		write(cmd->fd_heredoc, new_line, ft_strlen(new_line));
 		free (new_line);
