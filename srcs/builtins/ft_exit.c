@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:03:41 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 18:49:20 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:54:52 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@ unsigned char	ft_atoi_exit(char *str)
 {
 	int	nb;
 	int	i;
+	int	sign;
 
+	sign = 1;
 	if (*str == '+' || *str == '-')
+	{
 		str++;
+		sign = -1;
+	}
 	i = 1;
 	nb = str[0] % '0';
 	while (str[i] >= '0' && str[i] <= '9')
@@ -26,7 +31,7 @@ unsigned char	ft_atoi_exit(char *str)
 		nb = (nb * 10) + (str[i] % '0');
 		i++;
 	}
-	return (nb);
+	return (sign * nb);
 }
 
 void	ft_exit(t_minishell *mini)
