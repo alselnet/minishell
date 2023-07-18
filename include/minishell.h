@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 01:03:42 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:11:37 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,6 @@ int				free_array(char **arr);
 void			set_error(int error_code);
 int				free_structs(t_lexing *ltable,
 					t_data_env *data_env, char *error_msg, char mode);
-
-// temp.c
-void			print_token_list(t_token **head);
-void			rev_print_token_list(t_token **last, t_token **head);
 
 // tokens.c
 t_token			*tk_new(char *content);

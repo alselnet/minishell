@@ -6,7 +6,7 @@
 #    By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 12:46:57 by aselnet           #+#    #+#              #
-#    Updated: 2023/07/16 00:31:14 by aselnet          ###   ########.fr        #
+#    Updated: 2023/07/18 14:11:23 by aselnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ PARSING_FILES = define.c \
 				parsing.c \
 				parsing2.c \
 				quit.c \
-				temp.c \
 				tokens.c \
 				tokens2.c \
 				tokens3.c \
