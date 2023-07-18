@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:37:32 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 17:24:14 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:27:02 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	delim_len(char *delim, char *line)
 	int	line_len;
 	int	delim_len;
 
-	line_len = ft_strlen(line);
+	line_len = ft_strlen(line) - 1;
 	delim_len = ft_strlen(delim);
 	if (line_len > delim_len)
 		return (line_len);
