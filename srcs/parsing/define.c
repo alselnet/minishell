@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/15 18:32:15 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:04:28 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	define_delims(t_lexing *ltable)
 		return (0);
 	while (browse->next)
 	{
-		if (!ft_strncmp(browse->content, "<<", 2))
+		if (!ft_strncmp(browse->content, "<<", 2) && !browse->next->type)
 			browse->next->type = 'D';
 		browse = browse->next;
 	}
