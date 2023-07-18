@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:23:19 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 17:38:48 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:18:51 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_check_is_first_digit(char **argv, int *j, char *cmd)
 {
 	if (ft_isdigit(argv[*j][0]) == 1)
 	{
-		ft_error_identifier(cmd, argv[*j]);
+		if (ft_strcmp(cmd, "export") == 0)
+			ft_error_identifier(cmd, argv[*j]);
 		(*j)++;
 		return (-1);
 	}

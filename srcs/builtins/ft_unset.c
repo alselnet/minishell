@@ -6,7 +6,7 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:05:57 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/18 01:03:57 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:18:11 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_check_var_format_unset(char **argv, int *j)
 	{
 		if (ft_isalnum(argv[*j][i]) == 0 && (argv[*j][i] != '_'))
 		{
-			ft_error_identifier("unset", argv[*j]);
 			is_broken = 1;
 			break ;
 		}
@@ -67,7 +66,6 @@ void	ft_unset(t_minishell *mini)
 		if (ft_check_var_format_unset(mini->cmd.argv, &j) == -1
 			|| (ft_check_empty_var(mini->cmd.argv, &j, "unset") == -1))
 		{
-			status = 1;
 			continue ;
 		}	
 		if (ft_unset_with_arg(mini->cmd.argv, &mini->data_env, j) == -1)
