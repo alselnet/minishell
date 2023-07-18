@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 19:06:58 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 16:04:28 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:26:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	define_redirs(t_lexing *ltable)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (ft_isinbase(browse->content[0], "<|>"))
+		if (ft_isinbase(browse->content[0], "<|>") && !browse->quote)
 			browse->type = 'R';
 		browse = browse->next;
 	}
