@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:36:20 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/16 18:45:14 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:44:15 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	ft_execute(t_minishell_g *g_mini, t_minishell *mini)
 	head = mini->ltable.tklist_head;
 	builtin_done = 0;
 	pipe_before = 0;
-	ft_std_backup(mini);
-	mini->cmd.old_pipefd[0] = -2;
-	mini->cmd.old_pipefd[1] = -2;
+	ft_before_launch_pipeline(mini);
 	while (1)
 	{
 		ft_init_cmd(&mini->cmd);

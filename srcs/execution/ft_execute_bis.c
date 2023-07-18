@@ -6,13 +6,13 @@
 /*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:28:04 by orazafy           #+#    #+#             */
-/*   Updated: 2023/07/15 19:04:46 by orazafy          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:45:32 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_std_backup(t_minishell *mini)
+void	ft_before_launch_pipeline(t_minishell *mini)
 {
 	t_data_env	*data_env;
 
@@ -23,6 +23,9 @@ void	ft_std_backup(t_minishell *mini)
 	data_env->stdout = dup(STDOUT_FILENO);
 	if (data_env->stdout == -1)
 		ft_error(1, mini);
+	mini->cmd.old_pipefd[0] = -2;
+	mini->cmd.old_pipefd[1] = -2;
+	mini->cmd.pid = 0;
 }
 
 int	ft_init_pipe_before(t_cmd *cmd)

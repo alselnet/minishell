@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: orazafy <orazafy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:58:33 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 14:11:37 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:43:50 by orazafy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ void			ft_error_cmd_not_found2(t_minishell *mini);
 void			ft_error(int status, t_minishell *mini);
 
 // ft_execute_bis.c
-void			ft_std_backup(t_minishell *mini);
+void			ft_before_launch_pipeline(t_minishell *mini);
 int				ft_init_pipe_before(t_cmd *cmd);
 void			ft_restore_before_next_prompt(t_minishell *mini);
 
