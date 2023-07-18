@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:06:17 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 14:27:00 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:21:35 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,13 @@ int	parse_redirections(t_lexing *ltable, t_data_env *data_env)
 	t_token	*browse;
 
 	browse = ltable->tklist_head;
-	if (browse->type == 'R' && browse->content[0] == '|')
+	if (browse->content[0] == '|')
 		return (free_structs(ltable, data_env,
 				"syntax error near redirection\n", 1));
 	while (browse->next)
 	{
-		if (browse->type == 'R' && browse->next->type == 'R'
-			&& (browse->content[0] != '|' || (browse->content[0] == '|'
-					&& browse->next->content[0] == '>')))
+		if (ft_isinbase(browse->content[0], "<>")
+			&& ft_isinbase(browse->next->content[0], "<|>"))
 			return (free_structs(ltable, data_env,
 					"syntax error: consecutive redirection\n", 1));
 		browse = browse->next;

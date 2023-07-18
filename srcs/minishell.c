@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:01:50 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 14:09:34 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:21:11 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	define_token_types(t_lexing *ltable, t_data_env *data_env, int monitor)
 		monitor = define_cmds(ltable, data_env);
 	if (monitor)
 		define_args(ltable);
-	if (monitor)
-			monitor = parse_redirections(ltable, data_env);
 	if (!monitor)
 		return (0);
 	return (1);
@@ -44,6 +42,8 @@ void	process_input(t_minishell_g *g_mini, t_minishell *mini)
 		monitor = create_token_list(&mini->ltable, &mini->data_env);
 	if (monitor)
 		monitor = parse_token_list(&mini->ltable, &mini->data_env);
+	if (monitor)
+		monitor = parse_redirections(&mini->ltable, &mini->data_env);
 	if (monitor)
 		monitor = expand_token_list(&mini->ltable, &mini->data_env);
 	if (monitor)
