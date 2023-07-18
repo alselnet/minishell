@@ -6,7 +6,7 @@
 /*   By: aselnet <aselnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 19:13:16 by aselnet           #+#    #+#             */
-/*   Updated: 2023/07/18 14:00:03 by aselnet          ###   ########.fr       */
+/*   Updated: 2023/07/18 14:02:08 by aselnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	format_expands(t_lexing *ltable, t_data_env *data_env)
 	browse = ltable->tklist_head;
 	while (browse)
 	{
-		if (!browse->quote && !ft_strmatch(browse->content, "<|>") && (ft_isinbase(' ', browse->content)
+		if (!browse->quote && !ft_strmatch(browse->content, "<|>")
+			&& (ft_isinbase(' ', browse->content)
 				|| ft_isinbase('\t', browse->content)))
 		{
 			expand.input = browse->content;
